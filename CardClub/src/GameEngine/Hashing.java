@@ -17,7 +17,7 @@ public class Hashing
 	 * @return String hashed input
 	 * @return null if hashing failed
 	 */
-	public String hashed(String input)
+	public String hash(String input)
 	{
 		try 
 		{

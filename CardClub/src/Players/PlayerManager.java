@@ -1,5 +1,6 @@
 package Players;
 
-public class PlayerManager {
+public class PlayerManager 
+{
 
 }
