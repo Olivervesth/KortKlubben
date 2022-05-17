@@ -1,5 +1,6 @@
 package Cards;
 
-public interface Playable {
-
+public interface Playable 
+{
+	
 }
