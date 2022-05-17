@@ -1,9 +1,11 @@
-package GameEngine;
+package Players;
 
 /**
+ * Human player class
  * @author Martin
+ *
  */
-public class Player 
+public class Human implements Player
 {
 	/**
 	 * Fields for Player class
@@ -12,10 +14,10 @@ public class Player
 	private int points;
 	
 	/**
-	 * Constructor for Player class
+	 * Constructor for Human class
 	 * @param String name
 	 */
-	public Player(String name)
+	public Human(String name)
 	{
 		this.name = name;
 		this.points = 0;
@@ -43,7 +45,7 @@ public class Player
 	 * Method to add points to the player
 	 * Checks for valid amount of points in one addition
 	 * If points not valid, prints player name and points attempted to add, to terminal
-	 * !TODO Log the "error" for handling/registrering cheaters?
+	 * !TODO Log the "error" for handling/register cheaters?
 	 * @param int points
 	 */
 	public void addPoints(int points)
@@ -56,5 +58,13 @@ public class Player
 		{
 			System.out.println("Player: "+this.name+" tried to add: "+ points+" points");
 		}
+	}
+
+	/**
+	 * Method to reset points between games
+	 */
+	public void resetPoints() 
+	{
+		this.points = 0;
 	}
 }
