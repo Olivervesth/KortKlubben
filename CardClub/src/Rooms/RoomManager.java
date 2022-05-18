@@ -1,5 +1,16 @@
 package Rooms;
 
-public class RoomManager {
+import GameEngine.EngineManager;
 
+public class RoomManager 
+{
+	/**
+	 * Constructor for RoomManager
+	 */
+	public RoomManager() 
+	{
+		
+	}
+	
+	
 }
