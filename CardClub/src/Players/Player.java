@@ -1,6 +1,6 @@
 package Players;
 
-public class Player 
+public abstract class Player 
 {
 	/**
 	 * Fields for Player class

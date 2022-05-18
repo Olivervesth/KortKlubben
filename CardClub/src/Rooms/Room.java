@@ -11,14 +11,16 @@ public class Room
 	 */
 	private List<Player> players;
 	private Player owner;
+	private GameManager gameManager;
 	
 	/**
 	 * Constructor for Room class
 	 * @param Player owner
 	 */
-	public Room(Player owner)
+	public Room(Player owner, GameManager gameManager)
 	{
 		this.owner = owner;
 		players.add(owner);
+		this.gameManager = gameManager;
 	}
 }

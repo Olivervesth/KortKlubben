@@ -4,7 +4,7 @@ package Cards;
  * @author Martin
  *
  */
-public class Card implements Playable
+public class Card
 {
 	/**
 	 * Fields for Card class
