@@ -7,5 +7,6 @@ package Cards;
  */
 public interface Playable 
 {
-	
+	public int getValue();
+	public String getSuit();
 }

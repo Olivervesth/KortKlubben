@@ -22,7 +22,7 @@ public class CardManager
 	{
 		cards = new ArrayList<>();
 		// can expand with multiple decks / CardManager
-		generateCardDeckNoJockers();
+		generateCardDeckNoJokers();
 	}
 	
 	/**
@@ -30,7 +30,7 @@ public class CardManager
 	 * This deck of cards do not contain jockers
 	 * Generated cards are added to the managers cards list
 	 */
-	public void generateCardDeckNoJockers()
+	public void generateCardDeckNoJokers()
 	{
 		String suit = "";
 		// for each suit
