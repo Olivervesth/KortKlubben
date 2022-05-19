@@ -12,6 +12,8 @@ DROP PROCEDURE IF EXISTS SP_GetStats;
 DROP PROCEDURE IF EXISTS SP_CreatePlayer;
 DROP PROCEDURE IF EXISTS SP_UpdatePlayer;
 DROP PROCEDURE IF EXISTS SP_DeletePlayer;
+DROP PROCEDURE IF EXISTS SP_AddGamePlayed;
+DROP PROCEDURE IF EXISTS SP_AddGameWon;
 
 
 /*##################################################
@@ -99,5 +101,30 @@ BEGIN
     WHERE Players.Player_Id = @ChosenPlayerId;
     
 END//
+
+CREATE PROCEDURE SP_AddGamePlayed(IN usrName VARCHAR(50))
+BEGIN
+
+	SET @ChosenPlayer = SP_GetPlayerID(usrName);
+    
+    UPDATE Stats
+	SET
+		Games_Played = Games_Played + 1
+	WHERE Stats.Player_Id = @ChosenPlayer;
+    
+END//
+
+CREATE PROCEDURE SP_AddGameWon(IN usrName VARCHAR(50))
+BEGIN
+
+	SET @ChosenPlayer = SP_GetPlayerID(usrName);
+    
+    UPDATE Stats
+	SET
+		Games_Won = Games_Won + 1
+	WHERE Stats.Player_Id = @ChosenPlayer;
+    
+END//
+
 
 DELIMITER ;
