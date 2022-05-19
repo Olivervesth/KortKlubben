@@ -4,6 +4,8 @@ USE cardclub_db;
 				## Drop Procedures ##
 ####################################################*/
 
+DROP PROCEDURE IF EXISTS SP_GetLatestPlayerId;
+DROP PROCEDURE IF EXISTS SP_GetPlayerID;
 DROP PROCEDURE IF EXISTS SP_GetUsername;
 DROP PROCEDURE IF EXISTS SP_GetPassword;
 DROP PROCEDURE IF EXISTS SP_GetStats;
@@ -17,6 +19,11 @@ DROP PROCEDURE IF EXISTS SP_DeletePlayer;
 ####################################################*/
 
 DELIMITER //
+
+CREATE PROCEDURE SP_GetLatestPlayerId()
+BEGIN
+	 SELECT MAX(Player_Id) FROM Players;
+END//
 
 CREATE PROCEDURE SP_GetPlayerID(IN username varchar(50))
 BEGIN
@@ -56,17 +63,31 @@ BEGIN
     
 END//
 
-CREATE PROCEDURE SP_CreatePlayer(IN newName varchar(50))
+CREATE PROCEDURE SP_CreatePlayer(IN newName varchar(50), IN newUsrName varchar(50), IN newPass varchar(1000))
 BEGIN
 
 	INSERT INTO Players
     VALUES(Players.Name=newName);
     
+    SET @NewID =  SP_GetLatestPlayerId();
+    
+    INSERT INTO Logins
+    VALUES(Player_Id=@NewID, UserName=newUsrName, Password=newPass);
+    
+    
 END//
 
-CREATE PROCEDURE SP_UpdatePlayer()
+CREATE PROCEDURE SP_UpdatePlayer(IN oldName varchar(50), IN newName varchar(50), IN newPass varchar(1000))
 BEGIN
 
+	SET @ChosenPlayerId = SP_GetPlayerID(oldName);
+    
+    UPDATE Logins
+	SET 
+		UserName = newName,
+		Password = newPass
+	WHERE Logins.Player_Id = @ChosenPlayerId;
+            
 END//
 
 CREATE PROCEDURE SP_DeletePlayer(IN delName varchar(50))
