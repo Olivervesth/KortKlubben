@@ -1,79 +1,71 @@
 package GameEngine;
+
 import java.sql.*;
-public class DbManager 
-{
+
+public class DbManager {
 	/**
-	 * Fields for DbManager
+	 * Fields for DbManager move this to a application setting?
 	 */
 	private String database = "cardclub_db";
 	private String username = "martin";
 	private String password = "Kode1234!";
-	private String connectionString = "jdbc:mysql://10.108.130.218:3306/"+database+"";
-	
-	
+	private String connectionString = "jdbc:mysql://10.108.130.218:3306/" + database + "";
+
 	/**
 	 * Constructor for DbManager
+	 * 
 	 * @param String connectionString
 	 */
 //	public DbManager(String connectionString) original
 //	{
 //		this.connectionString = connectionString;
 //	}
-	public DbManager()
-	{
+	public DbManager() {
 	}
+
 	// Use stored procedure on Db, instead of sql call here
-	public boolean getUserName(String userName)
-	{
+	public boolean getUserName(String userName) {
 		int count = 0;
 		// count -> SELECT count(*) FROM Users WHERE Name = username
-		if(count > 0)
-		{
+		if (count > 0) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
-	
+
 	// Use stored procedure on Db, instead of sql call here
-	public boolean getPassword(String password)
-	{
+	public boolean getPassword(String password) {
 		int count = 0;
 		// count -> SELECT count(*) FROM Users WHERE Password = password
-		if(count > 0)
-		{
+		if (count > 0) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}
-	
-	public String getStats(String userName)
-	{
+
+	public String getStats(String userName) {
 		// TODO implement get player stats
 		return "";
 	}
-	
+
 	public Statement ConnectDb() {
 		Connection con = null;
-		  try{  
-			   // establish the connection
-		      con = DriverManager.getConnection(connectionString, username, password);
+		try {
+			// establish the connection
+			con = DriverManager.getConnection(connectionString, username, password);
 
-		      // create JDBC statement object
-		      Statement st = con.createStatement();
+			// create JDBC statement object
+			Statement st = con.createStatement();
 
-		      // prepare SQL query
+			// prepare SQL query
 //		      String query = "call SP_CreatePlayer('martin','martinplayer','password');";
 //		      ResultSet rs = st.executeQuery(query);
 //		      System.out.println(rs);
-		      return st;
-		      // send and execute SQL query in Database software
-		      // process the ResultSet object
+			return st;
+			// send and execute SQL query in Database software
+			// process the ResultSet object
 //		      boolean flag = false;
 //		      while (rs.next()) {
 //		         flag = true;
@@ -87,23 +79,24 @@ public class DbManager
 //		         System.out.println("Record not found");
 //		      }
 
-		      // close JDBC objects
+			// close JDBC objects
 //		      rs.close();
 //		      st.close();
 //		      con.close();
-			    }catch(Exception e){ System.out.println(e);}  
-		  			if (con != null) {
-		  				try {
-							if(con.isClosed() == false) {
-								con.close();
-							}
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-		  				
-		  			}
-		  			return null;
-			    }  
-}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		if (con != null) {
+			try {
+				if (con.isClosed() == false) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
+		}
+		return null;
+	}
+}
