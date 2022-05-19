@@ -1,21 +1,27 @@
 package GameEngine;
-
+import java.sql.*;
 public class DbManager 
 {
 	/**
 	 * Fields for DbManager
 	 */
-	private String connectionString;
+	private String database = "cardclub_db";
+	private String username = "martin";
+	private String password = "Kode1234!";
+	private String connectionString = "jdbc:mysql://10.108.130.218:3306/"+database+"";
+	
 	
 	/**
 	 * Constructor for DbManager
 	 * @param String connectionString
 	 */
-	public DbManager(String connectionString)
+//	public DbManager(String connectionString) original
+//	{
+//		this.connectionString = connectionString;
+//	}
+	public DbManager()
 	{
-		this.connectionString = connectionString;
 	}
-	
 	// Use stored procedure on Db, instead of sql call here
 	public boolean getUserName(String userName)
 	{
@@ -51,4 +57,53 @@ public class DbManager
 		// TODO implement get player stats
 		return "";
 	}
+	
+	public Statement ConnectDb() {
+		Connection con = null;
+		  try{  
+			   // establish the connection
+		      con = DriverManager.getConnection(connectionString, username, password);
+
+		      // create JDBC statement object
+		      Statement st = con.createStatement();
+
+		      // prepare SQL query
+//		      String query = "call SP_CreatePlayer('martin','martinplayer','password');";
+//		      ResultSet rs = st.executeQuery(query);
+//		      System.out.println(rs);
+		      return st;
+		      // send and execute SQL query in Database software
+		      // process the ResultSet object
+//		      boolean flag = false;
+//		      while (rs.next()) {
+//		         flag = true;
+//		         System.out.println(rs.getInt(1) + " " + rs.getString(2) + 
+//		                  " " + rs.getString(3));
+//		      }
+
+//		      if (flag == true) {
+//		         System.out.println("\nRecords retrieved and displayed");
+//		      } else {
+//		         System.out.println("Record not found");
+//		      }
+
+		      // close JDBC objects
+//		      rs.close();
+//		      st.close();
+//		      con.close();
+			    }catch(Exception e){ System.out.println(e);}  
+		  			if (con != null) {
+		  				try {
+							if(con.isClosed() == false) {
+								con.close();
+							}
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+		  				
+		  			}
+		  			return null;
+			    }  
 }
+
