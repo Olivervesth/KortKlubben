@@ -24,7 +24,7 @@ public final class EngineManager {
 	public EngineManager() {
 		logger = new Logger();
 		hashing = new Hashing();
-		db = new DbManager("ConnectionString");
+		db = new DbManager();
 		auth = new Authentication();
 		playerManager = new PlayerManager();
 		roomManager = new RoomManager();
