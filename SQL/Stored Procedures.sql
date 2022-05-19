@@ -6,8 +6,8 @@ USE cardclub_db;
 
 DROP PROCEDURE IF EXISTS SP_GetLatestPlayerId;
 DROP PROCEDURE IF EXISTS SP_GetPlayerID;
-DROP PROCEDURE IF EXISTS SP_GetUsername;
-DROP PROCEDURE IF EXISTS SP_GetPassword;
+DROP PROCEDURE IF EXISTS SP_CheckUsername;
+DROP PROCEDURE IF EXISTS SP_CheckPassword;
 DROP PROCEDURE IF EXISTS SP_GetStats;
 DROP PROCEDURE IF EXISTS SP_CreatePlayer;
 DROP PROCEDURE IF EXISTS SP_UpdatePlayer;
@@ -25,7 +25,7 @@ DELIMITER //
 CREATE PROCEDURE SP_GetLatestPlayerId(
 OUT result INT)
 BEGIN
-	 SELECT LAST_INSERT_ID() INTO result FROM Players;
+	SELECT MAX(Player_Id) INTO result FROM Players;
 END//
 
 CREATE PROCEDURE SP_GetPlayerID(
@@ -41,7 +41,7 @@ BEGIN
 END//
 
 
-CREATE PROCEDURE SP_GetUsername(
+CREATE PROCEDURE SP_CheckUsername(
 IN input VARCHAR(50))
 BEGIN
 
@@ -51,7 +51,7 @@ BEGIN
     
 END //
 
-CREATE PROCEDURE SP_GetPassword(
+CREATE PROCEDURE SP_CheckPassword(
 IN input VARCHAR(10000))
 BEGIN
 
@@ -87,6 +87,8 @@ BEGIN
     INSERT INTO Logins(Player_Id, UserName, Password)
     VALUES(@NewID, newUsrName, newPass);
     
+    INSERT INTO Stats(Player_Id, Games_Played, Games_Won)
+    VALUES(@NewId, 0, 0);
     
 END//
 
