@@ -63,5 +63,17 @@ public final class EngineManager {
 		}
 		return returnList;
 	}
+	
+	/**
+	 * Method to create a player
+	 * @param String name
+	 * @return Player
+	 */
+	public Player createPlayer(String name)
+	{
+		return playerManager.createPlayer(name, true);
+	}
+	
+	
 
 }
