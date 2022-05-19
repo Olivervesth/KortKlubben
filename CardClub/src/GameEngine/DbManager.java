@@ -50,7 +50,23 @@ public class DbManager {
 		return "";
 	}
 
+<<<<<<< HEAD
 	public Connection ConnectDb() {
+=======
+	public Connection getConection()
+	{
+		Connection con = null;
+		try {
+			con = DriverManager.getConnection(connectionString, username, password);
+			return con;
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
+			return null;
+		}
+	}
+	
+	public Statement ConnectDb() {
+>>>>>>> main
 		Connection con = null;
 		try {
 			// establish the connection

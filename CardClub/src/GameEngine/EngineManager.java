@@ -11,10 +11,10 @@ public final class EngineManager {
 	/**
 	 * Used classes in enginemanager
 	 */
-	private Hashing hashing;
-	private Logger logger;
-	private DbManager db;
-	private Authentication auth;
+	private static Hashing hashing;
+	private static Logger logger;
+	private static DbManager db;
+	private static Authentication auth;
 	private static PlayerManager playerManager;
 	private static RoomManager roomManager;
 
@@ -74,6 +74,9 @@ public final class EngineManager {
 		return playerManager.createPlayer(name, true);
 	}
 	
-	
+	public static void saveErrorMessage(String errormessage)
+	{
+		logger.saveMessage(errormessage);
+	}
 
 }
