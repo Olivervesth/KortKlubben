@@ -25,7 +25,7 @@ BEGIN
 	 SELECT MAX(Player_Id) FROM Players;
 END//
 
-CREATE PROCEDURE SP_GetPlayerID(IN username varchar(50))
+CREATE PROCEDURE SP_GetPlayerID(IN username VARCHAR(50))
 BEGIN
 
 	SELECT Player_Id 
@@ -34,7 +34,7 @@ BEGIN
     
 END//
 
-CREATE PROCEDURE SP_GetUsername(IN input varchar(50))
+CREATE PROCEDURE SP_GetUsername(IN input VARCHAR(50))
 BEGIN
 
 	SELECT IF(UserName IS NULL,0,1) 
@@ -43,7 +43,7 @@ BEGIN
     
 END //
 
-CREATE PROCEDURE SP_GetPassword(IN input Varchar(1000))
+CREATE PROCEDURE SP_GetPassword(IN input VARCHAR(1000))
 BEGIN
 
 	SELECT IF(Password IS NULL,0,1) 
@@ -52,7 +52,7 @@ BEGIN
     
 END //
 
-CREATE PROCEDURE SP_GetStats(IN input varchar(50))
+CREATE PROCEDURE SP_GetStats(IN input VARCHAR(50))
 BEGIN
 
 	SET @ChosenPlayer = SP_GetPlayerID(input);
@@ -63,7 +63,7 @@ BEGIN
     
 END//
 
-CREATE PROCEDURE SP_CreatePlayer(IN newName varchar(50), IN newUsrName varchar(50), IN newPass varchar(1000))
+CREATE PROCEDURE SP_CreatePlayer(IN newName VARCHAR(50), IN newUsrName VARCHAR(50), IN newPass VARCHAR(1000))
 BEGIN
 
 	INSERT INTO Players
@@ -77,7 +77,7 @@ BEGIN
     
 END//
 
-CREATE PROCEDURE SP_UpdatePlayer(IN oldName varchar(50), IN newName varchar(50), IN newPass varchar(1000))
+CREATE PROCEDURE SP_UpdatePlayer(IN oldName VARCHAR(50), IN newName VARCHAR(50), IN newPass VARCHAR(1000))
 BEGIN
 
 	SET @ChosenPlayerId = SP_GetPlayerID(oldName);
@@ -90,7 +90,7 @@ BEGIN
             
 END//
 
-CREATE PROCEDURE SP_DeletePlayer(IN delName varchar(50))
+CREATE PROCEDURE SP_DeletePlayer(IN delName VARCHAR(50))
 BEGIN
 
 	SET @ChosenPlayerId = SP_GetPlayerID(delName);
