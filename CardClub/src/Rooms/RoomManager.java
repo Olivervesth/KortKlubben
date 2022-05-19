@@ -21,6 +21,8 @@ public class RoomManager
 	public Room createRoom(int gameType, Player player)
 	{
 		Room room = null;
+		// What type of game is the room playing?
+		// currently Whist only
 		switch(gameType)
 		{
 		case 1:
