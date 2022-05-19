@@ -50,6 +50,9 @@ public class DbManager {
 		return "";
 	}
 
+<<<<<<< HEAD
+	public Connection ConnectDb() {
+=======
 	public Connection getConection()
 	{
 		Connection con = null;
@@ -63,19 +66,23 @@ public class DbManager {
 	}
 	
 	public Statement ConnectDb() {
+>>>>>>> main
 		Connection con = null;
 		try {
 			// establish the connection
 			con = DriverManager.getConnection(connectionString, username, password);
+			return con;
 
 			// create JDBC statement object
-			Statement st = con.createStatement();
+//			Statement st = con.createStatement();
 
 			// prepare SQL query
-//		      String query = "call SP_CreatePlayer('martin','martinplayer','password');";
+//		      String query = "call SP_CreatePlayer('Jesper','Jesperplayer','password');";
 //		      ResultSet rs = st.executeQuery(query);
 //		      System.out.println(rs);
-			return st;
+//		      con.close();
+			
+			//EXAMPLES HERE !!!
 			// send and execute SQL query in Database software
 			// process the ResultSet object
 //		      boolean flag = false;
