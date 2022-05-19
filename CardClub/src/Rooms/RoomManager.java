@@ -3,40 +3,49 @@ package Rooms;
 import java.util.ArrayList;
 import java.util.List;
 
+import Cards.CardManager;
 import GameEngine.EngineManager;
 import Players.Player;
 
-public class RoomManager 
-{
+public class RoomManager {
 	private List<Room> rooms;
-	
+	private CardManager cardManager;
+
 	/**
 	 * Constructor for RoomManager
 	 */
-	public RoomManager() 
-	{
+	public RoomManager() {
 		rooms = new ArrayList<Room>();
+		cardManager = new CardManager();
 	}
-	
-	public Room createRoom(int gameType, Player player)
-	{
+
+	/**
+	 * Method to create a new room
+	 * @param int gameType
+	 * @param Player owner
+	 * @return
+	 */
+	public Room createRoom(int gameType, Player owner) {
 		Room room = null;
 		// What type of game is the room playing?
 		// currently Whist only
-		switch(gameType)
-		{
+		switch (gameType) {
+		// Whist
 		case 1:
-			room = new Room(player, new GameManager());
+			room = new Room(owner, new GameManager());
 			break;
+		// Poker?
 		case 2:
+			break;
+		// Blackjack?
+		case 3:
 			break;
 		}
 		return room;
 	}
-	
-	public static List<Player> resetPlayers(List<Player> players)
-	{
+
+	public static List<Player> resetPlayers(List<Player> players) {
 		return EngineManager.resetPlayerPoints(players);
 	}
-	
+
 }
