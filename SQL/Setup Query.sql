@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS Stats;
 ####################################################*/
 
 CREATE TABLE Players(
-Player_Id INT NOT NULL,
+Player_Id INT NOT NULL AUTO_INCREMENT,
 Name VARCHAR(50) NOT NULL,
 PRIMARY KEY (Player_Id));
 
