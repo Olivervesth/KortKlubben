@@ -12,29 +12,42 @@ USE cardclub_db;
 DROP TABLE IF EXISTS PLayers;
 DROP TABLE IF EXISTS Logins;
 DROP TABLE IF EXISTS Stats;
+DROP TABLE IF EXISTS Logs;
 
 
 /*##################################################
 				## Create Tables ##
 ####################################################*/
 
-CREATE TABLE Players(
-Player_Id INT NOT NULL AUTO_INCREMENT,
-Name VARCHAR(50) NOT NULL,
-PRIMARY KEY (Player_Id));
+DELIMITER //
 
-CREATE TABLE Logins(
-Player_Id INT NOT NULL,
-UserName VARCHAR(50) NOT NULL,
-Password VARCHAR(1000) NOT NULL,
-PRIMARY KEY (Player_Id));
+CREATE TABLE Players (
+    Player_Id INT NOT NULL AUTO_INCREMENT,
+    Name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (Player_Id)
+);
 
+CREATE TABLE Logins (
+    Player_Id INT NOT NULL,
+    UserName VARCHAR(50) NOT NULL,
+    Password VARCHAR(10000) NOT NULL,
+    PRIMARY KEY (Player_Id)
+);
 
-CREATE TABLE Stats(
-Player_Id INT NOT NULL,
-Games_Played INT,
-Games_Won INT,
-PRIMARY KEY (Player_Id));
+CREATE TABLE Stats (
+    Player_Id INT NOT NULL,
+    Games_Played INT,
+    Games_Won INT,
+    PRIMARY KEY (Player_Id)
+);
+
+CREATE TABLE Logs (
+    Id INT NOT NULL,
+    Action VARCHAR(250) NOT NULL,
+    Message VARCHAR(500) NOT NULL,
+    CreatedTime DATETIME NOT NULL,
+    PRIMARY KEY (Id)
+);
 
 
 /*##################################################
