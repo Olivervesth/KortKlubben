@@ -29,7 +29,7 @@ CREATE TABLE Players (
 
 CREATE TABLE Logins (
     Player_Id INT NOT NULL,
-    UserName VARCHAR(50) NOT NULL,
+    UserName VARCHAR(50) NOT NULL UNIQUE,
     Password VARCHAR(10000) NOT NULL,
     PRIMARY KEY (Player_Id)
 );
