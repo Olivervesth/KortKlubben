@@ -16,18 +16,51 @@ public class DbManager {
 	 * 
 	 * @param String connectionString
 	 */
-//	public DbManager(String connectionString) original
-//	{
-//		this.connectionString = connectionString;
-//	}
 	public DbManager() {
 	}
 
-	public boolean createPlayer(String username, String Password)
-	{
-		return false;
+	/**
+	 * Method to create a new player
+	 * 
+	 * @param String username
+	 * @param String Password
+	 * @return boolean
+	 */
+	public boolean createPlayer(String username, String Password) {
+		Connection con = connectDb();
+		Statement st = null;
+		ResultSet rs = null;
+		boolean result = false;
+		try {
+			st = con.createStatement();
+			String query = "call SP_CreatePlayer('" + username + "', '" + password + "')";
+			rs = st.executeQuery(query);
+			if (rs.getInt(0) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
+			return result;
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+		}
 	}
-	
+
 	/**
 	 * Method to validate user login
 	 * 
@@ -49,26 +82,20 @@ public class DbManager {
 			EngineManager.saveErrorMessage(e.getMessage());
 			return false;
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					EngineManager.saveErrorMessage(e.getMessage());
-				}
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
 			}
-			if (st != null) {
-				try {
-					st.close();
-				} catch (SQLException e) {
-					EngineManager.saveErrorMessage(e.getMessage());
-				}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					EngineManager.saveErrorMessage(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -93,26 +120,20 @@ public class DbManager {
 			EngineManager.saveErrorMessage(e.getMessage());
 			return null;
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					EngineManager.saveErrorMessage(e.getMessage());
-				}
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
 			}
-			if (st != null) {
-				try {
-					st.close();
-				} catch (SQLException e) {
-					EngineManager.saveErrorMessage(e.getMessage());
-				}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
 			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					EngineManager.saveErrorMessage(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
 			}
 		}
 	}
