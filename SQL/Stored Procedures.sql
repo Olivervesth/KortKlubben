@@ -116,7 +116,7 @@ END//
 -- 	 newName - name of player-
 --   newUsrName - username of player.
 --   newPass - password of player.
--- Returns:    True or False.
+-- Returns:    0 = false, 0<x = true.
 -- =============================================
 CREATE PROCEDURE SP_CreatePlayer(
 IN newName VARCHAR(50), 
@@ -146,10 +146,10 @@ END//
 -- Description: Updates a player's information in the database
 -- Parameters:
 -- 	 newName - new name of player.
--- 	 oldUsrName - current username of player.
+-- 	 oldUsrName - current username of player, used to determine ID.
 --   newUsrName - new username of player.
 --   newPass - new password of player.
--- Returns:    True or False.
+-- Returns:    0 = false, 0<x = true.
 -- =============================================
 CREATE PROCEDURE SP_UpdatePlayer(
 IN newName VARCHAR(50),
@@ -169,7 +169,7 @@ BEGIN
 			Logins.Player_Id = @ChosenPlayerId;
 	end case;
     
-     CASE WHEN newPass IS NOT NULL
+	CASE WHEN newPass IS NOT NULL
 		THEN UPDATE Logins 
 			SET 
 				Password = newPass
@@ -195,7 +195,7 @@ END//
 -- Description: Deletes player from database
 -- Parameters:
 --   delName - username of player.
--- Returns:    True or False.
+-- Returns:    0 = false, 0<x = true.
 -- =============================================
 CREATE PROCEDURE SP_DeletePlayer(
 IN delName VARCHAR(50),
@@ -223,7 +223,7 @@ END//
 -- Description: Adds to the players saved amount of games played
 -- Parameters:
 --   usrName - username of player.
--- Returns:    True or False.
+-- Returns:    0 = false, 0<x = true.
 -- =============================================
 CREATE PROCEDURE SP_AddGamePlayed(
 IN usrName VARCHAR(50),
@@ -247,7 +247,7 @@ END//
 -- Description: Adds to the players saved amount of games won
 -- Parameters:
 --   usrName - username of player.
--- Returns:    True or False.
+-- Returns:    0 = false, 0<x = true.
 -- =============================================
 CREATE PROCEDURE SP_AddGameWon(
 IN usrName VARCHAR(50),
@@ -273,7 +273,7 @@ END//
 -- Parameters:
 --   action - the action that occurred.
 --   message - description of error.
--- Returns:    True or False.
+-- Returns:    0 = false, 0<x = true.
 -- =============================================
 CREATE PROCEDURE SP_CreateLog(
 IN action VARCHAR(250),
