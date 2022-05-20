@@ -65,7 +65,7 @@ CREATE PROCEDURE SP_GetStats(
 IN input VARCHAR(50))
 BEGIN
 
-	SET @ChosenPlayer = SP_GetPlayerID(input);
+	CALL SP_GetPlayerID(input, @ChosenPlayer);
     
 	SELECT Games_Played, Games_Won 
     FROM Stats 
@@ -121,7 +121,13 @@ CREATE PROCEDURE SP_DeletePlayer(
 IN delName VARCHAR(50))
 BEGIN
 
-	SET @ChosenPlayerId = SP_GetPlayerID(delName);
+	CALL SP_GetPlayerID(delName, @ChosenPlayerId);
+    
+    DELETE FROM Stats
+    WHERE Stats.Player_Id = @ChosenPlayerId;
+    
+    DELETE FROM Logins
+    WHERE Logins.Player_Id = @ChosenPlayerId;
     
     DELETE FROM Players
     WHERE Players.Player_Id = @ChosenPlayerId;
@@ -132,7 +138,7 @@ CREATE PROCEDURE SP_AddGamePlayed(
 IN usrName VARCHAR(50))
 BEGIN
 
-	SET @ChosenPlayer = SP_GetPlayerID(usrName);
+	CALL SP_GetPlayerID(usrName, @ChosdenPlayer);
     
     UPDATE Stats
 	SET
@@ -145,7 +151,7 @@ CREATE PROCEDURE SP_AddGameWon(
 IN usrName VARCHAR(50))
 BEGIN
 
-	SET @ChosenPlayer = SP_GetPlayerID(usrName);
+	CALL SP_GetPlayerID(usrName, @ChosenPlayer);
     
     UPDATE Stats
 	SET
