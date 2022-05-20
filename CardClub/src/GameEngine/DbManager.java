@@ -1,6 +1,7 @@
 package GameEngine;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 public class DbManager {
 	/**
@@ -17,6 +18,139 @@ public class DbManager {
 	 * @param String connectionString
 	 */
 	public DbManager() {
+	}
+
+	/**
+	 * Method to create error log on db
+	 * @param String errormessage
+	 * @return boolean
+	 */
+	public boolean createLog(String errormessage) {
+		Connection con = connectDb();
+		Statement st = null;
+		ResultSet rs = null;
+		boolean result = false;
+		try {
+			st = con.createStatement();
+			String date = java.time.LocalDateTime.now().toString();
+			String query = "call SP_CreateLog('" + errormessage + "', '" + date + "')";
+			rs = st.executeQuery(query);
+			if(rs.getInt(0) > 0)
+			{
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
+			return result;
+		}
+		finally
+		{
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 * Method to delete a player
+	 * 
+	 * @param String username
+	 * @return boolean
+	 */
+	public boolean deletePlayer(String username) {
+		Connection con = connectDb();
+		Statement st = null;
+		ResultSet rs = null;
+		boolean result = false;
+		try {
+			st = con.createStatement();
+			String query = "call SP_DeletePlayer('" + username + "')";
+			rs = st.executeQuery(query);
+			if (rs.getInt(0) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
+			return result;
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 * Method to update player information
+	 * 
+	 * @param String playername
+	 * @param String newplayername
+	 * @param String username
+	 * @param String newusername
+	 * @param String password
+	 * @param String newpassword
+	 * @return boolean
+	 */
+	public boolean updatePlayer(String playername, String newplayername, String username, String newusername,
+			String password, String newpassword) {
+		Connection con = connectDb();
+		Statement st = null;
+		ResultSet rs = null;
+		boolean result = false;
+		try {
+			st = con.createStatement();
+			String query = "call SP_UpdatePlayer('" + playername + "','" + newplayername + "', '" + username + "','"
+					+ newusername + "','" + password + "', '" + newpassword + "')";
+			rs = st.executeQuery(query);
+			if (rs.getInt(0) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
+			return result;
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+		}
 	}
 
 	/**
