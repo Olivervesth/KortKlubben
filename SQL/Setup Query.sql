@@ -1,3 +1,8 @@
+-- =============================================
+-- Author:      Jesper Deleurand
+-- Create date: 17/05/2022
+-- =============================================
+
 DROP DATABASE IF EXISTS cardclub_db;
 
 CREATE DATABASE cardclub_db;
