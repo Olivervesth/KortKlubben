@@ -156,10 +156,11 @@ BEGIN
 
 	CALL SP_GetPlayerID(usrName, @ChosenPlayer);
     
-    UPDATE Stats
-	SET
-		Games_Won = Games_Won + 1
-	WHERE Stats.Player_Id = @ChosenPlayer;
+UPDATE Stats 
+SET 
+    Games_Won = Games_Won + 1
+WHERE
+    Stats.Player_Id = @ChosenPlayer;
     
 END//
 
