@@ -145,7 +145,6 @@ END//
 -- Create date: 20/05/2022
 -- Description: Updates a player's information in the database
 -- Parameters:
--- 	 oldName - current name of player.
 -- 	 newName - new name of player.
 -- 	 oldUsrName - current username of player.
 --   newUsrName - new username of player.
@@ -153,7 +152,6 @@ END//
 -- Returns:    True or False.
 -- =============================================
 CREATE PROCEDURE SP_UpdatePlayer(
-IN oldName VARCHAR(50),
 IN newName VARCHAR(50),
 IN oldUsrName VARCHAR(50), 
 IN newUsrName VARCHAR(50), 
@@ -163,18 +161,29 @@ BEGIN
 
 	CALL SP_GetPlayerID(oldUsrName, @ChosenPlayerId);
     
-	UPDATE Players 
-	SET 
-		Name = newName
-	WHERE
-		Players.Player_Id = @ChosenPlayerId;
-
-	UPDATE Logins 
-	SET 
-		UserName = newUsrName,
-		Password = newPass
-	WHERE
-		Logins.Player_Id = @ChosenPlayerId;
+    CASE WHEN newUsrName IS NOT NULL
+		THEN UPDATE Logins 
+			SET 
+				UserName = newUsrName
+			WHERE
+			Logins.Player_Id = @ChosenPlayerId;
+	end case;
+    
+     CASE WHEN newPass IS NOT NULL
+		THEN UPDATE Logins 
+			SET 
+				Password = newPass
+			WHERE
+			Logins.Player_Id = @ChosenPlayerId;
+    end case;
+        
+	CASE WHEN newName IS NOT NULL
+		THEN UPDATE Players 
+			SET 
+				Name = newName
+			WHERE
+			Players.Player_Id = @ChosenPlayerId;
+	END CASE;
     
     SET result = ROW_COUNT();
             
