@@ -25,29 +25,69 @@ public class DbManager {
 
 	/**
 	 * Method to validate user login
+	 * 
 	 * @param String userName
 	 * @param String password
 	 * @return boolean
 	 */
-	public boolean getUserValidation(String userName, String password)
-	{
+	public boolean getUserValidation(String userName, String password) {
 		Connection con = connectDb();
+		Statement st = null;
+		ResultSet rs = null;
 		try {
-			Statement st = con.createStatement();
-			String query = "call SP_CheckLogin('"+username+"', '"+password+"')";
-			ResultSet rs = st.executeQuery(query);
-			return rs.getBoolean(0);
+			st = con.createStatement();
+			String query = "call SP_CheckLogin('" + username + "', '" + password + "')";
+			rs = st.executeQuery(query);
+			boolean result = rs.getBoolean(0);
+			rs.close();
+			st.close();
+			con.close();
+			return result;
 		} catch (SQLException e) {
 			EngineManager.saveErrorMessage(e.getMessage());
 			return false;
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					EngineManager.saveErrorMessage(e.getMessage());
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					EngineManager.saveErrorMessage(e.getMessage());
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					EngineManager.saveErrorMessage(e.getMessage());
+				}
+			}
 		}
 	}
 
 	public String getStats(String userName) {
-		// TODO implement get player stats
+		// TODO return string[]?
+		Connection con = connectDb();
+		try {
+			Statement st = con.createStatement();
+			String query = "call SP_GetStats('" + username + "')";
+			ResultSet rs = st.executeQuery(query);
+			String result = new String(rs.getString(0) + ":" + rs.getString(1));
+			rs.close();
+			st.close();
+			con.close();
+			return result;
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
+		}
 		return "";
 	}
-
 
 	public Connection connectDb() {
 
@@ -65,8 +105,8 @@ public class DbManager {
 //		      ResultSet rs = st.executeQuery(query);
 //		      System.out.println(rs);
 //		      con.close();
-			
-			//EXAMPLES HERE !!!
+
+			// EXAMPLES HERE !!!
 			// send and execute SQL query in Database software
 			// process the ResultSet object
 //		      boolean flag = false;
