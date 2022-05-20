@@ -23,6 +23,11 @@ public class DbManager {
 	public DbManager() {
 	}
 
+	public boolean createPlayer(String username, String Password)
+	{
+		return false;
+	}
+	
 	/**
 	 * Method to validate user login
 	 * 
@@ -39,9 +44,6 @@ public class DbManager {
 			String query = "call SP_CheckLogin('" + username + "', '" + password + "')";
 			rs = st.executeQuery(query);
 			boolean result = rs.getBoolean(0);
-			rs.close();
-			st.close();
-			con.close();
 			return result;
 		} catch (SQLException e) {
 			EngineManager.saveErrorMessage(e.getMessage());
@@ -71,24 +73,55 @@ public class DbManager {
 		}
 	}
 
-	public String getStats(String userName) {
-		// TODO return string[]?
+	/**
+	 * Method to get a users stats
+	 * 
+	 * @param String userName
+	 * @return String[]
+	 */
+	public String[] getStats(String userName) {
 		Connection con = connectDb();
+		Statement st = null;
+		ResultSet rs = null;
 		try {
-			Statement st = con.createStatement();
+			st = con.createStatement();
 			String query = "call SP_GetStats('" + username + "')";
-			ResultSet rs = st.executeQuery(query);
-			String result = new String(rs.getString(0) + ":" + rs.getString(1));
-			rs.close();
-			st.close();
-			con.close();
+			rs = st.executeQuery(query);
+			String[] result = new String[] { rs.getString(0), rs.getString(1) };
 			return result;
 		} catch (SQLException e) {
 			EngineManager.saveErrorMessage(e.getMessage());
+			return null;
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					EngineManager.saveErrorMessage(e.getMessage());
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					EngineManager.saveErrorMessage(e.getMessage());
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					EngineManager.saveErrorMessage(e.getMessage());
+				}
+			}
 		}
-		return "";
 	}
 
+	/**
+	 * Method to get database connection
+	 * 
+	 * @return Connection
+	 */
 	public Connection connectDb() {
 
 		Connection con = null;
@@ -96,38 +129,8 @@ public class DbManager {
 			// establish the connection
 			con = DriverManager.getConnection(connectionString, username, password);
 			return con;
-
-			// create JDBC statement object
-//			Statement st = con.createStatement();
-
-			// prepare SQL query
-//		      String query = "call SP_CreatePlayer('Jesper','Jesperplayer','password');";
-//		      ResultSet rs = st.executeQuery(query);
-//		      System.out.println(rs);
-//		      con.close();
-
-			// EXAMPLES HERE !!!
-			// send and execute SQL query in Database software
-			// process the ResultSet object
-//		      boolean flag = false;
-//		      while (rs.next()) {
-//		         flag = true;
-//		         System.out.println(rs.getInt(1) + " " + rs.getString(2) + 
-//		                  " " + rs.getString(3));
-//		      }
-
-//		      if (flag == true) {
-//		         System.out.println("\nRecords retrieved and displayed");
-//		      } else {
-//		         System.out.println("Record not found");
-//		      }
-
-			// close JDBC objects
-//		      rs.close();
-//		      st.close();
-//		      con.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			EngineManager.saveErrorMessage(e.getMessage());
 		}
 		if (con != null) {
 			try {
@@ -135,8 +138,7 @@ public class DbManager {
 					con.close();
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				EngineManager.saveErrorMessage(e.getMessage());
 			}
 
 		}
