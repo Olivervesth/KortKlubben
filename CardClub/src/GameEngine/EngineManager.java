@@ -14,7 +14,6 @@ public final class EngineManager {
 	private static Hashing hashing;
 	private static Logger logger;
 	private static DbManager db;
-	private static Authentication auth;
 	private static PlayerManager playerManager;
 	private static RoomManager roomManager;
 
@@ -25,7 +24,6 @@ public final class EngineManager {
 		logger = new Logger();
 		hashing = new Hashing();
 		db = new DbManager();
-		auth = new Authentication();
 		playerManager = new PlayerManager();
 		roomManager = new RoomManager();
 	}
@@ -39,7 +37,7 @@ public final class EngineManager {
 	 */
 	public boolean login(String username, String password) {
 		// if login is success
-		if (auth.validateUserInfo(db.getUserName(hashing.hash(username)), db.getPassword(hashing.hash(password)))) {
+		if (db.getUserValidation(hashing.hash(username), hashing.hash(password))) {
 			// create user?
 			return true;
 		}
@@ -76,15 +74,15 @@ public final class EngineManager {
 
 	/**
 	 * Method to create a user in Db
+	 * 
 	 * @param String name
 	 * @param String password
 	 * @return boolean
 	 */
-	public boolean createUser(String name, String password)
-	{
-		return db.createPlayer(name, hashing.hash(password));		
+	public boolean createUser(String name, String password) {
+		return db.createPlayer(name, hashing.hash(password));
 	}
-	
+
 	/**
 	 * Method to save error messages to local file
 	 * 
