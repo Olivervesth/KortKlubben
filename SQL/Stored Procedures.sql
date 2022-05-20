@@ -145,8 +145,8 @@ END//
 -- Create date: 20/05/2022
 -- Description: Updates a player's information in the database
 -- Parameters:
--- 	 newName - new name of player.
 -- 	 oldUsrName - current username of player, used to determine ID.
+-- 	 newName - new name of player.
 --   newUsrName - new username of player.
 --   newPass - new password of player.
 -- Returns:    0 = false, 0<x = true.
