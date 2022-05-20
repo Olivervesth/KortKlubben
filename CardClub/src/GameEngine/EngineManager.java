@@ -63,19 +63,34 @@ public final class EngineManager {
 		}
 		return returnList;
 	}
-	
+
 	/**
-	 * Method to create a player
+	 * Method to create a player for rooms
+	 * 
 	 * @param String name
 	 * @return Player
 	 */
-	public Player createPlayer(String name)
-	{
+	public Player createPlayer(String name) {
 		return playerManager.createPlayer(name, true);
 	}
-	
-	public static void saveErrorMessage(String errormessage)
+
+	/**
+	 * Method to create a user in Db
+	 * @param String name
+	 * @param String password
+	 * @return boolean
+	 */
+	public boolean createUser(String name, String password)
 	{
+		return db.createPlayer(name, hashing.hash(password));		
+	}
+	
+	/**
+	 * Method to save error messages to local file
+	 * 
+	 * @param String errormessage
+	 */
+	public static void saveErrorMessage(String errormessage) {
 		logger.saveMessage(errormessage);
 	}
 
