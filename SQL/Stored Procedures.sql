@@ -187,9 +187,4 @@ BEGIN
 	SELECT * FROM Logs WHERE Logs.Id = id;
 END//
 
-
-
-
-
-
 DELIMITER ;

@@ -59,7 +59,7 @@ ALTER TABLE Logins
      FOREIGN KEY (Player_Id)
      REFERENCES Players(Player_Id);
 
-ALTER TABLE Logins
+ALTER TABLE Stats
      ADD CONSTRAINT fk_P2S
      FOREIGN KEY (Player_Id)
      REFERENCES Players(Player_Id);
