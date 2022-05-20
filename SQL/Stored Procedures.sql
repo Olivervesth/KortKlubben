@@ -14,6 +14,9 @@ DROP PROCEDURE IF EXISTS SP_UpdatePlayer;
 DROP PROCEDURE IF EXISTS SP_DeletePlayer;
 DROP PROCEDURE IF EXISTS SP_AddGamePlayed;
 DROP PROCEDURE IF EXISTS SP_AddGameWon;
+DROP PROCEDURE IF EXISTS SP_CreateLog;
+DROP PROCEDURE IF EXISTS SP_GetLogs;
+DROP PROCEDURE IF EXISTS SP_GetLogById;
 
 
 /*##################################################
@@ -159,5 +162,33 @@ BEGIN
 	WHERE Stats.Player_Id = @ChosenPlayer;
     
 END//
+
+CREATE PROCEDURE SP_CreateLog(
+IN action VARCHAR(250),
+IN message VARCHAR(500))
+BEGIN
+	
+    INSERT INTO Logs(Action, Message, CreatedTime)
+    VALUES(action, message, NOW());
+    
+    
+END//
+
+CREATE PROCEDURE SP_GetLogs()
+BEGIN
+	SELECT * FROM Logs;
+END//
+
+
+CREATE PROCEDURE SP_GetLogById(
+IN id INT)
+BEGIN
+	SELECT * FROM Logs WHERE Logs.Id = id;
+END//
+
+
+
+
+
 
 DELIMITER ;
