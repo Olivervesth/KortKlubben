@@ -6,8 +6,7 @@ USE cardclub_db;
 
 DROP PROCEDURE IF EXISTS SP_GetLatestPlayerId;
 DROP PROCEDURE IF EXISTS SP_GetPlayerID;
-DROP PROCEDURE IF EXISTS SP_CheckUsername;
-DROP PROCEDURE IF EXISTS SP_CheckPassword;
+DROP PROCEDURE IF EXISTS SP_CheckLogin;
 DROP PROCEDURE IF EXISTS SP_GetStats;
 DROP PROCEDURE IF EXISTS SP_CreatePlayer;
 DROP PROCEDURE IF EXISTS SP_UpdatePlayer;
@@ -44,23 +43,22 @@ BEGIN
 END//
 
 
-CREATE PROCEDURE SP_CheckUsername(
-IN input VARCHAR(50))
+CREATE PROCEDURE SP_CheckLogin(
+IN usrName VARCHAR(50),
+IN pswrd VARCHAR(10000),
+OUT returnResult BIT)
 BEGIN
 
-	SELECT IF(UserName IS NULL,0,1) 
-    FROM Logins
-    WHERE Logins.UserName=input;
-    
-END //
-
-CREATE PROCEDURE SP_CheckPassword(
-IN input VARCHAR(10000))
-BEGIN
-
-	SELECT IF(Password IS NULL,0,1) 
-    FROM Logins 
-    WHERE Logins.Password=input;
+	SET returnResult =
+		CASE 
+			WHEN EXISTS (
+				SELECT * FROM Logins
+				WHERE 
+					UserName = usrName AND
+					Password = pswrd) 
+			THEN 1
+			ELSE 0
+		END;
     
 END //
 
