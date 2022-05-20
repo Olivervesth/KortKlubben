@@ -50,7 +50,8 @@ public class DbManager {
 		return "";
 	}
 
-	public Statement ConnectDb() {
+
+	public Connection ConnectDb() {
 
 		Connection con = null;
 		try {
