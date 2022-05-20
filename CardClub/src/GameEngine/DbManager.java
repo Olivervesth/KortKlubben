@@ -23,24 +23,22 @@ public class DbManager {
 	public DbManager() {
 	}
 
-	// Use stored procedure on Db, instead of sql call here
-	public boolean getUserName(String userName) {
-		int count = 0;
-		// count -> SELECT count(*) FROM Users WHERE Name = username
-		if (count > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// Use stored procedure on Db, instead of sql call here
-	public boolean getPassword(String password) {
-		int count = 0;
-		// count -> SELECT count(*) FROM Users WHERE Password = password
-		if (count > 0) {
-			return true;
-		} else {
+	/**
+	 * Method to validate user login
+	 * @param String userName
+	 * @param String password
+	 * @return boolean
+	 */
+	public boolean getUserValidation(String userName, String password)
+	{
+		Connection con = connectDb();
+		try {
+			Statement st = con.createStatement();
+			String query = "call SP_CheckLogin('"+username+"', '"+password+"')";
+			ResultSet rs = st.executeQuery(query);
+			return rs.getBoolean(0);
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
 			return false;
 		}
 	}
@@ -51,7 +49,7 @@ public class DbManager {
 	}
 
 
-	public Connection ConnectDb() {
+	public Connection connectDb() {
 
 		Connection con = null;
 		try {
