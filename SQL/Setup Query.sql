@@ -42,7 +42,7 @@ CREATE TABLE Stats (
 );
 
 CREATE TABLE Logs (
-    Id INT NOT NULL,
+    Id INT NOT NULL AUTO_INCREMENT,
     Action VARCHAR(250) NOT NULL,
     Message VARCHAR(500) NOT NULL,
     CreatedTime DATETIME NOT NULL,
@@ -59,7 +59,7 @@ ALTER TABLE Logins
      FOREIGN KEY (Player_Id)
      REFERENCES Players(Player_Id);
 
-ALTER TABLE Logins
+ALTER TABLE Stats
      ADD CONSTRAINT fk_P2S
      FOREIGN KEY (Player_Id)
      REFERENCES Players(Player_Id);

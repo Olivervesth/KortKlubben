@@ -14,6 +14,9 @@ DROP PROCEDURE IF EXISTS SP_UpdatePlayer;
 DROP PROCEDURE IF EXISTS SP_DeletePlayer;
 DROP PROCEDURE IF EXISTS SP_AddGamePlayed;
 DROP PROCEDURE IF EXISTS SP_AddGameWon;
+DROP PROCEDURE IF EXISTS SP_CreateLog;
+DROP PROCEDURE IF EXISTS SP_GetLogs;
+DROP PROCEDURE IF EXISTS SP_GetLogById;
 
 
 /*##################################################
@@ -65,7 +68,7 @@ CREATE PROCEDURE SP_GetStats(
 IN input VARCHAR(50))
 BEGIN
 
-	SET @ChosenPlayer = SP_GetPlayerID(input);
+	CALL SP_GetPlayerID(input, @ChosenPlayer);
     
 	SELECT Games_Played, Games_Won 
     FROM Stats 
@@ -121,7 +124,13 @@ CREATE PROCEDURE SP_DeletePlayer(
 IN delName VARCHAR(50))
 BEGIN
 
-	SET @ChosenPlayerId = SP_GetPlayerID(delName);
+	CALL SP_GetPlayerID(delName, @ChosenPlayerId);
+    
+    DELETE FROM Stats
+    WHERE Stats.Player_Id = @ChosenPlayerId;
+    
+    DELETE FROM Logins
+    WHERE Logins.Player_Id = @ChosenPlayerId;
     
     DELETE FROM Players
     WHERE Players.Player_Id = @ChosenPlayerId;
@@ -132,7 +141,7 @@ CREATE PROCEDURE SP_AddGamePlayed(
 IN usrName VARCHAR(50))
 BEGIN
 
-	SET @ChosenPlayer = SP_GetPlayerID(usrName);
+	CALL SP_GetPlayerID(usrName, @ChosdenPlayer);
     
     UPDATE Stats
 	SET
@@ -145,13 +154,37 @@ CREATE PROCEDURE SP_AddGameWon(
 IN usrName VARCHAR(50))
 BEGIN
 
-	SET @ChosenPlayer = SP_GetPlayerID(usrName);
+	CALL SP_GetPlayerID(usrName, @ChosenPlayer);
     
-    UPDATE Stats
-	SET
-		Games_Won = Games_Won + 1
-	WHERE Stats.Player_Id = @ChosenPlayer;
+UPDATE Stats 
+SET 
+    Games_Won = Games_Won + 1
+WHERE
+    Stats.Player_Id = @ChosenPlayer;
     
+END//
+
+CREATE PROCEDURE SP_CreateLog(
+IN action VARCHAR(250),
+IN message VARCHAR(500))
+BEGIN
+	
+    INSERT INTO Logs(Action, Message, CreatedTime)
+    VALUES(action, message, NOW());
+    
+    
+END//
+
+CREATE PROCEDURE SP_GetLogs()
+BEGIN
+	SELECT * FROM Logs;
+END//
+
+
+CREATE PROCEDURE SP_GetLogById(
+IN id INT)
+BEGIN
+	SELECT * FROM Logs WHERE Logs.Id = id;
 END//
 
 DELIMITER ;
