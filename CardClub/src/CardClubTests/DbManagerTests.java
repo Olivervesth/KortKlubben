@@ -98,5 +98,26 @@ class DbManagerTests {
 		// Assert
 		assertFalse(resultSet == null);
 	}
+	
+	
+	@Test
+	void checkLogin_ReturnsTrue_IfParamsEqual() {
+		
+	}
+	
+	@Test
+	void updatePlayer_ChangesPlayerData_IfValid() {
+		
+	}
+	
+	@Test
+	void deletePlayer_RemovesPlayer_IfAble() {
+		
+	}
+	
+	@Test
+	void createLog_WritesLogToDb_IfValid() {
+		
+	}
 
 }
