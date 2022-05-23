@@ -20,7 +20,7 @@ public class AppConnection {
 	  private static EngineManager em = null;
 	  // constructor with port
 	  public AppConnection(int port) {
-	    // starts server and waits for a connection
+			// starts server and waits for a connection
 	    try {
 	    	em = new EngineManager();
 	      server = new ServerSocket(port);

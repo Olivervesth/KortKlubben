@@ -16,16 +16,31 @@ public final class EngineManager {
 	private static DbManager db;
 	private static PlayerManager playerManager;
 	private static RoomManager roomManager;
+	private static EngineManager em;
 
 	/**
 	 * Constructor for EngineManager
 	 */
 	public EngineManager() {
+		em = this;
 		logger = new Logger();
 		hashing = new Hashing();
 		db = new DbManager();
 		playerManager = new PlayerManager();
 		roomManager = new RoomManager();
+	}
+	
+	public static EngineManager getEngineManager()
+	{
+		if(em == null)
+		{
+			em = new EngineManager();
+			return em;
+		}
+		else
+		{
+			return em;
+		}
 	}
 
 	/**
@@ -133,7 +148,7 @@ public final class EngineManager {
 	 * 
 	 * @param String errormessage
 	 */
-	public static void saveErrorMessage(String errormessage) {
+	public void saveErrorMessage(String errormessage) {
 		logger.saveMessage(errormessage);
 	}
 
@@ -143,7 +158,7 @@ public final class EngineManager {
 	 * @param String errormessage
 	 * @return boolean
 	 */
-	public static boolean saveErrorLog(String erroraction, String errormessage) {
+	public boolean saveErrorLog(String erroraction, String errormessage) {
 		return db.createLog(erroraction, errormessage);
 	}
 }

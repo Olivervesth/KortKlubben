@@ -40,23 +40,23 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -81,23 +81,23 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -123,23 +123,23 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -164,23 +164,23 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -209,23 +209,23 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -252,23 +252,23 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -291,23 +291,23 @@ public class DbManager {
 			boolean result = rs.getBoolean(0);
 			return result;
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return false;
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -329,23 +329,23 @@ public class DbManager {
 			String[] result = new String[] { rs.getString(0), rs.getString(1) };
 			return result;
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return null;
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 		}
 	}
@@ -363,7 +363,7 @@ public class DbManager {
 			con = DriverManager.getConnection(connectionString, username, password);
 			return con;
 		} catch (Exception e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 		}
 		if (con != null) {
 			try {
@@ -371,7 +371,7 @@ public class DbManager {
 					con.close();
 				}
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 
 		}
