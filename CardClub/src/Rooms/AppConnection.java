@@ -20,6 +20,7 @@ public class AppConnection {
 	  private ServerSocket server = null;
 	  private DataInputStream in = null;
 	  private EngineManager em = null;
+	  int clientsconnected = 0;
 	  // constructor with port
 	  public AppConnection(int port) {
 			// starts server and waits for a connection
@@ -38,24 +39,15 @@ public class AppConnection {
 	    	  } catch (IOException e) {
 	    		  // TODO Auto-generated catch block
 	    		  if(server.isClosed()) {
-	                  System.out.println("Server Stopped.") ;
+	                  System.out.println("Server Stopped.");
 	              }
 	    		  throw new RuntimeException(
 	    	                "Error accepting client connection", e);
 	    	  }
-	    	  
-	    	  Thread t = new Thread(()->Threadedwebsocket(socket));
-	    	  t.start();
-//	    	  new Thread(new Runnable() {
-//	    	         public void run() {
-//	    	        	
-//	    	         }
-//	    	      }).start();
-	    	
-	    	  
+	    	  //Start new thread when a new client joins
+	    	  new Thread(new ClientThread(socket)).start();
+	    	  System.out.println(""+clientsconnected+"");
 	      }
-	      
-
 	      // close connection
 	      socket.close();
 	      in.close();
@@ -73,6 +65,7 @@ public class AppConnection {
 	  public void Threadedwebsocket(Socket socket) {
 		  Socket client = socket;
      	 System.out.println("New client connected: "+client.getInetAddress()+"");
+     	clientsconnected++;
      	 boolean clientconnected = true;
      	 System.out.println("New thread.");
 	    	  // takes input from the client socket
@@ -92,7 +85,7 @@ public class AppConnection {
 	    		  try {
 	    			  //Send message to client
 	    			  DataOutputStream output = new DataOutputStream(client.getOutputStream());
-	    			  output.writeUTF("200");
+	    			  output.writeUTF("Bye");
 	    			  line = in.readUTF();
 	    			  System.out.println(line);
 	    			  
@@ -101,6 +94,7 @@ public class AppConnection {
 	    			  clientconnected = false;
 	    		  }
 	    	  }
+	    	  clientsconnected--;
 	    	  System.out.println("Closing connection to "+client.getInetAddress()+"");
 	  }
 
