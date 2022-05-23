@@ -28,14 +28,15 @@ public class DbManager {
 	 */
 	public boolean addGamePlayed(String username) {
 		Connection con = connectDb();
-		Statement st = null;
-		ResultSet rs = null;
+		CallableStatement st = null;
 		boolean result = false;
+		
 		try {
-			st = con.createStatement();
-			String query = "call SP_AddGamePlayed('" + username + "')";
-			rs = st.executeQuery(query);
-			if (rs.getInt(0) > 0) {
+			st = con.prepareCall("{call SP_AddGamePlayed(?, ?)}");
+			st.setString(1, username);
+			st.registerOutParameter(2, Types.INTEGER);
+			
+			if (st.getInt(2) > 0) {
 				result = true;
 			}
 			return result;
@@ -43,11 +44,6 @@ public class DbManager {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
 			try {
 				st.close();
 			} catch (SQLException e) {
@@ -69,14 +65,15 @@ public class DbManager {
 	 */
 	public boolean addGameWon(String username) {
 		Connection con = connectDb();
-		Statement st = null;
-		ResultSet rs = null;
+		CallableStatement st = null;
 		boolean result = false;
+		
 		try {
-			st = con.createStatement();
-			String query = "call SP_AddGameWon('" + username + "')";
-			rs = st.executeQuery(query);
-			if (rs.getInt(0) > 0) {
+			st = con.prepareCall("{call SP_AddGameWon(?, ?)}");
+			st.setString(1, username);
+			st.registerOutParameter(2, Types.INTEGER);
+			
+			if (st.getInt(2) > 0) {
 				result = true;
 			}
 			return result;
@@ -84,11 +81,6 @@ public class DbManager {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
 			try {
 				st.close();
 			} catch (SQLException e) {
@@ -281,23 +273,20 @@ public class DbManager {
 	 */
 	public boolean checkLogin(String userName, String password) {
 		Connection con = connectDb();
-		Statement st = null;
-		ResultSet rs = null;
+		CallableStatement st = null;
+		
 		try {
-			st = con.createStatement();
-			String query = "call SP_CheckLogin('" + databaseUsername + "', '" + password + "')";
-			rs = st.executeQuery(query);
-			boolean result = rs.getBoolean(0);
+			st = con.prepareCall("{call SP_CheckLogin(?, ?, ?)}");
+			st.setString(1, userName);
+			st.setString(2, password);
+			st.registerOutParameter(3, Types.BIT);
+						
+			boolean result = st.getBoolean(3);
 			return result;
 		} catch (SQLException e) {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return false;
 		} finally {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
 			try {
 				st.close();
 			} catch (SQLException e) {

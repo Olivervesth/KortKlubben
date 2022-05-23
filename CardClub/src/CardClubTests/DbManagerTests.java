@@ -100,24 +100,60 @@ class DbManagerTests {
 	}
 	
 	
-//	@Test
-//	void checkLogin_ReturnsTrue_IfParamsEqual() {
-//		assertFalse(true);
-//	}
-//	
-//	@Test
-//	void updatePlayer_ChangesPlayerData_IfValid() {
-//		assertFalse(true);
-//	}
-//	
-//	@Test
-//	void deletePlayer_RemovesPlayer_IfAble() {
-//		assertFalse(true);
-//	}
-//	
-//	@Test
-//	void createLog_WritesLogToDb_IfValid() {
-//		assertFalse(true);
-//	}
+	@Test
+	void checkLogin_ReturnsTrue_IfParamsEqual() {
+		//Arrange
+		String username = "PaulChowder";
+		String password = "Chowder123";
+		boolean result = false;
+		
+		//Act
+		result = manager.checkLogin(username, password);
+		
+		
+		//Assert
+		assertTrue(result);
+	}
+	
+	@Test
+	void updatePlayer_ChangesPlayerData_IfValid() {
+		//Arrange
+		String username = "PaulChowder";
+		
+		boolean result = false;
+		
+		//Act
+		result = manager.updatePlayer("Lars", username, "LarsLarsen", "TestPass123");
+		
+		//Assert
+		assertTrue(result);
+	}
+	
+	@Test
+	void deletePlayer_RemovesPlayer_IfAble() {
+		//Arrange
+		String username = "LarsLarsen";
+		boolean result = false;
+		
+		//Act
+		result = manager.deletePlayer(username);
+		
+		//Assert
+		assertTrue(result);
+	}
+	
+	@Test
+	void createLog_WritesLogToDb_IfValid() {
+		//Arrange
+		String action = "Testing Log";
+		String message = "This is a test for creating logs";
+		boolean result = false;
+		
+		//Act
+		result = manager.createLog(action, message);
+		
+		//Assert
+		assertTrue(result);
+	}
 
 }
