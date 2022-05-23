@@ -5,6 +5,9 @@ import Rooms.AppConnection;
 public class Main {
 
 	public static void main(String[] args) {
-		Client client = new Client("10.108.130.90",5001);
+		// TODO Auto-generated method stub
+		//Start listening for server connections
+		//AppConnection server = new AppConnection(5001);
+
 	}
 }
