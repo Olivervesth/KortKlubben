@@ -17,7 +17,7 @@ public class AppConnection {
 	  private Socket socket = null;
 	  private ServerSocket server = null;
 	  private DataInputStream in = null;
-	  private static EngineManager em = null;
+	  private EngineManager em = null;
 	  // constructor with port
 	  public AppConnection(int port) {
 			// starts server and waits for a connection
