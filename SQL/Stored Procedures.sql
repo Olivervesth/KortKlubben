@@ -97,7 +97,9 @@ END //
 -- Returns:    Games_Played and Games_Won
 -- =============================================
 CREATE PROCEDURE SP_GetStats(
-IN input VARCHAR(50))
+IN input VARCHAR(50),
+OUT gw INT,
+OUT gp INT)
 BEGIN
 
 	CALL SP_GetPlayerID(input, @ChosenPlayer);
