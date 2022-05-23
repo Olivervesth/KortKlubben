@@ -3,10 +3,13 @@ package Rooms;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import GameEngine.EngineManager;
 
 
 public class AppConnection {
@@ -14,26 +17,34 @@ public class AppConnection {
 	  private Socket socket = null;
 	  private ServerSocket server = null;
 	  private DataInputStream in = null;
+	  //private static EngineManager em = null;
 	  // constructor with port
 	  public AppConnection(int port) {
 	    // starts server and waits for a connection
 	    try {
+	    	//em = new EngineManager();
 	      server = new ServerSocket(port);
-	      System.out.println("Server started::");
+	      System.out.println("Server started: Ip "+InetAddress.getLocalHost().getHostAddress()+",Port "+server.getLocalPort()+":");
 
 	      System.out.println("Waiting for a client ........");
 
 	      while(!server.isClosed()) {
+	    	  try {
+	    		  socket = server.accept();
+	    		  EngineManager.saveErrorLog("Websocket","New client connected: "+socket.getInetAddress()+"");
+	    		  System.out.println("Client accepted.");
+	    	  } catch (IOException e) {
+	    		  // TODO Auto-generated catch block
+	    		  if(server.isClosed()) {
+	                  System.out.println("Server Stopped.") ;
+	              }
+	    		  throw new RuntimeException(
+	    	                "Error accepting client connection", e);
+	    	  }
+	    	  boolean clientedconnected = true;
 	    	  new Thread(new Runnable() {
 	    	         public void run() {
-	    	        	  try {
-							socket = server.accept();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	    		    	  System.out.println("Client accepted.");
-	    		    	  
+	    	        	 System.out.println("New thread.");
 	    		    	  // takes input from the client socket
 	    		    	  try {
 							in = new DataInputStream(
@@ -54,8 +65,10 @@ public class AppConnection {
 	    		    			  
 	    		    		  } catch (IOException i) {
 	    		    			  System.out.println(i);
+	    		    			  System.out.println("Server Stopped.") ;
+	    		    			  
 	    		    			  if(!socket.isConnected()) {
-	    		    				  break;
+	    		    				  return;
 	    		    			  }
 	    		    		  }
 	    		    	  }
