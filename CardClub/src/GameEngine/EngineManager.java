@@ -14,7 +14,6 @@ public final class EngineManager {
 	private static Hashing hashing;
 	private static Logger logger;
 	private static DbManager db;
-	private static Authentication auth;
 	private static PlayerManager playerManager;
 	private static RoomManager roomManager;
 
@@ -25,7 +24,6 @@ public final class EngineManager {
 		logger = new Logger();
 		hashing = new Hashing();
 		db = new DbManager();
-		auth = new Authentication();
 		playerManager = new PlayerManager();
 		roomManager = new RoomManager();
 	}
@@ -39,7 +37,7 @@ public final class EngineManager {
 	 */
 	public boolean login(String username, String password) {
 		// if login is success
-		if (auth.validateUserInfo(db.getUserName(hashing.hash(username)), db.getPassword(hashing.hash(password)))) {
+		if (db.checkLogin(hashing.hash(username), hashing.hash(password))) {
 			// create user?
 			return true;
 		}
@@ -48,6 +46,26 @@ public final class EngineManager {
 			// log failed attempt?
 			return false;
 		}
+	}
+
+	/**
+	 * Method to add played game to player statistics
+	 * 
+	 * @param String username
+	 * @return boolean
+	 */
+	public boolean addGamePlayed(String username) {
+		return db.addGamePlayed(username);
+	}
+
+	/**
+	 * Method to add won game to player statistics
+	 * 
+	 * @param String username
+	 * @return boolean
+	 */
+	public boolean addGameWon(String username) {
+		return db.addGameWon(username);
 	}
 
 	/**
@@ -63,20 +81,69 @@ public final class EngineManager {
 		}
 		return returnList;
 	}
-	
+
 	/**
-	 * Method to create a player
+	 * Method to create a player for rooms
+	 * 
 	 * @param String name
 	 * @return Player
 	 */
-	public Player createPlayer(String name)
-	{
+	public Player createPlayer(String name) {
 		return playerManager.createPlayer(name, true);
 	}
-	
-	public static void saveErrorMessage(String errormessage)
+
+	/**
+	 * Method to create a user in Db
+	 * 
+	 * @param String name
+	 * @param String password
+	 * @return boolean
+	 */
+	public boolean createUser(String playername, String username, String password) {
+		return db.createPlayer(playername, hashing.hash(username) ,hashing.hash(password));
+	}
+
+	/**
+	 * Method to get user stats
+	 * @param String username
+	 * @return String[]
+	 */
+	public String[] getStats(String username)
 	{
+		return db.getStats(username);
+	}
+	
+	/**
+	 * Method to update a user
+	 * 
+	 * @param String playername
+	 * @param String newplayername
+	 * @param String username
+	 * @param String newusername
+	 * @param String password
+	 * @param String newpassword
+	 * @return boolean
+	 */
+	public boolean updateUser(String newplayername, String username, String newusername, String newpassword) {
+		return db.updatePlayer(newplayername, username, newusername, newpassword);
+	}
+
+	/**
+	 * Method to save error messages to local file
+	 * 
+	 * @param String errormessage
+	 */
+	public static void saveErrorMessage(String errormessage) {
 		logger.saveMessage(errormessage);
 	}
 
+	/**
+	 * Method to save error message to db log
+	 * 
+	 * @param String errormessage
+	 * @return boolean
+	 */
+	public static boolean saveErrorLog(String erroraction, String errormessage) {
+		return db.createLog(erroraction, errormessage);
+	}
 }
