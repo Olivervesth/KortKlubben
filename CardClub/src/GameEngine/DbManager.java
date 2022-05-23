@@ -195,16 +195,15 @@ public class DbManager {
 	 * @param String newpassword
 	 * @return boolean
 	 */
-	public boolean updatePlayer(String playername, String newplayername, String username, String newusername,
-			String password, String newpassword) {
+	public boolean updatePlayer(String newplayername, String username, String newusername, String newpassword) {
 		Connection con = connectDb();
 		Statement st = null;
 		ResultSet rs = null;
 		boolean result = false;
 		try {
 			st = con.createStatement();
-			String query = "call SP_UpdatePlayer('" + playername + "','" + newplayername + "', '" + username + "','"
-					+ newusername + "','" + password + "', '" + newpassword + "')";
+			String query = "call SP_UpdatePlayer('" + username + "', '" + newplayername + "','"
+					+ newusername + "', '" + newpassword + "')";
 			rs = st.executeQuery(query);
 			if (rs.getInt(0) > 0) {
 				result = true;
