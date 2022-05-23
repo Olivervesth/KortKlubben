@@ -11,10 +11,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import GameEngine.DbManager;
-import GameEngine.EngineManager;
 
 class DbManagerTests {
-	
+
 	static DbManager manager;
 
 	@BeforeAll
@@ -22,56 +21,82 @@ class DbManagerTests {
 		manager = new DbManager();
 	}
 
+	
 	@Test
 	void connectDb_ConnectsToDb_IfAvailable() {
-		//Arrange
+		// Arrange
 		Connection con = manager.connectDb();
-		Statement st = null;	
+		Statement st = null;
 		ResultSet rs = null;
-		
-		//Act
+
+		// Act
 		try {
 			st = con.createStatement();
 			String query = "SELECT * FROM Players";
-			rs = st.executeQuery(query);	
+			rs = st.executeQuery(query);
 		} catch (SQLException e) {
-			EngineManager.saveErrorMessage(e.getMessage());
+			System.out.println(e.getMessage());
 		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				System.out.println(e.getMessage());
 			}
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				System.out.println(e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.saveErrorMessage(e.getMessage());
+				System.out.println(e.getMessage());
 			}
 		}
-		
-		//Assert
+
+		// Assert
 		assertFalse(rs == null);
 	}
+
+	
+	@Test
+	void createPlayer_CreatesNewPlayer_IfNotNull() {
+		// Arrange
+		String playername = "Paul";
+		String username = "PaulChowder";
+		String password = "Chowder123";
+		boolean result = false;
+
+		// Act
+		try {
+
+			result = manager.createPlayer(playername, username, password);
+
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+
+		// Assert
+		assertTrue(result);
+	}
+
 	
 	@Test
 	void getStats_ReturnsStats_IfPlayerExists() {
-		
+		// Arrange
+		String[] resultSet = null;
+
+		// Act
+		try {
+
+			resultSet = manager.getStats("PaulChowder");
+
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+
+		// Assert
+		assertFalse(resultSet == null);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
