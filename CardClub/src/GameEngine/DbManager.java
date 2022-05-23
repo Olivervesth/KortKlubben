@@ -108,15 +108,14 @@ public class DbManager {
 	 * @param String errormessage
 	 * @return boolean
 	 */
-	public boolean createLog(String errormessage) {
+	public boolean createLog(String errorAction, String errormessage) {
 		Connection con = connectDb();
 		Statement st = null;
 		ResultSet rs = null;
 		boolean result = false;
 		try {
 			st = con.createStatement();
-			String date = java.time.LocalDateTime.now().toString();
-			String query = "call SP_CreateLog('" + errormessage + "', '" + date + "')";
+			String query = "call SP_CreateLog('"+ errorAction + errormessage + "')";
 			rs = st.executeQuery(query);
 			if (rs.getInt(0) > 0) {
 				result = true;
