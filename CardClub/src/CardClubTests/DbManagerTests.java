@@ -100,24 +100,24 @@ class DbManagerTests {
 	}
 	
 	
-	@Test
-	void checkLogin_ReturnsTrue_IfParamsEqual() {
-		
-	}
-	
-	@Test
-	void updatePlayer_ChangesPlayerData_IfValid() {
-		
-	}
-	
-	@Test
-	void deletePlayer_RemovesPlayer_IfAble() {
-		
-	}
-	
-	@Test
-	void createLog_WritesLogToDb_IfValid() {
-		
-	}
+//	@Test
+//	void checkLogin_ReturnsTrue_IfParamsEqual() {
+//		assertFalse(true);
+//	}
+//	
+//	@Test
+//	void updatePlayer_ChangesPlayerData_IfValid() {
+//		assertFalse(true);
+//	}
+//	
+//	@Test
+//	void deletePlayer_RemovesPlayer_IfAble() {
+//		assertFalse(true);
+//	}
+//	
+//	@Test
+//	void createLog_WritesLogToDb_IfValid() {
+//		assertFalse(true);
+//	}
 
 }
