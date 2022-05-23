@@ -6,10 +6,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-//		DbManager db = new DbManager();
-//		db.ConnectDb();
-		AppConnection websocket = new AppConnection();
-		websocket.connect();
-	}
+		//Start listening for server connections
+		AppConnection server = new AppConnection(5001);
 
+	}
 }
