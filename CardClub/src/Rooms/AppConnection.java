@@ -2,6 +2,8 @@ package Rooms;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -41,40 +43,14 @@ public class AppConnection {
 	    		  throw new RuntimeException(
 	    	                "Error accepting client connection", e);
 	    	  }
-	    	  boolean clientedconnected = true;
-	    	  new Thread(new Runnable() {
-	    	         public void run() {
-	    	        	 System.out.println("New thread.");
-	    		    	  // takes input from the client socket
-	    		    	  try {
-							in = new DataInputStream(
-									  new BufferedInputStream(socket.getInputStream()));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-	    		    	  
-	    		    	  String line = "";
-	    		    	  
-	    		    	  // reads message from client until "Done" is sent
-	    		    	  
-	    		    	  while (!line.equals("Done")) {
-	    		    		  try {
-	    		    			  line = in.readUTF();
-	    		    			  System.out.println(line);
-	    		    			  
-	    		    		  } catch (IOException i) {
-	    		    			  System.out.println(i);
-	    		    			  System.out.println("Server Stopped.") ;
-	    		    			  
-	    		    			  if(!socket.isConnected()) {
-	    		    				  return;
-	    		    			  }
-	    		    		  }
-	    		    	  }
-	    		    	  System.out.println("Closing connection");
-	    	         }
-	    	      }).start();
+	    	  
+	    	  Thread t = new Thread(()->Threadedwebsocket(socket));
+	    	  t.start();
+//	    	  new Thread(new Runnable() {
+//	    	         public void run() {
+//	    	        	
+//	    	         }
+//	    	      }).start();
 	    	
 	    	  
 	      }
@@ -93,6 +69,39 @@ public class AppConnection {
 			e.printStackTrace();
 		}
 	    }
+	  }
+	  public void Threadedwebsocket(Socket socket) {
+		  Socket client = socket;
+     	 System.out.println("New client connected: "+client.getInetAddress()+"");
+     	 boolean clientconnected = true;
+     	 System.out.println("New thread.");
+	    	  // takes input from the client socket
+	    	  try {
+				in = new DataInputStream(
+						  new BufferedInputStream(client.getInputStream()));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	  
+	    	  String line = "";
+	    	  
+	    	  // reads message from client until "Done" is sent
+	    	  
+	    	  while (!line.equals("Done") && clientconnected == true) {
+	    		  try {
+	    			  //Send message to client
+	    			  DataOutputStream output = new DataOutputStream(client.getOutputStream());
+	    			  output.writeUTF("200");
+	    			  line = in.readUTF();
+	    			  System.out.println(line);
+	    			  
+	    		  } catch (IOException i) {
+	    			  System.out.println(i);
+	    			  clientconnected = false;
+	    		  }
+	    	  }
+	    	  System.out.println("Closing connection to "+client.getInetAddress()+"");
 	  }
 
 //	final int port = 5010
