@@ -127,16 +127,19 @@ public class DbManager {
 			return result;
 		} finally {
 			try {
+				if(rs != null)
 				rs.close();
 			} catch (SQLException e) {
 				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
+				if(st != null)
 				st.close();
 			} catch (SQLException e) {
 				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
+				if(con != null)
 				con.close();
 			} catch (SQLException e) {
 				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
