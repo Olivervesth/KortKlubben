@@ -49,6 +49,26 @@ public final class EngineManager {
 	}
 
 	/**
+	 * Method to add played game to player statistics
+	 * 
+	 * @param String username
+	 * @return boolean
+	 */
+	public boolean addGamePlayed(String username) {
+		return db.addGamePlayed(username);
+	}
+
+	/**
+	 * Method to add won game to player statistics
+	 * 
+	 * @param String username
+	 * @return boolean
+	 */
+	public boolean addGameWon(String username) {
+		return db.addGameWon(username);
+	}
+
+	/**
 	 * Method to reset player points
 	 * 
 	 * @param List<Player> players
@@ -84,6 +104,32 @@ public final class EngineManager {
 	}
 
 	/**
+	 * Method to get user stats
+	 * @param String username
+	 * @return String[]
+	 */
+	public String[] getStats(String username)
+	{
+		return db.getStats(username);
+	}
+	
+	/**
+	 * Method to update a user
+	 * 
+	 * @param String playername
+	 * @param String newplayername
+	 * @param String username
+	 * @param String newusername
+	 * @param String password
+	 * @param String newpassword
+	 * @return boolean
+	 */
+	public boolean updateUser(String playername, String newplayername, String username, String newusername,
+			String password, String newpassword) {
+		return db.updatePlayer(playername, newplayername, username, newusername, password, newpassword);
+	}
+
+	/**
 	 * Method to save error messages to local file
 	 * 
 	 * @param String errormessage
@@ -92,4 +138,13 @@ public final class EngineManager {
 		logger.saveMessage(errormessage);
 	}
 
+	/**
+	 * Method to save error message to db log
+	 * 
+	 * @param String errormessage
+	 * @return boolean
+	 */
+	public static boolean saveErrorLog(String errormessage) {
+		return db.createLog(errormessage);
+	}
 }
