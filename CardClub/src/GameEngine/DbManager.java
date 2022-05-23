@@ -243,14 +243,18 @@ public class DbManager {
 	 */
 	public boolean createPlayer(String name, String username, String Password) {
 		Connection con = connectDb();
-		Statement st = null;
-		ResultSet rs = null;
+		CallableStatement st = null;
 		boolean result = false;
 		try {
-			st = con.createStatement();
-			String query = "call SP_CreatePlayer('" + name + "', '" + username + "', '" + password + "')";
-			rs = st.executeQuery(query);
-			if (rs.getInt(0) > 0) {
+			st = con.prepareCall("{call SP_CreatePlayer(?, ?, ?, ?)}");
+			st.setString(1, name);
+			st.setString(2, username);
+			st.setString(3, password);
+			st.registerOutParameter(4, Types.INTEGER);
+			
+			st.executeUpdate();
+			
+			if (st.getInt(4) > 0) {
 				result = true;
 			}
 			return result;
@@ -258,11 +262,6 @@ public class DbManager {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			return result;
 		} finally {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
 			try {
 				st.close();
 			} catch (SQLException e) {
