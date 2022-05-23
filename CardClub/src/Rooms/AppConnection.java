@@ -17,12 +17,12 @@ public class AppConnection {
 	  private Socket socket = null;
 	  private ServerSocket server = null;
 	  private DataInputStream in = null;
-	  //private static EngineManager em = null;
+	  private static EngineManager em = null;
 	  // constructor with port
 	  public AppConnection(int port) {
 	    // starts server and waits for a connection
 	    try {
-	    	//em = new EngineManager();
+	    	em = new EngineManager();
 	      server = new ServerSocket(port);
 	      System.out.println("Server started: Ip "+InetAddress.getLocalHost().getHostAddress()+",Port "+server.getLocalPort()+":");
 
@@ -31,7 +31,7 @@ public class AppConnection {
 	      while(!server.isClosed()) {
 	    	  try {
 	    		  socket = server.accept();
-	    		  EngineManager.saveErrorLog("Websocket","New client connected: "+socket.getInetAddress()+"");
+	    		  em.saveErrorLog("Websocket","New client connected: "+socket.getInetAddress()+"");
 	    		  System.out.println("Client accepted.");
 	    	  } catch (IOException e) {
 	    		  // TODO Auto-generated catch block
