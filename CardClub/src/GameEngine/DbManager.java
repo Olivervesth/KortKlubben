@@ -21,7 +21,90 @@ public class DbManager {
 	}
 
 	/**
+	 * Method to add a played game to the players statistics
+	 * 
+	 * @param String username
+	 * @return boolean
+	 */
+	public boolean addGamePlayed(String username) {
+		Connection con = connectDb();
+		Statement st = null;
+		ResultSet rs = null;
+		boolean result = false;
+		try {
+			st = con.createStatement();
+			String query = "call SP_AddGamePlayed('" + username + "')";
+			rs = st.executeQuery(query);
+			if (rs.getInt(0) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
+			return result;
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 * Method to add a win to the players statistics
+	 * 
+	 * @param String username
+	 * @return boolean
+	 */
+	public boolean addGameWon(String username) {
+		Connection con = connectDb();
+		Statement st = null;
+		ResultSet rs = null;
+		boolean result = false;
+		try {
+			st = con.createStatement();
+			String query = "call SP_AddGameWon('" + username + "')";
+			rs = st.executeQuery(query);
+			if (rs.getInt(0) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.saveErrorMessage(e.getMessage());
+			return result;
+		} finally {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.saveErrorMessage(e.getMessage());
+			}
+		}
+	}
+
+	/**
 	 * Method to create error log on db
+	 * 
 	 * @param String errormessage
 	 * @return boolean
 	 */
@@ -35,17 +118,14 @@ public class DbManager {
 			String date = java.time.LocalDateTime.now().toString();
 			String query = "call SP_CreateLog('" + errormessage + "', '" + date + "')";
 			rs = st.executeQuery(query);
-			if(rs.getInt(0) > 0)
-			{
+			if (rs.getInt(0) > 0) {
 				result = true;
 			}
 			return result;
 		} catch (SQLException e) {
 			EngineManager.saveErrorMessage(e.getMessage());
 			return result;
-		}
-		finally
-		{
+		} finally {
 			try {
 				rs.close();
 			} catch (SQLException e) {
@@ -202,7 +282,7 @@ public class DbManager {
 	 * @param String password
 	 * @return boolean
 	 */
-	public boolean getUserValidation(String userName, String password) {
+	public boolean checkLogin(String userName, String password) {
 		Connection con = connectDb();
 		Statement st = null;
 		ResultSet rs = null;

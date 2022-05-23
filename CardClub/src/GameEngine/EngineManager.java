@@ -37,7 +37,7 @@ public final class EngineManager {
 	 */
 	public boolean login(String username, String password) {
 		// if login is success
-		if (db.getUserValidation(hashing.hash(username), hashing.hash(password))) {
+		if (db.checkLogin(hashing.hash(username), hashing.hash(password))) {
 			// create user?
 			return true;
 		}
