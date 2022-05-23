@@ -238,14 +238,14 @@ public class DbManager {
 	 * @param String Password
 	 * @return boolean
 	 */
-	public boolean createPlayer(String username, String Password) {
+	public boolean createPlayer(String name, String username, String Password) {
 		Connection con = connectDb();
 		Statement st = null;
 		ResultSet rs = null;
 		boolean result = false;
 		try {
 			st = con.createStatement();
-			String query = "call SP_CreatePlayer('" + username + "', '" + password + "')";
+			String query = "call SP_CreatePlayer('" + name + "', '" + username + "', '" + password + "')";
 			rs = st.executeQuery(query);
 			if (rs.getInt(0) > 0) {
 				result = true;
