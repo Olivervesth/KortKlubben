@@ -105,6 +105,7 @@ public class DbManager {
 	/**
 	 * Method to create error log on db
 	 * 
+	 * @param String errorAction
 	 * @param String errormessage
 	 * @return boolean
 	 */
@@ -187,11 +188,9 @@ public class DbManager {
 	/**
 	 * Method to update player information
 	 * 
-	 * @param String playername
 	 * @param String newplayername
 	 * @param String username
 	 * @param String newusername
-	 * @param String password
 	 * @param String newpassword
 	 * @return boolean
 	 */
@@ -234,6 +233,7 @@ public class DbManager {
 	/**
 	 * Method to create a new player
 	 * 
+	 * @param String name
 	 * @param String username
 	 * @param String Password
 	 * @return boolean
