@@ -21,142 +21,55 @@ public class DbManager {
 	}
 
 	/**
-	 * Method to add a played game to the players statistics
+	 * Method to get database connection
 	 * 
-	 * @param String username
-	 * @return boolean
+	 * @return Connection
 	 */
-	public boolean addGamePlayed(String username) {
-		Connection con = connectDb();
-		CallableStatement st = null;
-		boolean result = false;
+	public Connection connectDb() {
 
+		Connection con = null;
 		try {
-			st = con.prepareCall("{call SP_AddGamePlayed(?, ?)}");
-			st.setString(1, username);
-			st.registerOutParameter(2, Types.INTEGER);
-
-			if (st.getInt(2) > 0) {
-				result = true;
-			}
-			return result;
-		} catch (SQLException e) {
+			// establish the connection
+			con = DriverManager.getConnection(connectionString, databaseUsername, databasePassword);
+			return con;
+		} catch (Exception e) {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			return result;
-		} finally {
-			try {
-				st.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
-			try {
-				con.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
 		}
-	}
-
-	/**
-	 * Method to add a win to the players statistics
-	 * 
-	 * @param String username
-	 * @return boolean
-	 */
-	public boolean addGameWon(String username) {
-		Connection con = connectDb();
-		CallableStatement st = null;
-		boolean result = false;
-
-		try {
-			st = con.prepareCall("{call SP_AddGameWon(?, ?)}");
-			st.setString(1, username);
-			st.registerOutParameter(2, Types.INTEGER);
-
-			if (st.getInt(2) > 0) {
-				result = true;
-			}
-			return result;
-		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			return result;
-		} finally {
+		if (con != null) {
 			try {
-				st.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
-			try {
-				con.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
-		}
-	}
-
-	/**
-	 * Method to create error log on db
-	 * 
-	 * @param String errorAction
-	 * @param String errormessage
-	 * @return boolean
-	 */
-	public boolean createLog(String errorAction, String errormessage) {
-		Connection con = connectDb();
-		CallableStatement st = null;
-		boolean result = false;
-
-		try {
-			st = con.prepareCall("{call SP_CreateLog(?, ?, ?)}");
-			st.setString(1, errorAction);
-			st.setString(2, errormessage);
-			st.registerOutParameter(3, Types.INTEGER);
-
-			st.executeUpdate();
-
-			if (st.getInt(3) > 0) {
-				result = true;
-			}
-			return result;
-		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			return result;
-		} finally {
-			try {
-				if (st != null)
-					st.close();
-			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-			}
-			try {
-				if (con != null)
+				if (con.isClosed() == false) {
 					con.close();
+				}
 			} catch (SQLException e) {
 				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
+
 		}
+		return null;
 	}
 
 	/**
-	 * Method to delete a player
+	 * Method to create a new player
 	 * 
+	 * @param String name
 	 * @param String username
+	 * @param String Password
 	 * @return boolean
 	 */
-	public boolean deletePlayer(String username) {
+	public boolean createPlayer(String name, String username, String Password) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
-
 		try {
-
-			st = con.prepareCall("{call SP_DeletePlayer(?, ?)}");
-			st.setString(1, username);
-			st.registerOutParameter(2, Types.INTEGER);
+			st = con.prepareCall("{call SP_CreatePlayer(?, ?, ?, ?)}");
+			st.setString(1, name);
+			st.setString(2, username);
+			st.setString(3, databasePassword);
+			st.registerOutParameter(4, Types.INTEGER);
 
 			st.executeUpdate();
 
-			if (st.getInt(2) > 0) {
+			if (st.getInt(4) > 0) {
 				result = true;
 			}
 			return result;
@@ -223,27 +136,25 @@ public class DbManager {
 	}
 
 	/**
-	 * Method to create a new player
+	 * Method to delete a player
 	 * 
-	 * @param String name
 	 * @param String username
-	 * @param String Password
 	 * @return boolean
 	 */
-	public boolean createPlayer(String name, String username, String Password) {
+	public boolean deletePlayer(String username) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
+
 		try {
-			st = con.prepareCall("{call SP_CreatePlayer(?, ?, ?, ?)}");
-			st.setString(1, name);
-			st.setString(2, username);
-			st.setString(3, databasePassword);
-			st.registerOutParameter(4, Types.INTEGER);
+
+			st = con.prepareCall("{call SP_DeletePlayer(?, ?)}");
+			st.setString(1, username);
+			st.registerOutParameter(2, Types.INTEGER);
 
 			st.executeUpdate();
 
-			if (st.getInt(4) > 0) {
+			if (st.getInt(2) > 0) {
 				result = true;
 			}
 			return result;
@@ -279,15 +190,11 @@ public class DbManager {
 			st = con.prepareCall("{call SP_CheckLogin(?, ?, ?)}");
 			st.setString(1, userName);
 			st.setString(2, password);
-			st.registerOutParameter(3, Types.BOOLEAN);
+			st.registerOutParameter(3, Types.BIT);
 
 			st.executeUpdate();
-			
-			System.out.println("Query: " + st);
 
 			boolean result = st.getBoolean(3);
-			System.out.println("3 is: " + st.getString(3));
-			System.out.println("result is: " + result);
 			return result;
 		} catch (SQLException e) {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
@@ -343,30 +250,124 @@ public class DbManager {
 	}
 
 	/**
-	 * Method to get database connection
+	 * Method to add a played game to the players statistics
 	 * 
-	 * @return Connection
+	 * @param String username
+	 * @return boolean
 	 */
-	public Connection connectDb() {
+	public boolean addGamePlayed(String username) {
+		Connection con = connectDb();
+		CallableStatement st = null;
+		boolean result = false;
 
-		Connection con = null;
 		try {
-			// establish the connection
-			con = DriverManager.getConnection(connectionString, databaseUsername, databasePassword);
-			return con;
-		} catch (Exception e) {
+			st = con.prepareCall("{call SP_AddGamePlayed(?, ?)}");
+			st.setString(1, username);
+			st.registerOutParameter(2, Types.INTEGER);
+
+			st.executeUpdate();
+
+			if (st.getInt(2) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
-		}
-		if (con != null) {
+			return result;
+		} finally {
 			try {
-				if (con.isClosed() == false) {
-					con.close();
-				}
+				st.close();
 			} catch (SQLException e) {
 				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
-
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			}
 		}
-		return null;
 	}
+
+	/**
+	 * Method to add a win to the players statistics
+	 * 
+	 * @param String username
+	 * @return boolean
+	 */
+	public boolean addGameWon(String username) {
+		Connection con = connectDb();
+		CallableStatement st = null;
+		boolean result = false;
+
+		try {
+			st = con.prepareCall("{call SP_AddGameWon(?, ?)}");
+			st.setString(1, username);
+			st.registerOutParameter(2, Types.INTEGER);
+
+			st.executeUpdate();
+
+			if (st.getInt(2) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			return result;
+		} finally {
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 * Method to create error log on db
+	 * 
+	 * @param String errorAction
+	 * @param String errormessage
+	 * @return boolean
+	 */
+	public boolean createLog(String errorAction, String errormessage) {
+		Connection con = connectDb();
+		CallableStatement st = null;
+		boolean result = false;
+
+		try {
+			st = con.prepareCall("{call SP_CreateLog(?, ?, ?)}");
+			st.setString(1, errorAction);
+			st.setString(2, errormessage);
+			st.registerOutParameter(3, Types.INTEGER);
+
+			st.executeUpdate();
+
+			if (st.getInt(3) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			return result;
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			}
+		}
+	}
+
 }

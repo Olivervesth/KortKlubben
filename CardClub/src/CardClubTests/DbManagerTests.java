@@ -107,60 +107,88 @@ class DbManagerTests {
 	@Test
 	@Order(4)
 	void checkLogin_ReturnsTrue_IfParamsEqual() {
-		//Arrange
-		String username = "PaulChowder";
-		String password = "Chowder123";
+		// Arrange
+		String username = "JesperKD";
+		String password = "Kage1234!";
 		boolean result = false;
 		
-		//Act
+		// Act
 		result = manager.checkLogin(username, password);
 		
 		
-		//Assert
+		// Assert
 		assertTrue(result);
 	}
 	
 	@Test
 	@Order(5)
 	void updatePlayer_ChangesPlayerData_IfValid() {
-		//Arrange
+		// Arrange
 		String username = "PaulChowder";
-		
 		boolean result = false;
 		
-		//Act
+		// Act
 		result = manager.updatePlayer("Lars", username, "LarsLarsen", "TestPass123");
 		
-		//Assert
+		// Assert
 		assertTrue(result);
 	}
 	
 	@Test
 	@Order(6)
-	void deletePlayer_RemovesPlayer_IfAble() {
-		//Arrange
-		String username = "LarsLarsen";
+	void addGamePlayed_ShouldAdd_IfAble() {
+		// Arrange
+		String username = "JesperKD";
 		boolean result = false;
 		
-		//Act
-		result = manager.deletePlayer(username);
+		// Act
+		result = manager.addGamePlayed(username);
 		
-		//Assert
+		// Assert
 		assertTrue(result);
 	}
 	
 	@Test
 	@Order(7)
+	void addGameWon_ShouldAdd_IfAble() {
+		// Arrange
+		String username = "JesperKD";
+		boolean result = false;
+		
+		// Act
+		result = manager.addGameWon(username);
+		
+		// Assert
+		assertTrue(result);
+	}
+	
+	
+	@Test
+	@Order(8)
+	void deletePlayer_RemovesPlayer_IfAble() {
+		// Arrange
+		String username = "LarsLarsen";
+		boolean result = false;
+		
+		// Act
+		result = manager.deletePlayer(username);
+		
+		// Assert
+		assertTrue(result);
+	}
+	
+	@Test
+	@Order(9)
 	void createLog_WritesLogToDb_IfValid() {
-		//Arrange
+		// Arrange
 		String action = "Testing Log";
 		String message = "This is a test for creating logs";
 		boolean result = false;
 		
-		//Act
+		// Act
 		result = manager.createLog(action, message);
 		
-		//Assert
+		// Assert
 		assertTrue(result);
 	}
 

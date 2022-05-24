@@ -2,6 +2,7 @@ package Rooms;
 
 import java.util.List;
 
+import Cards.CardManager;
 import Players.Player;
 
 public class Room 
@@ -12,15 +13,29 @@ public class Room
 	private List<Player> players;
 	private Player owner;
 	private GameManager gameManager;
+	private CardManager cardManager;
 	
 	/**
 	 * Constructor for Room class
 	 * @param Player owner
+	 * @param GameManager gameManager
+	 * @param CardManager cardManager
 	 */
-	public Room(Player owner, GameManager gameManager)
+	public Room(Player owner, GameManager gameManager, CardManager cardManager)
 	{
 		this.owner = owner;
 		players.add(owner);
 		this.gameManager = gameManager;
+		this.cardManager = cardManager;
+		cardManager.generateCardDeckNoJokers();
 	}
+	
+	/**
+	 * Method to give players cards
+	 */
+	public void giveCards()
+	{
+		gameManager.giveCards(cardManager.generateCardDeckNoJokers());
+	}
+	
 }
