@@ -7,10 +7,11 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ClientThread extends Thread {
-	Socket client;
-	 private EngineManager em = null;
-	 private RoomManager rm = null;
+	private EngineManager em = null;
+	private RoomManager rm = null;
 	private DataInputStream in = null;
+	Socket client;
+	Room activeroom = null;
 	public ClientThread(Socket cli) {
 		em = new EngineManager();
 		rm = new RoomManager();
@@ -37,10 +38,18 @@ public class ClientThread extends Thread {
 	    	  while (!line.equals("Done") && clientconnected == true) {
 	    		  try {
 	    			  //Send message to client
+	    			 
 	    			  DataOutputStream output = new DataOutputStream(client.getOutputStream());
-	    			  output.writeUTF("200");
 	    			  line = in.readUTF();
-	    			  PlayerActions(line);
+	    			  if(activeroom != null) {
+	    				  if(UserActions(line)) {
+	    	    			  output.writeUTF("true");
+	    				  }else {
+	    					  output.writeUTF("false");
+	    				  }
+	    			  }else {
+	    				  PlayerInGameActions(line);
+	    			  }
 	    			  System.out.println(line);
 	    			  
 	    		  } catch (IOException i) {
@@ -55,7 +64,7 @@ public class ClientThread extends Thread {
 	 * @param command
 	 * @return
 	 */
-	public String PlayerActions(String command) {
+	public boolean UserActions(String command) {
 		String[] data = command.split(";");
 		
 		switch(data[0]) {
@@ -67,10 +76,10 @@ public class ClientThread extends Thread {
 			 * data[3] = psw
 			 */
 			try{
-				if(data[1] != null && data[2] != null && data[3] != null) {
+				if(data[2] != null && data[3] != null) {
 					
 					System.out.println("data send in login case");
-					return em.login(data[2], data[3])? "true" : "false";
+					return em.login(data[2], data[3]);
 				}
 				
 			}catch(ArrayIndexOutOfBoundsException e) {
@@ -83,7 +92,7 @@ public class ClientThread extends Thread {
 			try{
 				if(data[1] != null && data[2] != null && data[3] != null) {
 					
-					return em.createUser(data[1], data[2], data[3])? "true" : "false";
+					return em.createUser(data[1], data[2], data[3]);
 				}
 				
 			}catch(ArrayIndexOutOfBoundsException e) {
@@ -91,18 +100,25 @@ public class ClientThread extends Thread {
 			}
 					break;
 		case "createroom":
-//			try{
-//				if(data[1] != null && data[2] != null && data[3] != null) {
-//					return rm.createRoom(1,data[1])? "true" : "false";
-//				}
-//				
-//			}catch(ArrayIndexOutOfBoundsException e) {
-//				em.saveErrorLog(this.getName(), e.getLocalizedMessage()+""+e.getMessage());
-//			}
-//			break;
+			try{
+				if(data[1] != null) {
+					activeroom = rm.createRoom(1,em.createPlayer(data[1]));
+					if(activeroom != null) {
+						return true;
+					}
+				}
+				
+			}catch(ArrayIndexOutOfBoundsException e) {
+				em.saveErrorLog(this.getName(), e.getLocalizedMessage()+""+e.getMessage());
+			}
+			break;
 
 		default:
-			return "";
+			break;
 		}
+		return false;
+	}
+	public void PlayerInGameActions(String command) {
+		
 	}
 }

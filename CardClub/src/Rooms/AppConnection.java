@@ -11,21 +11,21 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import GameEngine.EngineManager;
 
+import Rooms.RoomManager;
 
 public class AppConnection {
 	  //initialize socket and input stream
 	  private Socket socket = null;
 	  private ServerSocket server = null;
 	  private DataInputStream in = null;
-	  private EngineManager em = null;
+	 
 	  int clientsconnected = 0;
 	  // constructor with port
 	  public AppConnection(int port) {
 			// starts server and waits for a connection
 	    try {
-	    	em = new EngineManager();
+	    	
 	      server = new ServerSocket(port);
 	      println("Server started: Ip "+InetAddress.getLocalHost().getHostAddress()+",Port "+server.getLocalPort()+":");
 	      System.out.println("Waiting for a client ........");
@@ -33,7 +33,6 @@ public class AppConnection {
 	      while(!server.isClosed()) {
 	    	  try {
 	    		  socket = server.accept();
-	    		  em.saveErrorLog("Websocket","New client connected: "+socket.getInetAddress()+"");
 	    		  System.out.println("Client accepted.");
 	    	  } catch (IOException e) {
 	    		  // TODO Auto-generated catch block
@@ -61,43 +60,43 @@ public class AppConnection {
 		}
 	    }
 	  }
-	public void Threadedwebsocket(Socket socket) {
-		  Socket client = socket;
-     	 System.out.println("New client connected: "+client.getInetAddress()+"");
-     	clientsconnected++;
-     	 boolean clientconnected = true;
-     	 System.out.println("New thread.");
-	    	  // takes input from the client socket
-	    	  try {
-				in = new DataInputStream(
-						  new BufferedInputStream(client.getInputStream()));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    	  
-	    	  String line = "";
-	    	  
-	    	  // reads message from client until "Done" is sent
-	    	  
-	    	  while (!line.equals("Done") && clientconnected == true) {
-	    		  try {
-	    			  //Send message to client
-	    			  DataOutputStream output = new DataOutputStream(client.getOutputStream());
-	    			  output.writeUTF("Bye");
-	    			  line = in.readUTF();
-	    			  System.out.println(line);
-	    			  
-	    		  } catch (IOException i) {
-	    			  System.out.println(i);
-	    			  clientconnected = false;
-	    			  em.saveErrorLog("Websocket ","Client closing connection "+client.getInetAddress()+"");
-	    		  }
-	    	  }
-	    	  clientsconnected--;
-	    	  em.saveErrorLog("Websocket ","Client closing connection "+client.getInetAddress()+"");
-	    	  System.out.println("Closing connection to "+client.getInetAddress()+"");
-	  }
+//	public void Threadedwebsocket(Socket socket) {
+//		  Socket client = socket;
+//     	 System.out.println("New client connected: "+client.getInetAddress()+"");
+//     	clientsconnected++;
+//     	 boolean clientconnected = true;
+//     	 System.out.println("New thread.");
+//	    	  // takes input from the client socket
+//	    	  try {
+//				in = new DataInputStream(
+//						  new BufferedInputStream(client.getInputStream()));
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//	    	  
+//	    	  String line = "";
+//	    	  
+//	    	  // reads message from client until "Done" is sent
+//	    	  
+//	    	  while (!line.equals("Done") && clientconnected == true) {
+//	    		  try {
+//	    			  //Send message to client
+//	    			  DataOutputStream output = new DataOutputStream(client.getOutputStream());
+//	    			  output.writeUTF("Bye");
+//	    			  line = in.readUTF();
+//	    			  System.out.println(line);
+//	    			  
+//	    		  } catch (IOException i) {
+//	    			  System.out.println(i);
+//	    			  clientconnected = false;
+//	    			  em.saveErrorLog("Websocket ","Client closing connection "+client.getInetAddress()+"");
+//	    		  }
+//	    	  }
+//	    	  clientsconnected--;
+//	    	  em.saveErrorLog("Websocket ","Client closing connection "+client.getInetAddress()+"");
+//	    	  System.out.println("Closing connection to "+client.getInetAddress()+"");
+//	  }
 	 private void println(String string) {
 		  System.out.println(string);
 	}
