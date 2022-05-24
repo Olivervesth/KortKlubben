@@ -53,7 +53,8 @@ public final class EngineManager {
 	public boolean login(String username, String password) {
 		// if login is success
 		if (db.checkLogin(hashing.hash(username), hashing.hash(password))) {
-			// create user?
+			// create player obj?
+			// log new login
 			return true;
 		}
 		// if login fails

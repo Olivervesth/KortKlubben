@@ -127,6 +127,10 @@ public class ClientThread extends Thread {
 	}
 	
 	public void PlayerInGameActions(String command) {
-		
+		String[] data = command.split(";");
+//		switch(data[0]) {
+//			activeroom.giveCards();
+//		
+//		}
 	} 
 }
