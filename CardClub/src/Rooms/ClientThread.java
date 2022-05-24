@@ -82,9 +82,10 @@ public class ClientThread extends Thread {
 			
 			try{
 				if(data[1] != null && data[2] != null) {
-					
+					 
 					System.out.println("data send in login case");
-					if(em.login(data[1], data[2]) != null) {//fix
+					clientplayer = em.login(data[1], data[2]);
+					if(clientplayer != null) {
 						return true;
 						
 					}else {
@@ -116,6 +117,11 @@ public class ClientThread extends Thread {
 			}
 					break;
 		case "createroom":
+			/**
+			 * data[1] = playername
+			 * data[2] = username
+			 * data[3] = psw
+			 */
 			try{
 				if(data[1] != null) {
 					activeroom = rm.createRoom(1,em.createPlayer(data[2],data[1]));//fix
