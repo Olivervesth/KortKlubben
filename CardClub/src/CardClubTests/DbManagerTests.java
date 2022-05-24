@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import GameEngine.DbManager;
@@ -23,6 +24,7 @@ class DbManagerTests {
 
 	
 	@Test
+	@Order(1)
 	void connectDb_ConnectsToDb_IfAvailable() {
 		// Arrange
 		Connection con = manager.connectDb();
@@ -60,6 +62,7 @@ class DbManagerTests {
 
 	
 	@Test
+	@Order(2)
 	void createPlayer_CreatesNewPlayer_IfNotNull() {
 		// Arrange
 		String playername = "Paul";
@@ -82,6 +85,7 @@ class DbManagerTests {
 
 	
 	@Test
+	@Order(3)
 	void getStats_ReturnsStats_IfPlayerExists() {
 		// Arrange
 		String[] resultSet = null;
@@ -101,6 +105,7 @@ class DbManagerTests {
 	
 	
 	@Test
+	@Order(4)
 	void checkLogin_ReturnsTrue_IfParamsEqual() {
 		//Arrange
 		String username = "PaulChowder";
@@ -116,6 +121,7 @@ class DbManagerTests {
 	}
 	
 	@Test
+	@Order(5)
 	void updatePlayer_ChangesPlayerData_IfValid() {
 		//Arrange
 		String username = "PaulChowder";
@@ -130,6 +136,7 @@ class DbManagerTests {
 	}
 	
 	@Test
+	@Order(6)
 	void deletePlayer_RemovesPlayer_IfAble() {
 		//Arrange
 		String username = "LarsLarsen";
@@ -143,6 +150,7 @@ class DbManagerTests {
 	}
 	
 	@Test
+	@Order(7)
 	void createLog_WritesLogToDb_IfValid() {
 		//Arrange
 		String action = "Testing Log";

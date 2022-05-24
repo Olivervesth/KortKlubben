@@ -62,9 +62,11 @@ CREATE TABLE Logs (
 ALTER TABLE Logins
      ADD CONSTRAINT fk_P2L
      FOREIGN KEY (Player_Id)
-     REFERENCES Players(Player_Id);
+     REFERENCES Players(Player_Id)
+     ON DELETE CASCADE;
 
 ALTER TABLE Stats
      ADD CONSTRAINT fk_P2S
      FOREIGN KEY (Player_Id)
-     REFERENCES Players(Player_Id);
+     REFERENCES Players(Player_Id)
+     ON DELETE CASCADE;

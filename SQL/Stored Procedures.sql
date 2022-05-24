@@ -104,7 +104,11 @@ BEGIN
 
 	CALL SP_GetPlayerID(input, @ChosenPlayer);
     
-	SELECT Games_Played, Games_Won 
+	SELECT Games_Played INTO gp 
+    FROM Stats
+    WHERE Stats.Player_Id=@ChosenPlayer; 
+    
+    SELECT Games_Won INTO gw
     FROM Stats 
     WHERE Stats.Player_Id=@ChosenPlayer; 
     
@@ -206,12 +210,6 @@ BEGIN
 
 	CALL SP_GetPlayerID(delName, @ChosenPlayerId);
     
-    DELETE FROM Stats
-    WHERE Stats.Player_Id = @ChosenPlayerId;
-    
-    DELETE FROM Logins
-    WHERE Logins.Player_Id = @ChosenPlayerId;
-    
     DELETE FROM Players
     WHERE Players.Player_Id = @ChosenPlayerId;
     
@@ -232,7 +230,7 @@ IN usrName VARCHAR(50),
 OUT result INT)
 BEGIN
 
-	CALL SP_GetPlayerID(usrName, @ChosdenPlayer);
+	CALL SP_GetPlayerID(usrName, @ChosenPlayer);
     
     UPDATE Stats
 	SET
@@ -315,4 +313,4 @@ BEGIN
 	SELECT * FROM Logs WHERE Logs.Id = id;
 END//
 
-DELIMITER ;
+DELIMITER ;SELECT * FROM cardclub_db.Players;

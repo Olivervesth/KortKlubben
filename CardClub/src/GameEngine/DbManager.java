@@ -30,12 +30,12 @@ public class DbManager {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
-		
+
 		try {
 			st = con.prepareCall("{call SP_AddGamePlayed(?, ?)}");
 			st.setString(1, username);
 			st.registerOutParameter(2, Types.INTEGER);
-			
+
 			if (st.getInt(2) > 0) {
 				result = true;
 			}
@@ -67,12 +67,12 @@ public class DbManager {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
-		
+
 		try {
 			st = con.prepareCall("{call SP_AddGameWon(?, ?)}");
 			st.setString(1, username);
 			st.registerOutParameter(2, Types.INTEGER);
-			
+
 			if (st.getInt(2) > 0) {
 				result = true;
 			}
@@ -105,15 +105,15 @@ public class DbManager {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
-		
+
 		try {
 			st = con.prepareCall("{call SP_CreateLog(?, ?, ?)}");
 			st.setString(1, errorAction);
 			st.setString(2, errormessage);
 			st.registerOutParameter(3, Types.INTEGER);
-			
+
 			st.executeUpdate();
-			
+
 			if (st.getInt(3) > 0) {
 				result = true;
 			}
@@ -123,14 +123,14 @@ public class DbManager {
 			return result;
 		} finally {
 			try {
-				if(st != null)
-				st.close();
+				if (st != null)
+					st.close();
 			} catch (SQLException e) {
 				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
 			try {
-				if(con != null)
-				con.close();
+				if (con != null)
+					con.close();
 			} catch (SQLException e) {
 				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
 			}
@@ -147,15 +147,15 @@ public class DbManager {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
-		
+
 		try {
-			
+
 			st = con.prepareCall("{call SP_DeletePlayer(?, ?)}");
 			st.setString(1, username);
 			st.registerOutParameter(2, Types.INTEGER);
-			
+
 			st.executeUpdate();
-			
+
 			if (st.getInt(2) > 0) {
 				result = true;
 			}
@@ -190,7 +190,7 @@ public class DbManager {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
-		
+
 		try {
 			st = con.prepareCall("{call SP_UpdatePlayer(?, ?, ?, ?, ?)}");
 			st.setString(1, newplayername);
@@ -198,9 +198,9 @@ public class DbManager {
 			st.setString(3, newusername);
 			st.setString(4, newpassword);
 			st.registerOutParameter(5, Types.INTEGER);
-			
+
 			st.executeUpdate();
-			
+
 			if (st.getInt(5) > 0) {
 				result = true;
 			}
@@ -240,9 +240,9 @@ public class DbManager {
 			st.setString(2, username);
 			st.setString(3, databasePassword);
 			st.registerOutParameter(4, Types.INTEGER);
-			
+
 			st.executeUpdate();
-			
+
 			if (st.getInt(4) > 0) {
 				result = true;
 			}
@@ -274,14 +274,20 @@ public class DbManager {
 	public boolean checkLogin(String userName, String password) {
 		Connection con = connectDb();
 		CallableStatement st = null;
-		
+
 		try {
 			st = con.prepareCall("{call SP_CheckLogin(?, ?, ?)}");
 			st.setString(1, userName);
 			st.setString(2, password);
-			st.registerOutParameter(3, Types.BIT);
-						
+			st.registerOutParameter(3, Types.BOOLEAN);
+
+			st.executeUpdate();
+			
+			System.out.println("Query: " + st);
+
 			boolean result = st.getBoolean(3);
+			System.out.println("3 is: " + st.getString(3));
+			System.out.println("result is: " + result);
 			return result;
 		} catch (SQLException e) {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
@@ -314,9 +320,9 @@ public class DbManager {
 			st.setString(1, username);
 			st.registerOutParameter(2, Types.INTEGER);
 			st.registerOutParameter(3, Types.INTEGER);
-			
+
 			st.executeUpdate();
-			
+
 			String[] result = new String[] { st.getString(2), st.getString(3) };
 			return result;
 		} catch (SQLException e) {
