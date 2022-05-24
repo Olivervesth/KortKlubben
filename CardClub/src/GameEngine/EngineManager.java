@@ -103,7 +103,7 @@ public final class EngineManager {
 	 * @return Player
 	 */
 	public Player createPlayer(String username,String playername) {
-		return playerManager.createPlayer(username,playername, true);
+		return playerManager.createPlayer(hashing.hash(username),playername, true);
 	}
 
 	/**
@@ -113,8 +113,8 @@ public final class EngineManager {
 	 * @param String password
 	 * @return boolean
 	 */
-	public boolean createUser(String playername, String username, String password) {
-		return db.createPlayer(playername, hashing.hash(username) ,hashing.hash(password));
+	public boolean createUser(Player player, String password) {
+		return db.createPlayer(player ,hashing.hash(password));
 	}
 
 	/**
@@ -136,7 +136,7 @@ public final class EngineManager {
 	 * @return boolean
 	 */
 	public boolean updateUser(Player player, String newPlayername, String newpassword) {
-		return db.updatePlayer(player, newPlayername, newpassword);
+		return db.updatePlayer(player, newpassword);
 	}
 
 	/**
