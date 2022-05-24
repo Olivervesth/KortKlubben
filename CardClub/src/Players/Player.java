@@ -6,7 +6,7 @@ public abstract class Player
 	 * Fields for Player class
 	 */
 	private String playername;
-	private String usernamename;
+	private String username;
 	private int points;
 	
 	/**
@@ -16,17 +16,26 @@ public abstract class Player
 	public Player(String usernamename,String playername)
 	{
 		this.playername = playername;
-		this.usernamename = usernamename;
+		this.username = usernamename;
 		this.points = 0;
 	}
 	
 	/**
-	 * Method to get the player's name
+	 * Method to get the player's username
 	 * @return String name
 	 */
-	public String getName()
+	public String getUserName()
 	{
-		return this.usernamename;
+		return this.username;
+	}
+
+	/**
+	 * Method to get the player's player name
+	 * @return String name
+	 */
+	public String getPlayerName()
+	{
+		return this.playername;
 	}
 	
 	/**
