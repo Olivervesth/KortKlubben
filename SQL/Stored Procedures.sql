@@ -343,7 +343,7 @@ END//
 -- =============================================
 -- Author:      Jesper Deleurand
 -- Create date: 20/05/2022
--- Description: Creates a new Log
+-- Description: Creates a new ErrorLog
 -- Parameters:
 --   action - the action that occurred.
 --   message - description of error.
@@ -365,7 +365,7 @@ END//
 -- =============================================
 -- Author:      Jesper Deleurand
 -- Create date: 20/05/2022
--- Description: Gets entire collection of Logs
+-- Description: Gets entire collection of ErrorLogs
 -- Returns:   All Logs
 -- =============================================
 CREATE PROCEDURE SP_GetErrorLogs()
@@ -376,7 +376,7 @@ END//
 -- =============================================
 -- Author:      Jesper Deleurand
 -- Create date: 20/05/2022
--- Description: Gets a single Log by ID
+-- Description: Gets a single ErrorLog by ID
 -- Parameters:
 --   id - the id of the Log.
 -- Returns:   The Log
