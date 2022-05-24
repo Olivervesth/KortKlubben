@@ -20,6 +20,7 @@ public class ClientThread extends Thread {
 	Socket client;
 	Room activeroom = null;
 	Player clientplayer = null;
+	
 	public ClientThread(Socket cli,EngineManager enginemanager,RoomManager roommanager ) {
 
 		em = enginemanager;
@@ -84,22 +85,27 @@ public class ClientThread extends Thread {
 			 * data[2] = psw
 			 */
 			System.out.println("in login case");
-			
-			try{
-				if(data[1] != null && data[2] != null) {
-					 
-					System.out.println("data send in login case");
-					clientplayer = em.login(data[1], data[2]);
-					if(clientplayer != null) {
-						return true;
+			if(clientplayer == null) {
+				try{
+					if(data[1] != null && data[2] != null) {
 						
-					}else {
-						return false;
+						System.out.println("data send in login case");
+						clientplayer = em.login(data[1], data[2]);
+						System.out.println(clientplayer.getUserName()+" Logged in");
+						if(clientplayer != null) {
+							return true;
+							
+						}else {
+							return false;
+						}
 					}
+					
+				}catch(ArrayIndexOutOfBoundsException e) {
+					em.saveErrorLog(this.getName(), e.getLocalizedMessage()+""+e.getMessage());
 				}
 				
-			}catch(ArrayIndexOutOfBoundsException e) {
-				em.saveErrorLog(this.getName(), e.getLocalizedMessage()+""+e.getMessage());
+			}else {
+				return false;
 			}
 			
 			break;
@@ -110,17 +116,21 @@ public class ClientThread extends Thread {
 			 * data[2] = username
 			 * data[3] = psw
 			 */
-			System.out.println("Register case");
-			try{
-				if(data[1] != null && data[2] != null && data[3] != null) {
-					System.out.println("Creating new user");
-					clientplayer = em.createPlayer(data[2], data[1]);
-					return em.createUser(clientplayer,data[3]);
+			if(clientplayer == null) {
+				System.out.println("Register case");
+				try{
+					if(data[1] != null && data[2] != null && data[3] != null) {
+						System.out.println("Creating new user");
+						clientplayer = em.createPlayer(data[2], data[1]);
+						return em.createUser(clientplayer,data[3]);
+					}
+					
+				}catch(ArrayIndexOutOfBoundsException e) {
+					em.saveErrorLog(this.getName(), e.getLocalizedMessage()+""+e.getMessage());
 				}
 				
-			}catch(ArrayIndexOutOfBoundsException e) {
-				em.saveErrorLog(this.getName(), e.getLocalizedMessage()+""+e.getMessage());
 			}
+			
 					break;
 		case "createroom":
 			/**
@@ -128,16 +138,19 @@ public class ClientThread extends Thread {
 			 * data[2] = username
 			 * data[3] = psw
 			 */
-			try{
-				if(data[1] != null) {
-					activeroom = rm.createRoom(1,em.createPlayer(data[2],data[1]));//fix
+			if(clientplayer != null) {
+				try{
+					activeroom = rm.createRoom(1,clientplayer);//fix
 					if(activeroom != null) {
 						return true;
 					}
+					
+				}catch(ArrayIndexOutOfBoundsException e) {
+					em.saveErrorLog(this.getName(), e.getLocalizedMessage()+""+e.getMessage());
 				}
 				
-			}catch(ArrayIndexOutOfBoundsException e) {
-				em.saveErrorLog(this.getName(), e.getLocalizedMessage()+""+e.getMessage());
+			}else {
+				return false;
 			}
 			break;
 
