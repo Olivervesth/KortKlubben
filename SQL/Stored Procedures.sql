@@ -11,6 +11,7 @@ USE cardclub_db;
 
 DROP PROCEDURE IF EXISTS SP_GetLatestPlayerId;
 DROP PROCEDURE IF EXISTS SP_GetPlayerID;
+DROP PROCEDURE IF EXISTS SP_GetPlayerName;
 DROP PROCEDURE IF EXISTS SP_CheckLogin;
 DROP PROCEDURE IF EXISTS SP_GetStats;
 DROP PROCEDURE IF EXISTS SP_CreatePlayer;
@@ -69,15 +70,15 @@ END//
 -- =============================================
 CREATE PROCEDURE SP_GetPlayerName(
 IN username VARCHAR(50),
-OUT name VARCHAR(50))
+OUT result VARCHAR(50))
 BEGIN
 
-	SET @id = SP_GetPlayerId(username);
+	CALL SP_GetPlayerId(username, @id);
 	
     SELECT Name
-    INTO name
+    INTO result
     FROM Players
-    WHERE Players.Id = @id;
+    WHERE Player_Id = @id;
 
 END//
 
@@ -342,4 +343,4 @@ DELIMITER ;SELECT * FROM cardclub_db.Players;
 
 
 
-CALL SP_CreatePlayer('Jesper', 'JesperKD', 'Kage1234!', @rs);
+-- CALL SP_CreatePlayer('Jesper', 'JesperKD', 'Kage1234!', @rs);

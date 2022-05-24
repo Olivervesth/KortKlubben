@@ -104,14 +104,14 @@ public class DbManager {
 		boolean result = false;
 
 		try {
-			st = con.prepareCall("{call SP_UpdatePlayer(?, ?, ?, ?, ?)}");
+			st = con.prepareCall("{call SP_UpdatePlayer(?, ?, ?, ?)}");
 			st.setString(1, player.getPlayerName());
 			st.setString(2, player.getUserName());
 			st.setString(3, newpassword);
 			st.registerOutParameter(4, Types.INTEGER);
 
 			st.executeUpdate();
-
+			
 			if (st.getInt(4) > 0) {
 				result = true;
 			}

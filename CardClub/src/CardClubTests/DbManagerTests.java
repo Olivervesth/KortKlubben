@@ -8,13 +8,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import GameEngine.DbManager;
 import Players.Human;
 import Players.Player;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DbManagerTests {
 
 	static DbManager manager;
@@ -67,14 +70,13 @@ class DbManagerTests {
 	@Order(2)
 	void createPlayer_CreatesNewPlayer_IfNotNull() {
 		// Arrange
-		Player test = testPlayer();
 		String password = "Chowder123";
 		boolean result = false;
 
 		// Act
 		try {
 
-			result = manager.createPlayer(test, password);
+			result = manager.createPlayer(testPlayer(), password);
 
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -190,13 +192,13 @@ class DbManagerTests {
 	}
 	
 	private Player testPlayer() {
-		Player player = new Human("Lars", "LarsLummer");
+		Player player = new Human("LarsLummer", "Lars");
 		
 		return player;
 	}
 	
 	private Player testPlayer2() {
-		Player player = new Human("Bror", "LarsLummer");
+		Player player = new Human("LarsLummer", "Bror");
 		
 		return player;
 	}
