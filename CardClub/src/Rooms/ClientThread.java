@@ -12,9 +12,9 @@ public class ClientThread extends Thread {
 	private DataInputStream in = null;
 	Socket client;
 	Room activeroom = null;
-	public ClientThread(Socket cli) {
-		em = new EngineManager();
-		rm = new RoomManager();
+	public ClientThread(Socket cli,EngineManager enginemanager,RoomManager roommanager ) {
+		em = enginemanager;
+		rm = roommanager;
 		client = cli;
 	}
 	public void run() {
@@ -41,7 +41,8 @@ public class ClientThread extends Thread {
 	    			 
 	    			  DataOutputStream output = new DataOutputStream(client.getOutputStream());
 	    			  line = in.readUTF();
-	    			  if(activeroom != null) {
+	    			  if(activeroom == null) {
+	    				  System.out.println("UserAction activated");
 	    				  if(UserActions(line)) {
 	    	    			  output.writeUTF("true");
 	    				  }else {
@@ -66,20 +67,20 @@ public class ClientThread extends Thread {
 	 */
 	public boolean UserActions(String command) {
 		String[] data = command.split(";");
-		
+		System.out.println("data 0 :"+data[0]);
 		switch(data[0]) {
 		case "login":
-			System.out.println("in login case");
 			/**
-			 * data[1] = playername
-			 * data[2] = username
-			 * data[3] = psw
+			 * data[1] = username
+			 * data[2] = psw
 			 */
+			System.out.println("in login case");
+			
 			try{
-				if(data[2] != null && data[3] != null) {
+				if(data[1] != null && data[2] != null) {
 					
 					System.out.println("data send in login case");
-					return em.login(data[2], data[3]);
+					return em.login(data[1], data[2]);
 				}
 				
 			}catch(ArrayIndexOutOfBoundsException e) {
@@ -89,9 +90,15 @@ public class ClientThread extends Thread {
 			break;
 			
 		case "register":
+			/**
+			 * data[1] = playername
+			 * data[2] = username
+			 * data[3] = psw
+			 */
+			System.out.println("Register case");
 			try{
 				if(data[1] != null && data[2] != null && data[3] != null) {
-					
+					System.out.println("Creating new user");
 					return em.createUser(data[1], data[2], data[3]);
 				}
 				
@@ -118,7 +125,8 @@ public class ClientThread extends Thread {
 		}
 		return false;
 	}
+	
 	public void PlayerInGameActions(String command) {
 		
-	}
+	} 
 }

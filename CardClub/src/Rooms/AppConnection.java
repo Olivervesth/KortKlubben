@@ -11,12 +11,14 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
+import GameEngine.EngineManager;
 import Rooms.RoomManager;
 
 public class AppConnection {
 	  //initialize socket and input stream
 	  private Socket socket = null;
+	  private EngineManager em = null;
+	  private RoomManager rm = null;
 	  private ServerSocket server = null;
 	  private DataInputStream in = null;
 	 
@@ -25,7 +27,8 @@ public class AppConnection {
 	  public AppConnection(int port) {
 			// starts server and waits for a connection
 	    try {
-	    	
+	    	em = new EngineManager();
+	    	rm = new RoomManager();
 	      server = new ServerSocket(port);
 	      println("Server started: Ip "+InetAddress.getLocalHost().getHostAddress()+",Port "+server.getLocalPort()+":");
 	      System.out.println("Waiting for a client ........");
@@ -43,7 +46,7 @@ public class AppConnection {
 	    	                "Error accepting client connection", e);
 	    	  }
 	    	  //Start new thread when a new client joins
-	    	  new Thread(new ClientThread(socket)).start();
+	    	  new Thread(new ClientThread(socket,em,rm)).start();
 	    	  System.out.println(""+clientsconnected+"");
 	      }
 	      // close connection
