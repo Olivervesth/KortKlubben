@@ -11,6 +11,7 @@ package GameEngine;
 public class Logger {
 	
 	public boolean saveLog(String action, String message, DbManager db) {
+		System.out.println("Log Saved: " + action + " " + message);
 		return db.createLog(action, message);
 	}
 	
