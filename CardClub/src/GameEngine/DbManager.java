@@ -254,12 +254,12 @@ public class DbManager {
 	 * @param String userName
 	 * @return String
 	 */
-	public String getPlayerName(Player player) {
+	public String getPlayerName(String username) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		try {
 			st = con.prepareCall("{CALL SP_GetPlayerName(?, ?)}");
-			st.setString(1, player.getUserName());
+			st.setString(1, username);
 			st.registerOutParameter(2, Types.INTEGER);
 
 			st.executeUpdate();
