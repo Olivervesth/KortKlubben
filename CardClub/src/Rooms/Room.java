@@ -1,5 +1,6 @@
 package Rooms;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Cards.CardManager;
@@ -11,7 +12,7 @@ public class Room
 	 * Fields for Room class
 	 */
 	private List<Player> players;
-	private Player owner;
+	private Player owner = null;
 	private GameManager gameManager;
 	private CardManager cardManager;
 	
@@ -23,6 +24,7 @@ public class Room
 	 */
 	public Room(Player owner, GameManager gameManager, CardManager cardManager)
 	{
+		players = new ArrayList<Player>();
 		this.owner = owner;
 		players.add(owner);
 		this.gameManager = gameManager;
