@@ -8,6 +8,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * 
+ * @author Oliver
+ *
+ */
 public class ClientThread extends Thread {
 	private EngineManager em = null;
 	private RoomManager rm = null;
@@ -141,6 +146,10 @@ public class ClientThread extends Thread {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param command
+	 */
 	public void PlayerInGameActions(String command) {
 		String[] data = command.split(";");
 //		switch(data[0]) {
