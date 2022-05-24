@@ -104,8 +104,8 @@ public final class EngineManager {
 	 * @param String name
 	 * @return Player
 	 */
-	public Player createPlayer(String name) {
-		return playerManager.createPlayer(name, true);
+	public Player createPlayer(String username,String playername) {
+		return playerManager.createPlayer(username,playername, true);
 	}
 
 	/**

@@ -8,15 +8,15 @@ public class PlayerManager
 	 * @param boolean human
 	 * @return Player
 	 */
-	public Player createPlayer(String name, boolean human)
+	public Player createPlayer(String username,String playername, boolean human)
 	{
 		if(human)
 		{
-			return new Human(name);
+			return new Human(username,playername);
 		}
 		else
 		{
-			return new Computer(name);
+			return new Computer(playername);
 		}
 	}
 	

@@ -5,16 +5,18 @@ public abstract class Player
 	/**
 	 * Fields for Player class
 	 */
-	private String name;
+	private String playername;
+	private String usernamename;
 	private int points;
 	
 	/**
 	 * Constructor for Human class
 	 * @param String name
 	 */
-	public Player(String name)
+	public Player(String usernamename,String playername)
 	{
-		this.name = name;
+		this.playername = playername;
+		this.usernamename = usernamename;
 		this.points = 0;
 	}
 	
@@ -24,7 +26,7 @@ public abstract class Player
 	 */
 	public String getName()
 	{
-		return this.name;
+		return this.usernamename;
 	}
 	
 	/**
@@ -51,7 +53,7 @@ public abstract class Player
 		}
 		else
 		{
-			System.out.println("Player: "+this.name+" tried to add: "+ points+" points");
+			System.out.println("Player: "+this.usernamename+" tried to add: "+ points+" points");
 		}
 	}
 

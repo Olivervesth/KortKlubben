@@ -1,5 +1,7 @@
 package Rooms;
 import GameEngine.EngineManager;
+import Players.Player;
+
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -12,7 +14,9 @@ public class ClientThread extends Thread {
 	private DataInputStream in = null;
 	Socket client;
 	Room activeroom = null;
+	Player clientplayer = null;
 	public ClientThread(Socket cli,EngineManager enginemanager,RoomManager roommanager ) {
+
 		em = enginemanager;
 		rm = roommanager;
 		client = cli;
@@ -80,7 +84,12 @@ public class ClientThread extends Thread {
 				if(data[1] != null && data[2] != null) {
 					
 					System.out.println("data send in login case");
-					return em.login(data[1], data[2]);
+					if(em.login(data[1], data[2]) != null) {//fix
+						return true;
+						
+					}else {
+						return false;
+					}
 				}
 				
 			}catch(ArrayIndexOutOfBoundsException e) {
@@ -109,7 +118,7 @@ public class ClientThread extends Thread {
 		case "createroom":
 			try{
 				if(data[1] != null) {
-					activeroom = rm.createRoom(1,em.createPlayer(data[1]));
+					activeroom = rm.createRoom(1,em.createPlayer(data[2],data[1]));//fix
 					if(activeroom != null) {
 						return true;
 					}
