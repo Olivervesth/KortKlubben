@@ -181,13 +181,13 @@ public class DbManager {
 	 * @param String password
 	 * @return boolean
 	 */
-	public boolean checkLogin(Player player, String password) {
+	public boolean checkLogin(String username, String password) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 
 		try {
 			st = con.prepareCall("{call SP_CheckLogin(?, ?, ?)}");
-			st.setString(1, player.getUserName());
+			st.setString(1, username);
 			st.setString(2, password);
 			st.registerOutParameter(3, Types.BIT);
 
