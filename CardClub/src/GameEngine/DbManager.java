@@ -2,6 +2,8 @@ package GameEngine;
 
 import java.sql.*;
 
+import Players.Player;
+
 public class DbManager {
 	/**
 	 * Fields for DbManager move this to a application setting?
@@ -55,14 +57,14 @@ public class DbManager {
 	 * @param String Password
 	 * @return boolean
 	 */
-	public boolean createPlayer(String name, String username, String Password) {
+	public boolean createPlayer(Player player, String name, String Password) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
 		try {
 			st = con.prepareCall("{call SP_CreatePlayer(?, ?, ?, ?)}");
 			st.setString(1, name);
-			st.setString(2, username);
+			st.setString(2, player.getUserName());
 			st.setString(3, Password);
 			st.registerOutParameter(4, Types.INTEGER);
 
@@ -97,7 +99,7 @@ public class DbManager {
 	 * @param String newpassword
 	 * @return boolean
 	 */
-	public boolean updatePlayer(String newplayername, String username, String newpassword) {
+	public boolean updatePlayer(Player player, String newplayername, String newpassword) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
@@ -105,7 +107,7 @@ public class DbManager {
 		try {
 			st = con.prepareCall("{call SP_UpdatePlayer(?, ?, ?, ?, ?)}");
 			st.setString(1, newplayername);
-			st.setString(2, username);
+			st.setString(2, player.getUserName());
 			st.setString(3, newpassword);
 			st.registerOutParameter(4, Types.INTEGER);
 
@@ -138,7 +140,7 @@ public class DbManager {
 	 * @param String username
 	 * @return boolean
 	 */
-	public boolean deletePlayer(String username) {
+	public boolean deletePlayer(Player player) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
@@ -146,7 +148,7 @@ public class DbManager {
 		try {
 
 			st = con.prepareCall("{call SP_DeletePlayer(?, ?)}");
-			st.setString(1, username);
+			st.setString(1, player.getUserName());
 			st.registerOutParameter(2, Types.INTEGER);
 
 			st.executeUpdate();
@@ -179,13 +181,13 @@ public class DbManager {
 	 * @param String password
 	 * @return boolean
 	 */
-	public boolean checkLogin(String userName, String password) {
+	public boolean checkLogin(Player player, String password) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 
 		try {
 			st = con.prepareCall("{call SP_CheckLogin(?, ?, ?)}");
-			st.setString(1, userName);
+			st.setString(1, player.getUserName());
 			st.setString(2, password);
 			st.registerOutParameter(3, Types.BIT);
 
@@ -216,12 +218,12 @@ public class DbManager {
 	 * @param String userName
 	 * @return String[]
 	 */
-	public String[] getStats(String username) {
+	public String[] getStats(Player player) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		try {
 			st = con.prepareCall("{call SP_GetStats(?, ?, ?)}");
-			st.setString(1, username);
+			st.setString(1, player.getUserName());
 			st.registerOutParameter(2, Types.INTEGER);
 			st.registerOutParameter(3, Types.INTEGER);
 
@@ -252,12 +254,12 @@ public class DbManager {
 	 * @param String userName
 	 * @return String
 	 */
-	public String getPlayerName(String username) {
+	public String getPlayerName(Player player) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		try {
 			st = con.prepareCall("{CALL SP_GetPlayerName(?, ?)}");
-			st.setString(1, username);
+			st.setString(1, player.getUserName());
 			st.registerOutParameter(2, Types.INTEGER);
 
 			st.executeUpdate();
