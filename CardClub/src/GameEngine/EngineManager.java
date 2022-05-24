@@ -50,12 +50,10 @@ public final class EngineManager {
 	 * @param String password
 	 * @return String Player name
 	 */
-	public String login(String username, String password) {
+	public Player login(String username, String password) {
 		// if login is success
 		if (db.checkLogin(hashing.hash(username), hashing.hash(password))) {
-
-			// create user?
-			return db.getPlayerName(username);
+			return playerManager.createPlayer(username, db.getPlayerName(username), true);
 		}
 		// if login fails
 		else {
