@@ -94,8 +94,7 @@ public class DbManager {
 	/**
 	 * Method to update player information
 	 * 
-	 * @param String newplayername
-	 * @param String username
+	 * @param Player player. Player object with new info.
 	 * @param String newpassword
 	 * @return boolean
 	 */
@@ -137,7 +136,7 @@ public class DbManager {
 	/**
 	 * Method to delete a player
 	 * 
-	 * @param String username
+	 * @param Player player
 	 * @return boolean
 	 */
 	public boolean deletePlayer(Player player) {
