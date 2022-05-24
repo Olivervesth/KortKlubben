@@ -279,15 +279,11 @@ public class DbManager {
 			st = con.prepareCall("{call SP_CheckLogin(?, ?, ?)}");
 			st.setString(1, userName);
 			st.setString(2, password);
-			st.registerOutParameter(3, Types.BOOLEAN);
+			st.registerOutParameter(3, Types.BIT);
 
 			st.executeUpdate();
-			
-			System.out.println("Query: " + st);
 
 			boolean result = st.getBoolean(3);
-			System.out.println("3 is: " + st.getString(3));
-			System.out.println("result is: " + result);
 			return result;
 		} catch (SQLException e) {
 			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());

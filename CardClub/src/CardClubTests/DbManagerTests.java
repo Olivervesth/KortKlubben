@@ -108,8 +108,8 @@ class DbManagerTests {
 	@Order(4)
 	void checkLogin_ReturnsTrue_IfParamsEqual() {
 		//Arrange
-		String username = "PaulChowder";
-		String password = "Chowder123";
+		String username = "RasRasRasputin";
+		String password = "QueenLover12";
 		boolean result = false;
 		
 		//Act
