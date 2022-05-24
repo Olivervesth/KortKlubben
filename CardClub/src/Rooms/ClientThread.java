@@ -114,7 +114,8 @@ public class ClientThread extends Thread {
 			try{
 				if(data[1] != null && data[2] != null && data[3] != null) {
 					System.out.println("Creating new user");
-					return em.createUser(data[1], data[2], data[3]);
+					clientplayer = em.createPlayer(data[2], data[1]);
+					return em.createUser(clientplayer,data[3]);
 				}
 				
 			}catch(ArrayIndexOutOfBoundsException e) {
