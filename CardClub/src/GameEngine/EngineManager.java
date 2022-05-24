@@ -48,19 +48,19 @@ public final class EngineManager {
 	 * 
 	 * @param String username
 	 * @param String password
-	 * @return true/false
+	 * @return String Player name
 	 */
-	public boolean login(String username, String password) {
+	public String login(String username, String password) {
 		// if login is success
 		if (db.checkLogin(hashing.hash(username), hashing.hash(password))) {
-			// create player obj?
-			// log new login
-			return true;
+
+			// create user?
+			return db.getPlayerName(username);
 		}
 		// if login fails
 		else {
 			// log failed attempt?
-			return false;
+			return null;
 		}
 	}
 
@@ -132,16 +132,13 @@ public final class EngineManager {
 	/**
 	 * Method to update a user
 	 * 
-	 * @param String playername
 	 * @param String newplayername
 	 * @param String username
-	 * @param String newusername
-	 * @param String password
 	 * @param String newpassword
 	 * @return boolean
 	 */
-	public boolean updateUser(String newplayername, String username, String newusername, String newpassword) {
-		return db.updatePlayer(newplayername, username, newusername, newpassword);
+	public boolean updateUser(String newplayername, String username, String newpassword) {
+		return db.updatePlayer(newplayername, username, newpassword);
 	}
 
 	/**

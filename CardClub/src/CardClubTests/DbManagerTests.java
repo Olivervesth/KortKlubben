@@ -128,7 +128,7 @@ class DbManagerTests {
 		boolean result = false;
 		
 		// Act
-		result = manager.updatePlayer("Lars", username, "LarsLarsen", "TestPass123");
+		result = manager.updatePlayer("Lars", username, "TestPass123");
 		
 		// Assert
 		assertTrue(result);
