@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import GameEngine.DbManager;
+import Players.Human;
+import Players.Player;
 
 class DbManagerTests {
 
@@ -65,15 +67,14 @@ class DbManagerTests {
 	@Order(2)
 	void createPlayer_CreatesNewPlayer_IfNotNull() {
 		// Arrange
-		String playername = "Paul";
-		String username = "PaulChowder";
+		Player test = testPlayer();
 		String password = "Chowder123";
 		boolean result = false;
 
 		// Act
 		try {
 
-			result = manager.createPlayer(playername, username, password);
+			result = manager.createPlayer(test, password);
 
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -93,7 +94,7 @@ class DbManagerTests {
 		// Act
 		try {
 
-			resultSet = manager.getStats("PaulChowder");
+			resultSet = manager.getStats(testPlayer());
 
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -108,12 +109,11 @@ class DbManagerTests {
 	@Order(4)
 	void checkLogin_ReturnsTrue_IfParamsEqual() {
 		// Arrange
-		String username = "JesperKD";
-		String password = "Kage1234!";
+		String password = "Chowder123";
 		boolean result = false;
 		
 		// Act
-		result = manager.checkLogin(username, password);
+		result = manager.checkLogin(testPlayer(), password);
 		
 		
 		// Assert
@@ -124,11 +124,10 @@ class DbManagerTests {
 	@Order(5)
 	void updatePlayer_ChangesPlayerData_IfValid() {
 		// Arrange
-		String username = "PaulChowder";
 		boolean result = false;
 		
 		// Act
-		result = manager.updatePlayer("Lars", username, "TestPass123");
+		result = manager.updatePlayer(testPlayer2(), "TestPass123");
 		
 		// Assert
 		assertTrue(result);
@@ -138,11 +137,10 @@ class DbManagerTests {
 	@Order(6)
 	void addGamePlayed_ShouldAdd_IfAble() {
 		// Arrange
-		String username = "JesperKD";
 		boolean result = false;
 		
 		// Act
-		result = manager.addGamePlayed(username);
+		result = manager.addGamePlayed(testPlayer2());
 		
 		// Assert
 		assertTrue(result);
@@ -152,11 +150,10 @@ class DbManagerTests {
 	@Order(7)
 	void addGameWon_ShouldAdd_IfAble() {
 		// Arrange
-		String username = "JesperKD";
 		boolean result = false;
 		
 		// Act
-		result = manager.addGameWon(username);
+		result = manager.addGameWon(testPlayer2());
 		
 		// Assert
 		assertTrue(result);
@@ -167,11 +164,10 @@ class DbManagerTests {
 	@Order(8)
 	void deletePlayer_RemovesPlayer_IfAble() {
 		// Arrange
-		String username = "LarsLarsen";
 		boolean result = false;
 		
 		// Act
-		result = manager.deletePlayer(username);
+		result = manager.deletePlayer(testPlayer2());
 		
 		// Assert
 		assertTrue(result);
@@ -190,6 +186,18 @@ class DbManagerTests {
 		
 		// Assert
 		assertTrue(result);
+	}
+	
+	private Player testPlayer() {
+		Player player = new Human("Lars", "LarsLummer");
+		
+		return player;
+	}
+	
+	private Player testPlayer2() {
+		Player player = new Human("Bror", "LarsLummer");
+		
+		return player;
 	}
 
 }

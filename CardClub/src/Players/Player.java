@@ -62,7 +62,7 @@ public abstract class Player
 		}
 		else
 		{
-			System.out.println("Player: "+this.usernamename+" tried to add: "+ points+" points");
+			System.out.println("Player: "+this.username+" tried to add: "+ points+" points");
 		}
 	}
 

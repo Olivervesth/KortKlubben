@@ -57,13 +57,13 @@ public class DbManager {
 	 * @param String Password
 	 * @return boolean
 	 */
-	public boolean createPlayer(Player player, String name, String Password) {
+	public boolean createPlayer(Player player, String Password) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
 		try {
 			st = con.prepareCall("{call SP_CreatePlayer(?, ?, ?, ?)}");
-			st.setString(1, name);
+			st.setString(1, player.getPlayerName());
 			st.setString(2, player.getUserName());
 			st.setString(3, Password);
 			st.registerOutParameter(4, Types.INTEGER);
@@ -99,14 +99,14 @@ public class DbManager {
 	 * @param String newpassword
 	 * @return boolean
 	 */
-	public boolean updatePlayer(Player player, String newplayername, String newpassword) {
+	public boolean updatePlayer(Player player, String newpassword) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
 
 		try {
 			st = con.prepareCall("{call SP_UpdatePlayer(?, ?, ?, ?, ?)}");
-			st.setString(1, newplayername);
+			st.setString(1, player.getPlayerName());
 			st.setString(2, player.getUserName());
 			st.setString(3, newpassword);
 			st.registerOutParameter(4, Types.INTEGER);
@@ -289,14 +289,14 @@ public class DbManager {
 	 * @param String username
 	 * @return boolean
 	 */
-	public boolean addGamePlayed(String username) {
+	public boolean addGamePlayed(Player player) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
 
 		try {
 			st = con.prepareCall("{call SP_AddGamePlayed(?, ?)}");
-			st.setString(1, username);
+			st.setString(1, player.getUserName());
 			st.registerOutParameter(2, Types.INTEGER);
 
 			st.executeUpdate();
@@ -328,14 +328,14 @@ public class DbManager {
 	 * @param String username
 	 * @return boolean
 	 */
-	public boolean addGameWon(String username) {
+	public boolean addGameWon(Player player) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
 
 		try {
 			st = con.prepareCall("{call SP_AddGameWon(?, ?)}");
-			st.setString(1, username);
+			st.setString(1, player.getUserName());
 			st.registerOutParameter(2, Types.INTEGER);
 
 			st.executeUpdate();
