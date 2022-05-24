@@ -36,6 +36,8 @@ public class DbManager {
 			st.setString(1, username);
 			st.registerOutParameter(2, Types.INTEGER);
 
+			st.executeUpdate();
+			
 			if (st.getInt(2) > 0) {
 				result = true;
 			}
@@ -72,6 +74,8 @@ public class DbManager {
 			st = con.prepareCall("{call SP_AddGameWon(?, ?)}");
 			st.setString(1, username);
 			st.registerOutParameter(2, Types.INTEGER);
+			
+			st.executeUpdate();
 
 			if (st.getInt(2) > 0) {
 				result = true;
