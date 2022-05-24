@@ -68,7 +68,7 @@ public class ClientThread extends Thread {
 	    			  clientconnected = false;
 	    		  }
 	    	  }
-	    	  System.out.println("Closing connection to "+client.getInetAddress()+"");
+	    	  em.savLog("Disconnected", client.getInetAddress().toString());//Log disconnect
 	}
 	/**
 	 * 
@@ -88,9 +88,9 @@ public class ClientThread extends Thread {
 			if(clientplayer == null) {
 				try{
 					if(data[1] != null && data[2] != null) {
-						
 						System.out.println("data send in login case");
 						clientplayer = em.login(data[1], data[2]);
+						em.savLog("Login", client.getInetAddress().toString());
 						System.out.println(clientplayer.getUserName()+" Logged in");
 						if(clientplayer != null) {
 							return true;
@@ -140,9 +140,11 @@ public class ClientThread extends Thread {
 			 */
 			if(clientplayer != null) {
 				try{
-					activeroom = rm.createRoom(1,clientplayer);//fix
-					if(activeroom != null) {
+					if(activeroom == null) {
+						activeroom = rm.createRoom(1,clientplayer);//fix
 						return true;
+					}else {
+						return false;
 					}
 					
 				}catch(ArrayIndexOutOfBoundsException e) {
