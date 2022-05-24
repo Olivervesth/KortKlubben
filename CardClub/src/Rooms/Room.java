@@ -27,7 +27,7 @@ public class Room
 		players.add(owner);
 		this.gameManager = gameManager;
 		this.cardManager = cardManager;
-		cardManager.generateCardDeckNoJokers();
+		cardManager.generateCardDeckNoJokers();		
 	}
 	
 	/**
