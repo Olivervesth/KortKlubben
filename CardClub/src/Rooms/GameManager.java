@@ -41,6 +41,11 @@ public class GameManager {
 		}
 	}
 
+	/**
+	 * Method to play a card
+	 * @param int playerIndex
+	 * @param Card card
+	 */
 	public void playCard(int playerIndex, Card card)
 	{
 		((List<Card>)playerCards.toArray()[playerIndex]).remove(card);
