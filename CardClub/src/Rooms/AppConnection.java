@@ -27,8 +27,7 @@ public class AppConnection {
 	    try {
 	    	em = new EngineManager();
 	      server = new ServerSocket(port);
-	      System.out.println("Server started: Ip "+InetAddress.getLocalHost().getHostAddress()+",Port "+server.getLocalPort()+":");
-
+	      println("Server started: Ip "+InetAddress.getLocalHost().getHostAddress()+",Port "+server.getLocalPort()+":");
 	      System.out.println("Waiting for a client ........");
 
 	      while(!server.isClosed()) {
@@ -62,7 +61,7 @@ public class AppConnection {
 		}
 	    }
 	  }
-	  public void Threadedwebsocket(Socket socket) {
+	public void Threadedwebsocket(Socket socket) {
 		  Socket client = socket;
      	 System.out.println("New client connected: "+client.getInetAddress()+"");
      	clientsconnected++;
@@ -92,12 +91,16 @@ public class AppConnection {
 	    		  } catch (IOException i) {
 	    			  System.out.println(i);
 	    			  clientconnected = false;
+	    			  em.saveErrorLog("Websocket ","Client closing connection "+client.getInetAddress()+"");
 	    		  }
 	    	  }
 	    	  clientsconnected--;
+	    	  em.saveErrorLog("Websocket ","Client closing connection "+client.getInetAddress()+"");
 	    	  System.out.println("Closing connection to "+client.getInetAddress()+"");
 	  }
-
+	 private void println(String string) {
+		  System.out.println(string);
+	}
 //	final int port = 5010
 //			;
 //	public void connect() {
