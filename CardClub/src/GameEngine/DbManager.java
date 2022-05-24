@@ -32,7 +32,7 @@ public class DbManager {
 			con = DriverManager.getConnection(connectionString, databaseUsername, databasePassword);
 			return con;
 		} catch (Exception e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("connectDB", e.getMessage());
 		}
 		if (con != null) {
 			try {
@@ -40,7 +40,7 @@ public class DbManager {
 					con.close();
 				}
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("connectDB", e.getMessage());
 			}
 
 		}
@@ -63,7 +63,7 @@ public class DbManager {
 			st = con.prepareCall("{call SP_CreatePlayer(?, ?, ?, ?)}");
 			st.setString(1, name);
 			st.setString(2, username);
-			st.setString(3, databasePassword);
+			st.setString(3, Password);
 			st.registerOutParameter(4, Types.INTEGER);
 
 			st.executeUpdate();
@@ -73,18 +73,18 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("create Player", e.getMessage());
 			return result;
 		} finally {
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("create Player", e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("create Player", e.getMessage());
 			}
 		}
 	}
@@ -118,18 +118,18 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("Update Player", e.getMessage());
 			return result;
 		} finally {
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Update Player", e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Update Player", e.getMessage());
 			}
 		}
 	}
@@ -158,18 +158,18 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("Delete Player", e.getMessage());
 			return result;
 		} finally {
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Delete Player", e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Delete Player", e.getMessage());
 			}
 		}
 	}
@@ -196,18 +196,18 @@ public class DbManager {
 			boolean result = st.getBoolean(3);
 			return result;
 		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("Check Login", e.getMessage());
 			return false;
 		} finally {
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Check Login", e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Check Login", e.getMessage());
 			}
 		}
 	}
@@ -232,18 +232,18 @@ public class DbManager {
 			String[] result = new String[] { st.getString(2), st.getString(3) };
 			return result;
 		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("Get Stats", e.getMessage());
 			return null;
 		} finally {
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Get Stats", e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Get Stats", e.getMessage());
 			}
 		}
 	}
@@ -271,18 +271,18 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("Add Game Played", e.getMessage());
 			return result;
 		} finally {
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Add Game Played", e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Add Game Played", e.getMessage());
 			}
 		}
 	}
@@ -310,18 +310,18 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("Add Game Won", e.getMessage());
 			return result;
 		} finally {
 			try {
 				st.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Add Game Won", e.getMessage());
 			}
 			try {
 				con.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Add Game Won", e.getMessage());
 			}
 		}
 	}
@@ -351,20 +351,20 @@ public class DbManager {
 			}
 			return result;
 		} catch (SQLException e) {
-			EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+			EngineManager.getEngineManager().saveErrorLog("Create Log", e.getMessage());
 			return result;
 		} finally {
 			try {
 				if (st != null)
 					st.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Create Log", e.getMessage());
 			}
 			try {
 				if (con != null)
 					con.close();
 			} catch (SQLException e) {
-				EngineManager.getEngineManager().saveErrorMessage(e.getMessage());
+				EngineManager.getEngineManager().saveErrorLog("Create Log", e.getMessage());
 			}
 		}
 	}
