@@ -68,8 +68,8 @@ public final class EngineManager {
 	 * @param String username
 	 * @return boolean
 	 */
-	public boolean addGamePlayed(String username) {
-		return db.addGamePlayed(username);
+	public boolean addGamePlayed(Player player) {
+		return db.addGamePlayed(player);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public final class EngineManager {
 	 * @param String username
 	 * @return boolean
 	 */
-	public boolean addGameWon(String username) {
+	public boolean addGameWon(Player player) {
 		return db.addGameWon(username);
 	}
 
@@ -122,9 +122,9 @@ public final class EngineManager {
 	 * @param String username
 	 * @return String[]
 	 */
-	public String[] getStats(String username)
+	public String[] getStats(Player player)
 	{
-		return db.getStats(username);
+		return db.getStats(player);
 	}
 	
 	/**
@@ -135,8 +135,8 @@ public final class EngineManager {
 	 * @param String newpassword
 	 * @return boolean
 	 */
-	public boolean updateUser(String newplayername, String username, String newpassword) {
-		return db.updatePlayer(newplayername, username, newpassword);
+	public boolean updateUser(Player player, String newPlayername, String newpassword) {
+		return db.updatePlayer(player, newPlayername, newpassword);
 	}
 
 	/**
