@@ -79,7 +79,7 @@ public final class EngineManager {
 	 * @return boolean
 	 */
 	public boolean addGameWon(Player player) {
-		return db.addGameWon(username);
+		return db.addGameWon(player);
 	}
 
 	/**
