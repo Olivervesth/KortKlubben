@@ -32,7 +32,7 @@ public class RoomManager {
 		switch (gameType) {
 		// Whist
 		case 1:
-			room = new Room(owner, new GameManager());
+			room = new Room(owner, new GameManager(), new CardManager());
 			break;
 		// Poker?
 		case 2:
@@ -41,6 +41,8 @@ public class RoomManager {
 		case 3:
 			break;
 		}
+		if(room != null)
+			rooms.add(room);
 		return room;
 	}
 
