@@ -259,7 +259,7 @@ public class DbManager {
 		try {
 			st = con.prepareCall("{CALL SP_GetPlayerName(?, ?)}");
 			st.setString(1, username);
-			st.registerOutParameter(2, Types.INTEGER);
+			st.registerOutParameter(2, Types.VARCHAR);
 
 			st.executeUpdate();
 
