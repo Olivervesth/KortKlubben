@@ -131,18 +131,29 @@ IN newPass VARCHAR(10000),
 OUT result INT)
 BEGIN
 
-	INSERT INTO Players(Name)
-    VALUES(newName);
-        
-    CALL SP_GetLatestPlayerId(@NewId);
+	DECLARE errno INT;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+    GET CURRENT DIAGNOSTICS CONDITION 1 errno = MYSQL_ERRNO;
+    SELECT errno AS MYSQL_ERROR;
+    ROLLBACK;
+    END;
+
+	START TRANSACTION;
+		INSERT INTO Players(Name)
+		VALUES(newName);
+			
+		CALL SP_GetLatestPlayerId(@NewId);
+		
+		INSERT INTO Logins(Player_Id, UserName, Password)
+		VALUES(@NewID, newUsrName, newPass);
+		
+		INSERT INTO Stats(Player_Id, Games_Played, Games_Won)
+		VALUES(@NewId, 0, 0);
+		
+		SET result = ROW_COUNT();
     
-    INSERT INTO Logins(Player_Id, UserName, Password)
-    VALUES(@NewID, newUsrName, newPass);
-    
-    INSERT INTO Stats(Player_Id, Games_Played, Games_Won)
-    VALUES(@NewId, 0, 0);
-    
-    SET result = ROW_COUNT();
+    COMMIT WORK;
     
 END//
 
@@ -314,3 +325,9 @@ BEGIN
 END//
 
 DELIMITER ;SELECT * FROM cardclub_db.Players;
+
+
+
+
+
+CALL SP_CreatePlayer('Jesper', 'JesperKD', 'Kage1234!', @rs);
