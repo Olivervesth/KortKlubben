@@ -13,7 +13,11 @@ import java.util.concurrent.Executors;
 
 import GameEngine.EngineManager;
 import Rooms.RoomManager;
-
+/**
+ * 
+ * @author Oliver
+ *
+ */
 public class AppConnection {
 	  //initialize socket and input stream
 	  private Socket socket = null;
