@@ -60,6 +60,13 @@ BEGIN
     
 END//
 
+-- =============================================
+-- Author:      Jesper Deleurand
+-- Create date: 24/05/2022
+-- Parameters:
+--   username - username of player
+-- Returns:    Players Name
+-- =============================================
 CREATE PROCEDURE SP_GetPlayerName(
 IN username VARCHAR(50),
 OUT name VARCHAR(50))
