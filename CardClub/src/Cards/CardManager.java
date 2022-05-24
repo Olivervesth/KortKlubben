@@ -20,15 +20,13 @@ public class CardManager {
 	 */
 	public CardManager() {
 		cards = new ArrayList<>();
-		// can expand with multiple decks / CardManager
-		generateCardDeckNoJokers();
 	}
 
 	/**
 	 * Method to generate a new deck of cards This deck of cards do not contain
 	 * jockers Generated cards are added to the managers cards list
 	 */
-	public void generateCardDeckNoJokers() {
+	public List<Card> generateCardDeckNoJokers() {
 		String suit = "";
 		// for each suit
 		for (int s = 0; s < 4; s++) {
@@ -51,18 +49,16 @@ public class CardManager {
 				cards.add(new Card(v, suit));
 			}
 		}
+		return cards;
 	}
 
 	/**
 	 * Method to draw a card from the cardmanager.
 	 * 
 	 * @return Card
-	 */
-	public Card giveCard() {
-		// TODO entire method
-		int random = new Random().nextInt(0 - cards.size());
-		Card drawnCard = (Card) cards.toArray()[random];
-		cards.remove(drawnCard);
-		return drawnCard;
-	}
+	 *//*
+		 * public Card giveCard() { // TODO entire method int random = new
+		 * Random().nextInt(0 - cards.size()); Card drawnCard = (Card)
+		 * cards.toArray()[random]; cards.remove(drawnCard); return drawnCard; }
+		 */
 }
