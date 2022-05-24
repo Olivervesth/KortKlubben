@@ -144,21 +144,15 @@ public final class EngineManager {
 	}
 
 	/**
-	 * Method to save error messages to local file
+	 * Method to save error messages to log table in db
 	 * 
-	 * @param String errormessage
+	 * @param String action
+	 * @param String message
+	 * 
+	 * @returns boolean
 	 */
-	public void saveErrorMessage(String errormessage) {
-		logger.saveMessage(errormessage);
+	public boolean saveErrorLog(String action, String message) {
+		return logger.saveLog(action, message, db);
 	}
 
-	/**
-	 * Method to save error message to db log
-	 * 
-	 * @param String errormessage
-	 * @return boolean
-	 */
-	public boolean saveErrorLog(String erroraction, String errormessage) {
-		return db.createLog(erroraction, errormessage);
-	}
 }

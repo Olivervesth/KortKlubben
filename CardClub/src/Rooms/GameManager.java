@@ -12,6 +12,7 @@ public class GameManager {
 	 */
 	private List<List<Card>> playerCards;
 	private List<Card> playedCards;
+	private int[] playerPoints;
 	private String trumphSuit;
 	private String playingSuit;
 
@@ -48,7 +49,12 @@ public class GameManager {
 	 */
 	public void playCard(int playerIndex, Card card)
 	{
-		((List<Card>)playerCards.toArray()[playerIndex]).remove(card);
+		// TODO
+		// Replace card with string suit string value? to remove connections
+		List<Card> pCards = playerCards.get(playerIndex);
+		pCards.remove(card);
+		playerCards.remove(playerIndex);
+		playerCards.add(playerIndex,pCards);
 		playedCards.add(playerIndex, card);
 	}
 	
@@ -73,7 +79,7 @@ public class GameManager {
 					highestCard = value;
 					playerIndex = i;
 				}
-			}
+			}			
 		}		
 		return playerIndex;
 	}
