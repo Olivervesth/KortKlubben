@@ -60,6 +60,20 @@ BEGIN
     
 END//
 
+CREATE PROCEDURE SP_GetPlayerName(
+IN username VARCHAR(50),
+OUT name VARCHAR(50))
+BEGIN
+
+	SET @id = SP_GetPlayerId(username);
+	
+    SELECT Name
+    INTO name
+    FROM Players
+    WHERE Players.Id = @id;
+
+END//
+
 -- =============================================
 -- Author:      Jesper Deleurand
 -- Create date: 20/05/2022
@@ -170,21 +184,12 @@ END//
 -- =============================================
 CREATE PROCEDURE SP_UpdatePlayer(
 IN newName VARCHAR(50),
-IN oldUsrName VARCHAR(50), 
-IN newUsrName VARCHAR(50), 
+IN UsrName VARCHAR(50), 
 IN newPass VARCHAR(10000),
 OUT result INT)
 BEGIN
 
-	CALL SP_GetPlayerID(oldUsrName, @ChosenPlayerId);
-    
-    CASE WHEN newUsrName IS NOT NULL
-		THEN UPDATE Logins 
-			SET 
-				UserName = newUsrName
-			WHERE
-			Logins.Player_Id = @ChosenPlayerId;
-	end case;
+	CALL SP_GetPlayerID(UsrName, @ChosenPlayerId);
     
 	CASE WHEN newPass IS NOT NULL
 		THEN UPDATE Logins 

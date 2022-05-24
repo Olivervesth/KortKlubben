@@ -94,11 +94,10 @@ public class DbManager {
 	 * 
 	 * @param String newplayername
 	 * @param String username
-	 * @param String newusername
 	 * @param String newpassword
 	 * @return boolean
 	 */
-	public boolean updatePlayer(String newplayername, String username, String newusername, String newpassword) {
+	public boolean updatePlayer(String newplayername, String username, String newpassword) {
 		Connection con = connectDb();
 		CallableStatement st = null;
 		boolean result = false;
@@ -107,13 +106,12 @@ public class DbManager {
 			st = con.prepareCall("{call SP_UpdatePlayer(?, ?, ?, ?, ?)}");
 			st.setString(1, newplayername);
 			st.setString(2, username);
-			st.setString(3, newusername);
-			st.setString(4, newpassword);
-			st.registerOutParameter(5, Types.INTEGER);
+			st.setString(3, newpassword);
+			st.registerOutParameter(4, Types.INTEGER);
 
 			st.executeUpdate();
 
-			if (st.getInt(5) > 0) {
+			if (st.getInt(4) > 0) {
 				result = true;
 			}
 			return result;
@@ -244,6 +242,41 @@ public class DbManager {
 				con.close();
 			} catch (SQLException e) {
 				EngineManager.getEngineManager().saveErrorLog("Get Stats", e.getMessage());
+			}
+		}
+	}
+	
+	/**
+	 * Method to get a users player name
+	 * 
+	 * @param String userName
+	 * @return String
+	 */
+	public String getPlayerName(String username) {
+		Connection con = connectDb();
+		CallableStatement st = null;
+		try {
+			st = con.prepareCall("{CALL SP_GetPlayerName(?, ?)}");
+			st.setString(1, username);
+			st.registerOutParameter(2, Types.INTEGER);
+
+			st.executeUpdate();
+
+			String result = st.getString(2);
+			return result;
+		} catch (SQLException e) {
+			EngineManager.getEngineManager().saveErrorLog("Get Player Name", e.getMessage());
+			return null;
+		} finally {
+			try {
+				st.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorLog("Get Player Name", e.getMessage());
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorLog("Get Player Name", e.getMessage());
 			}
 		}
 	}
