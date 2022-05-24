@@ -22,6 +22,9 @@ DROP PROCEDURE IF EXISTS SP_AddGameWon;
 DROP PROCEDURE IF EXISTS SP_CreateLog;
 DROP PROCEDURE IF EXISTS SP_GetLogs;
 DROP PROCEDURE IF EXISTS SP_GetLogById;
+DROP PROCEDURE IF EXISTS SP_CreateErrorLog;
+DROP PROCEDURE IF EXISTS SP_GetErrorLogs;
+DROP PROCEDURE IF EXISTS SP_GetErrorLogById;
 
 
 /*##################################################
@@ -337,7 +340,54 @@ BEGIN
 	SELECT * FROM Logs WHERE Logs.Id = id;
 END//
 
-DELIMITER ;SELECT * FROM cardclub_db.Players;
+-- =============================================
+-- Author:      Jesper Deleurand
+-- Create date: 20/05/2022
+-- Description: Creates a new Log
+-- Parameters:
+--   action - the action that occurred.
+--   message - description of error.
+-- Returns:    0 = false, 0<x = true.
+-- =============================================
+CREATE PROCEDURE SP_CreateErrorLog(
+IN action VARCHAR(250),
+IN message VARCHAR(500),
+OUT result INT)
+BEGIN
+	
+    INSERT INTO ErrorLogs(Action, Message, CreatedTime)
+    VALUES(action, message, NOW());
+    
+    SET result = ROW_COUNT();
+    
+END//
+
+-- =============================================
+-- Author:      Jesper Deleurand
+-- Create date: 20/05/2022
+-- Description: Gets entire collection of Logs
+-- Returns:   All Logs
+-- =============================================
+CREATE PROCEDURE SP_GetErrorLogs()
+BEGIN
+	SELECT * FROM ErrorLogs;
+END//
+
+-- =============================================
+-- Author:      Jesper Deleurand
+-- Create date: 20/05/2022
+-- Description: Gets a single Log by ID
+-- Parameters:
+--   id - the id of the Log.
+-- Returns:   The Log
+-- =============================================
+CREATE PROCEDURE SP_GetErrorLogById(
+IN id INT)
+BEGIN
+	SELECT * FROM Logs WHERE ErrorLogs.Id = id;
+END//
+
+DELIMITER ;
 
 
 

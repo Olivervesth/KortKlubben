@@ -402,5 +402,51 @@ public class DbManager {
 			}
 		}
 	}
+	
+	
+	/**
+	 * Method to create error log on db
+	 * 
+	 * @param String errorAction
+	 * @param String errormessage
+	 * @return boolean
+	 */
+	public boolean createErrorLog(String errorAction, String errormessage) {
+		Connection con = connectDb();
+		CallableStatement st = null;
+		boolean result = false;
+
+		try {
+			st = con.prepareCall("{call SP_CreateErrorLog(?, ?, ?)}");
+			st.setString(1, errorAction);
+			st.setString(2, errormessage);
+			st.registerOutParameter(3, Types.INTEGER);
+
+			st.executeUpdate();
+
+			if (st.getInt(3) > 0) {
+				result = true;
+			}
+			return result;
+		} catch (SQLException e) {
+			EngineManager.getEngineManager().saveErrorLog("Create Log", e.getMessage());
+			return result;
+		} finally {
+			try {
+				if (st != null)
+					st.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorLog("Create Log", e.getMessage());
+			}
+			try {
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				EngineManager.getEngineManager().saveErrorLog("Create Log", e.getMessage());
+			}
+		}
+	}
+	
+	
 
 }

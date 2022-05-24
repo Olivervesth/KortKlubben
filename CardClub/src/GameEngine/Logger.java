@@ -15,6 +15,11 @@ public class Logger {
 		return db.createLog(action, message);
 	}
 	
+	public boolean saveErrorLog(String action, String message, DbManager db) {
+		System.out.println("ErrorLog Saved: " + action + " " + message);
+		return db.createErrorLog(action, message);
+	}
+	
 
 	/**
 	 * Method to log an error message to local file
