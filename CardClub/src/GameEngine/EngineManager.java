@@ -134,6 +134,16 @@ public final class EngineManager {
 	public boolean updateUser(Player player, String newpassword) {
 		return db.updatePlayer(player, newpassword);
 	}
+	
+	/**
+	 * Method to delete a user
+	 * 
+	 * @param Player player
+	 * @return boolean
+	 */
+	public boolean deleteUser(Player player) {
+		return db.deletePlayer(player);
+	}
 
 	/**
 	 * Method to save error messages to ErrorLog table in db
@@ -155,7 +165,7 @@ public final class EngineManager {
 	 * 
 	 * @returns boolean
 	 */
-	public boolean savLog(String action, String message) {
+	public boolean saveLog(String action, String message) {
 		return logger.saveLog(action, message, db);
 	}
 
