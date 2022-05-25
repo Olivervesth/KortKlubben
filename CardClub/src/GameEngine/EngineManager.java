@@ -38,6 +38,19 @@ public final class EngineManager {
 			return em;
 		}
 	}
+	
+	public static RoomManager getRoomManager()
+	{
+		if(roomManager == null)
+		{
+			roomManager = new RoomManager();
+			return roomManager;
+		}
+		else
+		{
+			return roomManager;
+		}
+	}
 
 	/**
 	 * Method to login
