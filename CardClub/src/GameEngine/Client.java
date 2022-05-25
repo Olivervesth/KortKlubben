@@ -8,14 +8,20 @@ import java.net.UnknownHostException;
 
 public class Client {
 
-	// here we simply initialize socket, input & output streams
-
+	/**
+	 * Fields
+	 */
 	private Socket socket = null;
 	private DataInputStream input = null;
 	private DataOutputStream output = null;
 	private DataInputStream res = null;
 
-	// parametrized constructor for CilentSideProgram
+	/**
+	 * Constructor for Client
+	 * 
+	 * @param String address
+	 * @param int    port
+	 */
 	public Client(String address, Integer port) {
 
 		// code to establish a connection
@@ -35,7 +41,7 @@ public class Client {
 		// below line is to read message from input
 		while (!(line.equals("Done"))) {
 			try {
-					
+
 				System.out.println(res.readUTF());
 				line = input.readLine();
 				output.writeUTF(line);

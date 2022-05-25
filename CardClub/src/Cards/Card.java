@@ -1,43 +1,38 @@
 package Cards;
 
-/**
- * @author Martin
- *
- */
-public class Card
-{
+public class Card {
 	/**
-	 * Fields for Card class
+	 * Fields for Card
 	 */
 	private int value;
 	private String suit;
-	
+
 	/**
 	 * Constructor for Card class
-	 * @param int value
-	 * @param String color
+	 * 
+	 * @param int    value
+	 * @param String suit
 	 */
-	public Card(int value, String suit)
-	{
+	public Card(int value, String suit) {
 		this.value = value;
 		this.suit = suit;
 	}
-	
+
 	/**
 	 * Method to get the card's value
+	 * 
 	 * @return int value
 	 */
-	public int getValue()
-	{
+	public int getValue() {
 		return this.value;
 	}
-	
+
 	/**
 	 * Method to the the card's suit
+	 * 
 	 * @return String suit
 	 */
-	public String getSuit()
-	{
+	public String getSuit() {
 		return this.suit;
 	}
 }

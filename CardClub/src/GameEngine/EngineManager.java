@@ -9,7 +9,7 @@ import Rooms.RoomManager;
 
 public final class EngineManager {
 	/**
-	 * Used classes in enginemanager
+	 * Fields
 	 */
 	private static Hashing hashing;
 	private static Logger logger;
@@ -29,26 +29,22 @@ public final class EngineManager {
 		playerManager = new PlayerManager();
 		roomManager = new RoomManager();
 	}
-	
-	public static EngineManager getEngineManager()
-	{
-		if(em == null)
-		{
+
+	public static EngineManager getEngineManager() {
+		if (em == null) {
 			em = new EngineManager();
 			return em;
-		}
-		else
-		{
+		} else {
 			return em;
 		}
 	}
 
 	/**
-	 * Attempts to hash, ask database and validate the response
+	 * Method to login
 	 * 
 	 * @param String username
 	 * @param String password
-	 * @return String Player name
+	 * @return Player
 	 */
 	public Player login(String username, String password) {
 		// if login is success
@@ -65,7 +61,7 @@ public final class EngineManager {
 	/**
 	 * Method to add played game to player statistics
 	 * 
-	 * @param String username
+	 * @param Player player
 	 * @return boolean
 	 */
 	public boolean addGamePlayed(Player player) {
@@ -75,7 +71,7 @@ public final class EngineManager {
 	/**
 	 * Method to add won game to player statistics
 	 * 
-	 * @param String username
+	 * @param Player player
 	 * @return boolean
 	 */
 	public boolean addGameWon(Player player) {
@@ -83,7 +79,7 @@ public final class EngineManager {
 	}
 
 	/**
-	 * Method to reset player points
+	 * Method to reset players points
 	 * 
 	 * @param List<Player> players
 	 * @return List<Player>
@@ -97,45 +93,45 @@ public final class EngineManager {
 	}
 
 	/**
-	 * Method to create a player for rooms
+	 * Method to create a player
 	 * 
-	 * @param String name
+	 * @param String username
+	 * @param String playername
 	 * @return Player
 	 */
-	public Player createPlayer(String username,String playername) {
-		return playerManager.createPlayer(hashing.hash(username),playername, true);
+	public Player createPlayer(String username, String playername) {
+		return playerManager.createPlayer(hashing.hash(username), playername, true);
 	}
 
 	/**
 	 * Method to create a user in Db
 	 * 
-	 * @param String name
+	 * @param Player player
 	 * @param String password
 	 * @return boolean
 	 */
 	public boolean createUser(Player player, String password) {
-		return db.createPlayer(player ,hashing.hash(password));
+		return db.createPlayer(player, hashing.hash(password));
 	}
 
 	/**
-	 * Method to get user stats
-	 * @param String username
+	 * Method to get player stats
+	 * 
+	 * @param Player player
 	 * @return String[]
 	 */
-	public String[] getStats(Player player)
-	{
+	public String[] getStats(Player player) {
 		return db.getStats(player);
 	}
-	
+
 	/**
 	 * Method to update a user
 	 * 
-	 * @param String newplayername
-	 * @param String username
+	 * @param Player player
 	 * @param String newpassword
 	 * @return boolean
 	 */
-	public boolean updateUser(Player player, String newPlayername, String newpassword) {
+	public boolean updateUser(Player player, String newpassword) {
 		return db.updatePlayer(player, newpassword);
 	}
 

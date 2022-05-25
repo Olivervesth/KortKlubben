@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Manager class to handle the playing cards
- * 
- * @author Martin
- */
 public class CardManager {
 	/**
 	 * Fields for CardManager
@@ -24,7 +19,9 @@ public class CardManager {
 
 	/**
 	 * Method to generate a new deck of cards This deck of cards do not contain
-	 * jockers Generated cards are added to the managers cards list
+	 * jokers Generated cards are added to the managers cards list
+	 * 
+	 * @return List<Card>
 	 */
 	public List<Card> generateCardDeckNoJokers() {
 		String suit = "";
@@ -51,14 +48,4 @@ public class CardManager {
 		}
 		return cards;
 	}
-
-	/**
-	 * Method to draw a card from the cardmanager.
-	 * 
-	 * @return Card
-	 *//*
-		 * public Card giveCard() { // TODO entire method int random = new
-		 * Random().nextInt(0 - cards.size()); Card drawnCard = (Card)
-		 * cards.toArray()[random]; cards.remove(drawnCard); return drawnCard; }
-		 */
 }

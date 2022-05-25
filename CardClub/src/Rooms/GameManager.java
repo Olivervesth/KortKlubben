@@ -44,43 +44,40 @@ public class GameManager {
 
 	/**
 	 * Method to play a card
-	 * @param int playerIndex
+	 * 
+	 * @param int  playerIndex
 	 * @param Card card
 	 */
-	public void playCard(int playerIndex, Card card)
-	{
+	public void playCard(int playerIndex, Card card) {
 		// TODO
 		// Replace card with string suit string value? to remove connections
 		List<Card> pCards = playerCards.get(playerIndex);
 		pCards.remove(card);
 		playerCards.remove(playerIndex);
-		playerCards.add(playerIndex,pCards);
+		playerCards.add(playerIndex, pCards);
 		playedCards.add(playerIndex, card);
 	}
-	
+
 	/**
 	 * Method to see who won the round
 	 * 
 	 * @return int playerIndex
 	 */
-	public int checkRound() {
+	public int checkSet() {
 		int highestCard = 0;
 		int playerIndex = -1;
 
-		for(int i = 0; i < 4; i++)
-		{
-			String suit =((Card)(playedCards.toArray()[i])).getSuit();
-			int value = ((Card)(playedCards.toArray()[i])).getValue();
-			
-			if(suit.equals(playingSuit) || suit.equals(trumphSuit))
-			{
-				if(value > highestCard)
-				{
+		for (int i = 0; i < 4; i++) {
+			String suit = ((Card) (playedCards.toArray()[i])).getSuit();
+			int value = ((Card) (playedCards.toArray()[i])).getValue();
+
+			if (suit.equals(playingSuit) || suit.equals(trumphSuit)) {
+				if (value > highestCard) {
 					highestCard = value;
 					playerIndex = i;
 				}
-			}			
-		}		
+			}
+		}
 		return playerIndex;
 	}
 }

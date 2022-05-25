@@ -23,7 +23,7 @@ public class RoomManager {
 	 * Method to create a new room
 	 * @param int gameType
 	 * @param Player owner
-	 * @return
+	 * @return Room
 	 */
 	public Room createRoom(int gameType, Player owner) {
 		Room room = null;

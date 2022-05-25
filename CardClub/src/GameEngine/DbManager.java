@@ -52,8 +52,7 @@ public class DbManager {
 	/**
 	 * Method to create a new player
 	 * 
-	 * @param String name
-	 * @param String username
+	 * @param Player player
 	 * @param String Password
 	 * @return boolean
 	 */
@@ -111,7 +110,7 @@ public class DbManager {
 			st.registerOutParameter(4, Types.INTEGER);
 
 			st.executeUpdate();
-			
+
 			if (st.getInt(4) > 0) {
 				result = true;
 			}
@@ -212,9 +211,9 @@ public class DbManager {
 	}
 
 	/**
-	 * Method to get a users stats
+	 * Method to get a players stats
 	 * 
-	 * @param String userName
+	 * @param Player player
 	 * @return String[]
 	 */
 	public String[] getStats(Player player) {
@@ -246,9 +245,9 @@ public class DbManager {
 			}
 		}
 	}
-	
+
 	/**
-	 * Method to get a users player name
+	 * Method to get a players playername
 	 * 
 	 * @param String userName
 	 * @return String
@@ -285,7 +284,7 @@ public class DbManager {
 	/**
 	 * Method to add a played game to the players statistics
 	 * 
-	 * @param String username
+	 * @param Player player
 	 * @return boolean
 	 */
 	public boolean addGamePlayed(Player player) {
@@ -324,7 +323,7 @@ public class DbManager {
 	/**
 	 * Method to add a win to the players statistics
 	 * 
-	 * @param String username
+	 * @param Player player
 	 * @return boolean
 	 */
 	public boolean addGameWon(Player player) {
