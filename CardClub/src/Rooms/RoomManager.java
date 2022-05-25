@@ -12,20 +12,18 @@ public class RoomManager {
 	 * Fields
 	 */
 	private List<Room> rooms;
-	private CardManager cardManager;
 
 	/**
 	 * Constructor for RoomManager
 	 */
 	public RoomManager() {
 		rooms = new ArrayList<Room>();
-		cardManager = new CardManager();
 	}
 
 	/**
 	 * Method to create a new room
 	 * 
-	 * @param int gameType
+	 * @param int    gameType
 	 * @param Player owner
 	 * @return Room
 	 */
