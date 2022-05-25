@@ -18,9 +18,9 @@ public class Room
 
     /**
      * Constructor for Room class
-     * @param Player owner
-     * @param GameManager gameManager
-     * @param CardManager cardManager
+     * @param owner
+     * @param gameManager
+     * @param cardManager
      */
     public Room(Player owner, GameManager gameManager, CardManager cardManager)
     {

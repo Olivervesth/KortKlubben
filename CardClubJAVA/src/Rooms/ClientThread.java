@@ -172,10 +172,14 @@ public class ClientThread extends Thread {
      * @param String command
      */
     public void playerInGameActions(String command) {
+
         String[] data = command.split(";");
-//		switch(data[0]) {
-//			activeroom.giveCards();
-//
-//		}
+		switch(data[0]) {
+            case "":
+                break;
+            case "":
+                break;
+
+		}
     }
 }
