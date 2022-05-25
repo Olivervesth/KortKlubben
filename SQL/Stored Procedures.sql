@@ -308,8 +308,8 @@ IN message VARCHAR(500),
 OUT result INT)
 BEGIN
 	
-    INSERT INTO Logs(Action, Message, CreatedTime)
-    VALUES(action, message, NOW());
+    INSERT INTO Logs(Action, Message, CreatedTime, LogType)
+    VALUES(action, message, NOW(), 1);
     
     SET result = ROW_COUNT();
     
@@ -323,7 +323,7 @@ END//
 -- =============================================
 CREATE PROCEDURE SP_GetLogs()
 BEGIN
-	SELECT * FROM Logs;
+	SELECT * FROM Logs WHERE Logs.LogType = 1;
 END//
 
 -- =============================================
@@ -337,7 +337,7 @@ END//
 CREATE PROCEDURE SP_GetLogById(
 IN id INT)
 BEGIN
-	SELECT * FROM Logs WHERE Logs.Id = id;
+	SELECT * FROM Logs WHERE Logs.Id = id AND Logs.LogType = 1;
 END//
 
 -- =============================================
@@ -355,8 +355,8 @@ IN message VARCHAR(500),
 OUT result INT)
 BEGIN
 	
-    INSERT INTO ErrorLogs(Action, Message, CreatedTime)
-    VALUES(action, message, NOW());
+    INSERT INTO Logs(Action, Message, CreatedTime, LogType)
+    VALUES(action, message, NOW(), 2);
     
     SET result = ROW_COUNT();
     
@@ -370,7 +370,7 @@ END//
 -- =============================================
 CREATE PROCEDURE SP_GetErrorLogs()
 BEGIN
-	SELECT * FROM ErrorLogs;
+	SELECT * FROM Logs WHERE Logs.LogType = 2;
 END//
 
 -- =============================================
@@ -384,13 +384,10 @@ END//
 CREATE PROCEDURE SP_GetErrorLogById(
 IN id INT)
 BEGIN
-	SELECT * FROM Logs WHERE ErrorLogs.Id = id;
+	SELECT * FROM Logs WHERE Logs.Id = id AND Logs.LogType = 2;
 END//
 
 DELIMITER ;
-
-
-
 
 
 -- CALL SP_CreatePlayer('Jesper', 'JesperKD', 'Kage1234!', @rs);
