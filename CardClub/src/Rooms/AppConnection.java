@@ -24,8 +24,6 @@ public class AppConnection {
 	private ServerSocket server = null;
 	private DataInputStream in = null;
 
-	int clientsconnected = 0;
-
 	// constructor with port
 	/**
 	 * Constructor for AppConnection
@@ -55,7 +53,6 @@ public class AppConnection {
 				}
 				// Start new thread when a new client joins
 				new Thread(new ClientThread(socket, em, rm)).start();
-				System.out.println("" + clientsconnected + "");
 			}
 			// close connection
 			socket.close();
