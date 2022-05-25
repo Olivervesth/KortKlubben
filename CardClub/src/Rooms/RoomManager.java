@@ -8,6 +8,9 @@ import GameEngine.EngineManager;
 import Players.Player;
 
 public class RoomManager {
+	/**
+	 * Fields
+	 */
 	private List<Room> rooms;
 	private CardManager cardManager;
 
@@ -21,6 +24,7 @@ public class RoomManager {
 
 	/**
 	 * Method to create a new room
+	 * 
 	 * @param int gameType
 	 * @param Player owner
 	 * @return Room
@@ -41,11 +45,17 @@ public class RoomManager {
 		case 3:
 			break;
 		}
-		if(room != null)
+		if (room != null)
 			rooms.add(room);
 		return room;
 	}
 
+	/**
+	 * Method to reset players in a room
+	 * 
+	 * @param List<Player> players
+	 * @return List<Player> TODO check static
+	 */
 	public static List<Player> resetPlayers(List<Player> players) {
 		return EngineManager.resetPlayerPoints(players);
 	}

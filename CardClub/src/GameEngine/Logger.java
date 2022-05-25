@@ -3,14 +3,8 @@ package GameEngine;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
-/**
- * Class to log errors
- * 
- * @author Martin, Jesper
- */
 public class Logger {
-	
+
 	/**
 	 * Method to log a system message to the database
 	 * 
@@ -18,20 +12,18 @@ public class Logger {
 	 * @param String message
 	 * 
 	 * @returns Boolean
-	 * */
+	 */
 	public boolean saveLog(String action, String message, DbManager db) {
 		try {
 
 			System.out.println("Log Saved: " + action + " " + message);
-			return db.createLog(action, message);	
-		}
-		catch(Exception ex) {
+			return db.createLog(action, message);
+		} catch (Exception ex) {
 			saveMessageLocal(action, message);
 			return true;
 		}
 	}
-	
-	
+
 	/**
 	 * Method to log an error message to the database
 	 * 
@@ -39,17 +31,16 @@ public class Logger {
 	 * @param String message
 	 * 
 	 * @returns Boolean
-	 * */
+	 */
 	public boolean saveErrorLog(String action, String message, DbManager db) {
 		try {
 			System.out.println("ErrorLog Saved: " + action + " " + message);
 			return db.createErrorLog(action, message);
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			saveMessageLocal(action, message);
 			return true;
 		}
 	}
-	
 
 	/**
 	 * Method to log an error message to local file

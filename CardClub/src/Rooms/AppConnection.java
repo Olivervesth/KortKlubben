@@ -72,6 +72,11 @@ public class AppConnection {
 		}
 	}
 
+	/**
+	 * Method to see live commands on server
+	 * 
+	 * @param String string
+	 */
 	private void println(String string) {
 		System.out.println(string);
 	}
