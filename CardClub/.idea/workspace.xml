@@ -2,9 +2,53 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ceb4e4e0-3e0b-4528-9182-e189b19631de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/CardClub.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/CardClub.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/CardClubTests/DbManagerTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Cards/Card.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Cards/CardManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GameEngine/Client.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GameEngine/DbManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GameEngine/EngineManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GameEngine/Hashing.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GameEngine/Logger.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/GameEngine/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Players/Computer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Players/Human.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Players/Player.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Players/PlayerManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Rooms/AppConnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Rooms/ClientThread.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Rooms/GameManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Rooms/Room.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Rooms/RoomManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid866692.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-connector-java-8.0.29.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CardClubTests/DbManagerTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cards/Card.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Cards/CardManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEngine/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEngine/DbManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEngine/EngineManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEngine/Hashing.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEngine/Logger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEngine/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Players/Computer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Players/Human.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Players/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Players/PlayerManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rooms/AppConnection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rooms/ClientThread.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rooms/GameManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rooms/Room.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rooms/RoomManager.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +57,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="29eHvV7H1as4m9KeVaJsiGWY8cF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -26,13 +73,22 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/jesp446c/Downloads/SequenceDiagram-2.1.8.zip",
+    "last_opened_file_path": "C:/Users/jesp446c/source/repos/KortKlubben/CardClubJAVA",
     "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "preferences.sourceCode.Java"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="GameEngine.Main" />
+      <module name="CardClub" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
