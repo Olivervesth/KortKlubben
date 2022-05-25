@@ -54,6 +54,14 @@ CREATE TABLE Logs (
     PRIMARY KEY (Id)
 );
 
+CREATE TABLE ErrorLogs (
+    Id INT NOT NULL AUTO_INCREMENT,
+    Action VARCHAR(250) NOT NULL,
+    Message VARCHAR(500) NOT NULL,
+    CreatedTime DATETIME NOT NULL,
+    PRIMARY KEY (Id)
+);
+
 
 /*##################################################
 				## Alter Data Tables ##

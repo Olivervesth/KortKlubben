@@ -136,7 +136,7 @@ public final class EngineManager {
 	}
 
 	/**
-	 * Method to save error messages to log table in db
+	 * Method to save error messages to ErrorLog table in db
 	 * 
 	 * @param String action
 	 * @param String message
@@ -144,6 +144,18 @@ public final class EngineManager {
 	 * @returns boolean
 	 */
 	public boolean saveErrorLog(String action, String message) {
+		return logger.saveErrorLog(action, message, db);
+	}
+	
+	/**
+	 * Method to save messages to Log table in db
+	 * 
+	 * @param String action
+	 * @param String message
+	 * 
+	 * @returns boolean
+	 */
+	public boolean savLog(String action, String message) {
 		return logger.saveLog(action, message, db);
 	}
 
