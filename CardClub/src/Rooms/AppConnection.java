@@ -34,7 +34,7 @@ public class AppConnection {
 		// starts server and waits for a connection
 		try {
 			em = new EngineManager();
-			rm = new RoomManager();
+			rm = em.getRoomManager();
 			server = new ServerSocket(port);
 			println("Server started: Ip " + InetAddress.getLocalHost().getHostAddress() + ",Port "
 					+ server.getLocalPort() + ":");
