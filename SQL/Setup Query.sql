@@ -51,14 +51,7 @@ CREATE TABLE Logs (
     Action VARCHAR(250) NOT NULL,
     Message VARCHAR(500) NOT NULL,
     CreatedTime DATETIME NOT NULL,
-    PRIMARY KEY (Id)
-);
-
-CREATE TABLE ErrorLogs (
-    Id INT NOT NULL AUTO_INCREMENT,
-    Action VARCHAR(250) NOT NULL,
-    Message VARCHAR(500) NOT NULL,
-    CreatedTime DATETIME NOT NULL,
+    LogType INT NOT NULL,
     PRIMARY KEY (Id)
 );
 
