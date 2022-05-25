@@ -48,39 +48,7 @@ public class ClientThread extends Thread {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-//		String line = "";
-//
-//		// reads message from client until "Done" is sent
-//
-//		while (!line.equals("Done") && clientconnected == true) {
-//			try {
-//				// Send message to client
-//
-//				DataOutputStream output = new DataOutputStream(client.getOutputStream());
-//				line = in.readUTF();
-//				if (activeroom == null) {
-//					System.out.println("UserAction activated");
-//					if (userActions(line)) {
-//						output.writeUTF("true");
-//					} else {
-//						output.writeUTF("false");
-//					}
-//				} else {
-//					playerInGameActions(line);
-//				}
-//				System.out.println(line);
-//
-//			} catch (IOException i) {
-//				System.out.println(i);
-//				clientconnected = false;
-//			}
-//<<<<<<< HEAD
-//		}
-//		System.out.println("Closing connection to " + client.getInetAddress() + "");
-//=======
-	    	  
+		}    	  
 	    	  String line = "";
 	    	  
 	    	  // reads message from client until "Done" is sent
@@ -108,7 +76,7 @@ public class ClientThread extends Thread {
 	    			  clientconnected = false;
 	    		  }
 	    	  }
-	    	  em.savLog("Disconnected", client.getInetAddress().toString());//Log disconnect
+	    	  em.saveLog("Disconnected", client.getInetAddress().toString());//Log disconnect
 	}
 
 	/**
@@ -130,7 +98,7 @@ public class ClientThread extends Thread {
 					if(data[1] != null && data[2] != null) {
 						System.out.println("data send in login case");
 						clientplayer = em.login(data[1], data[2]);
-						em.savLog("Login", client.getInetAddress().toString());
+						em.saveLog("Login", client.getInetAddress().toString());
 						if(clientplayer != null) {
 							System.out.println(clientplayer.getUserName()+" Logged in");
 							return true;
