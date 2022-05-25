@@ -50,36 +50,36 @@ public class ClientThread extends Thread {
 			e.printStackTrace();
 		}
 
-		String line = "";
-
-		// reads message from client until "Done" is sent
-
-		while (!line.equals("Done") && clientconnected == true) {
-			try {
-				// Send message to client
-
-				DataOutputStream output = new DataOutputStream(client.getOutputStream());
-				line = in.readUTF();
-				if (activeroom == null) {
-					System.out.println("UserAction activated");
-					if (userActions(line)) {
-						output.writeUTF("true");
-					} else {
-						output.writeUTF("false");
-					}
-				} else {
-					playerInGameActions(line);
-				}
-				System.out.println(line);
-
-			} catch (IOException i) {
-				System.out.println(i);
-				clientconnected = false;
-			}
-<<<<<<< HEAD
-		}
-		System.out.println("Closing connection to " + client.getInetAddress() + "");
-=======
+//		String line = "";
+//
+//		// reads message from client until "Done" is sent
+//
+//		while (!line.equals("Done") && clientconnected == true) {
+//			try {
+//				// Send message to client
+//
+//				DataOutputStream output = new DataOutputStream(client.getOutputStream());
+//				line = in.readUTF();
+//				if (activeroom == null) {
+//					System.out.println("UserAction activated");
+//					if (userActions(line)) {
+//						output.writeUTF("true");
+//					} else {
+//						output.writeUTF("false");
+//					}
+//				} else {
+//					playerInGameActions(line);
+//				}
+//				System.out.println(line);
+//
+//			} catch (IOException i) {
+//				System.out.println(i);
+//				clientconnected = false;
+//			}
+//<<<<<<< HEAD
+//		}
+//		System.out.println("Closing connection to " + client.getInetAddress() + "");
+//=======
 	    	  
 	    	  String line = "";
 	    	  
@@ -93,13 +93,13 @@ public class ClientThread extends Thread {
 	    			  line = in.readUTF();
 	    			  if(activeroom == null) {
 	    				  System.out.println("UserAction activated");
-	    				  if(UserActions(line)) {
+	    				  if(userActions(line)) {
 	    	    			  output.writeUTF("true");
 	    				  }else {
 	    					  output.writeUTF("false");
 	    				  }
 	    			  }else {
-	    				  PlayerInGameActions(line);
+	    				  playerInGameActions(line);
 	    			  }
 	    			  System.out.println(line);
 	    			  
@@ -109,7 +109,6 @@ public class ClientThread extends Thread {
 	    		  }
 	    	  }
 	    	  em.savLog("Disconnected", client.getInetAddress().toString());//Log disconnect
->>>>>>> 6a2bf58ad414a5fa473f2a8097690523f97b3082
 	}
 
 	/**
@@ -126,25 +125,14 @@ public class ClientThread extends Thread {
 			 * data[1] = username data[2] = psw
 			 */
 			System.out.println("in login case");
-<<<<<<< HEAD
-			if (clientplayer == null) {
-				try {
-					if (data[1] != null && data[2] != null) {
-
-						System.out.println("data send in login case");
-						clientplayer = em.login(data[1], data[2]);
-						System.out.println(clientplayer.getUserName() + " Logged in");
-						if (clientplayer != null) {
-=======
 			if(clientplayer == null) {
 				try{
 					if(data[1] != null && data[2] != null) {
 						System.out.println("data send in login case");
 						clientplayer = em.login(data[1], data[2]);
 						em.savLog("Login", client.getInetAddress().toString());
-						System.out.println(clientplayer.getUserName()+" Logged in");
 						if(clientplayer != null) {
->>>>>>> 6a2bf58ad414a5fa473f2a8097690523f97b3082
+							System.out.println(clientplayer.getUserName()+" Logged in");
 							return true;
 
 						} else {
@@ -186,17 +174,11 @@ public class ClientThread extends Thread {
 			/**
 			 * data[1] = playername data[2] = username data[3] = psw
 			 */
-<<<<<<< HEAD
-			if (clientplayer != null) {
-				try {
-					activeroom = rm.createRoom(1, clientplayer);// fix
-					if (activeroom != null) {
-=======
+
 			if(clientplayer != null) {
 				try{
 					if(activeroom == null) {
 						activeroom = rm.createRoom(1,clientplayer);//fix
->>>>>>> 6a2bf58ad414a5fa473f2a8097690523f97b3082
 						return true;
 					}else {
 						return false;
