@@ -42,7 +42,7 @@ public class CardManager {
                     break;
             }
             // for each value
-            for (int v = 2; v < 14; v++) {
+            for (int v = 2; v < 15; v++) {
                 cards.add(new Card(v, suit));
             }
         }
