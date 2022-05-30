@@ -22,10 +22,9 @@ public class RoomManager {
 
     /**
      * Method to create a new room
-     *
-     * @param int    gameType
-     * @param Player owner
-     * @return Room
+     * @param gameType
+     * @param owner
+     * @return
      */
     public Room createRoom(int gameType, Player owner) {
         Room room = null;
@@ -50,9 +49,8 @@ public class RoomManager {
 
     /**
      * Method to reset players in a room
-     *
-     * @param List<Player> players
-     * @return List<Player> TODO check static
+     * @param players
+     * @return
      */
     public static List<Player> resetPlayers(List<Player> players) {
         return EngineManager.resetPlayerPoints(players);
