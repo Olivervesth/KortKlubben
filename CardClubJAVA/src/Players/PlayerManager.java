@@ -23,4 +23,8 @@ public class PlayerManager {
         player.resetPoints();
         return player;
     }
+
+    public void setPlayerPoints(Player player, int points) {
+        player.updatePoints(points);
+    }
 }
