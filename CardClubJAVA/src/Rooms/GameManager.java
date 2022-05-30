@@ -55,6 +55,11 @@ public class GameManager {
         playedCards.add(playerIndex, card);
     }
 
+    public void checkGame()
+    {
+
+    }
+
     public void checkRound()
     {
 
@@ -70,7 +75,7 @@ public class GameManager {
      *
      * @return int playerIndex
      */
-    public int checkSet() {
+    public int checkForSet() {
         int highestCard = 0;
         int playerIndex = -1;
 
