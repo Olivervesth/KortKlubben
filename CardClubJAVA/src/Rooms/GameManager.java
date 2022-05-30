@@ -77,7 +77,7 @@ public class GameManager {
     }
 
     /**
-     * Method to see who won the round
+     * Method to see who won the set
      *
      * @return int playerIndex
      */
