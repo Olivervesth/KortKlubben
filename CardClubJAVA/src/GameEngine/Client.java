@@ -19,8 +19,6 @@ public class Client {
     /**
      * Constructor for Client
      *
-     * @param String address
-     * @param int    port
      */
     public Client(String address, Integer port) {
 

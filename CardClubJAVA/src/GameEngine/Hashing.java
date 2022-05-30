@@ -8,7 +8,6 @@ public class Hashing {
     /**
      * Method to hash a string input
      *
-     * @param String input
      * @return String hashed input
      * @return null if hashing failed
      */

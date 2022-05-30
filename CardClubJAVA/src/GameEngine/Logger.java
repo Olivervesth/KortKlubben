@@ -8,9 +8,6 @@ public class Logger {
     /**
      * Method to log a system message to the database
      *
-     * @param String action
-     * @param String message
-     *
      * @returns Boolean
      */
     public boolean saveLog(String action, String message, DbManager db) {
@@ -27,9 +24,6 @@ public class Logger {
     /**
      * Method to log an error message to the database
      *
-     * @param String action
-     * @param String message
-     *
      * @returns Boolean
      */
     public boolean saveErrorLog(String action, String message, DbManager db) {
@@ -45,8 +39,6 @@ public class Logger {
     /**
      * Method to log an error message to local file
      *
-     * @param String errorAction
-     * @param String errorMessage
      */
     public void saveMessageLocal(String errorAction, String errorMessage) {
         String homeDir = System.getProperty("user.home");
