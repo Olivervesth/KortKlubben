@@ -81,8 +81,8 @@ public class ClientThread extends Thread {
 
     /**
      *
-     * @param String command
-     * @return Different response from server
+     * @param command
+     * @return
      */
     public boolean userActions(String command) {
         String[] data = command.split(";");
@@ -169,13 +169,13 @@ public class ClientThread extends Thread {
 
     /**
      *
-     * @param String command
+     * @param command
      */
     public void playerInGameActions(String command) {
 
         String[] data = command.split(";");
 		switch(data[0]) {
-            case "":
+            case "q":
                 break;
             case "":
                 break;
