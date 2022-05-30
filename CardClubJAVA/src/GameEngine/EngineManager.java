@@ -55,8 +55,6 @@ public final class EngineManager {
     /**
      * Method to login
      *
-     * @param String username
-     * @param String password
      * @return Player
      */
     public Player login(String username, String password) {
@@ -74,7 +72,6 @@ public final class EngineManager {
     /**
      * Method to add played game to player statistics
      *
-     * @param Player player
      * @return boolean
      */
     public boolean addGamePlayed(Player player) {
@@ -84,7 +81,6 @@ public final class EngineManager {
     /**
      * Method to add won game to player statistics
      *
-     * @param Player player
      * @return boolean
      */
     public boolean addGameWon(Player player) {
@@ -94,7 +90,6 @@ public final class EngineManager {
     /**
      * Method to reset players points
      *
-     * @param List<Player> players
      * @return List<Player>
      */
     public static List<Player> resetPlayerPoints(List<Player> players) {
@@ -108,8 +103,6 @@ public final class EngineManager {
     /**
      * Method to create a player
      *
-     * @param String username
-     * @param String playername
      * @return Player
      */
     public Player createPlayer(String username, String playername) {
@@ -117,11 +110,10 @@ public final class EngineManager {
     }
 
     /**
-     * Method to create a user in Db
      *
-     * @param Player player
-     * @param String password
-     * @return boolean
+     * @param player
+     * @param password
+     * @return
      */
     public boolean createUser(Player player, String password) {
         return db.createPlayer(player, hashing.hash(password));
@@ -130,7 +122,6 @@ public final class EngineManager {
     /**
      * Method to get player stats
      *
-     * @param Player player
      * @return String[]
      */
     public String[] getStats(Player player) {
@@ -140,8 +131,6 @@ public final class EngineManager {
     /**
      * Method to update a user
      *
-     * @param Player player
-     * @param String newpassword
      * @return boolean
      */
     public boolean updateUser(Player player, String newpassword) {
@@ -151,7 +140,6 @@ public final class EngineManager {
     /**
      * Method to delete a user
      *
-     * @param Player player
      * @return boolean
      */
     public boolean deleteUser(Player player) {
@@ -161,9 +149,6 @@ public final class EngineManager {
     /**
      * Method to save error messages to ErrorLog table in db
      *
-     * @param String action
-     * @param String message
-     *
      * @returns boolean
      */
     public boolean saveErrorLog(String action, String message) {
@@ -172,9 +157,6 @@ public final class EngineManager {
 
     /**
      * Method to save messages to Log table in db
-     *
-     * @param String action
-     * @param String message
      *
      * @returns boolean
      */
