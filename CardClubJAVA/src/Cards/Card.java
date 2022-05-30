@@ -10,8 +10,6 @@ public class Card {
     /**
      * Constructor for Card class
      *
-     * @param int    value
-     * @param String suit
      */
     public Card(int value, String suit) {
         this.value = value;
