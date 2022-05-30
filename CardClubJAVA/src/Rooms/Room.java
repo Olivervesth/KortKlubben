@@ -38,7 +38,7 @@ public class Room
      */
     public void giveCards()
     {
-        gameManager.giveCards(cardManager.generateCardDeckNoJokers());
+        gameManager.giveCards(players, cardManager.generateCardDeckNoJokers());
     }
 
 }

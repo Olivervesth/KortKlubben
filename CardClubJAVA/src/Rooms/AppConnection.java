@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,7 +25,7 @@ public class AppConnection {
     private RoomManager rm = null;
     private ServerSocket server = null;
     private DataInputStream in = null;
-
+    private List<Thread> clientThreads = null;
     // constructor with port
     /**
      * Constructor for AppConnection
@@ -32,6 +34,7 @@ public class AppConnection {
     public AppConnection(int port) {
         // starts server and waits for a connection
         try {
+            clientThreads = new ArrayList<>();
             em = new EngineManager();
             rm = em.getRoomManager();
             server = new ServerSocket(port);
@@ -51,7 +54,9 @@ public class AppConnection {
                     throw new RuntimeException("Error accepting client connection", e);
                 }
                 // Start new thread when a new client joins
-                new Thread(new ClientThread(socket, em, rm)).start();
+                Thread t = new Thread(new ClientThread(socket, em, rm));
+                clientThreads.add(t);
+                t.start();
             }
             // close connection
             socket.close();

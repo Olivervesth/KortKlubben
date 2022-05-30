@@ -20,9 +20,9 @@ public abstract class Player {
     /**
      * Constructor for Human class
      */
-    public Player(String usernamename, String playername) {
-        this.playername = playername;
-        this.username = usernamename;
+    public Player(String Username, String PlayerName) {
+        this.playername = PlayerName;
+        this.username = Username;
         this.points = 0;
     }
 
@@ -102,19 +102,19 @@ public abstract class Player {
     }
 
     /**
+     * Method to reset points between games
+     */
+    public void resetPoints() {
+        this.points = 0;
+    }
+
+    /**
      * Method to get a players amount of sets
      *
      * @return amount of sets
      */
     public int getSets() {
         return cardSets;
-    }
-
-    /**
-     * resets the amount of sets to 0
-     */
-    public void resetSets() {
-        cardSets = 0;
     }
 
     /**
@@ -127,10 +127,10 @@ public abstract class Player {
     }
 
     /**
-     * Method to reset points between games
+     * resets the amount of sets to 0
      */
-    public void resetPoints() {
-        this.points = 0;
+    public void resetSets() {
+        cardSets = 0;
     }
 
 }

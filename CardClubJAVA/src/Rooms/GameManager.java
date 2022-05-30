@@ -24,8 +24,11 @@ public class GameManager {
 
     /**
      * Method to give players cards
+     *
+     * @param players
+     * @param cards
      */
-    public void giveCards(List<Card> cards) {
+    public void giveCards(List<Player> players, List<Card> cards) {
         for (int i = 0; i < 4; i++) {
             List<Card> cardList = new ArrayList<Card>();
             for (int o = 0; o < 13; o++) {
@@ -34,31 +37,23 @@ public class GameManager {
                 cards.remove(c);
                 cardList.add(c);
             }
-            playerCards.add(cardList);
+            players.get(i).setCards(cardList);
         }
     }
 
     /**
      * Method to play a card
+     *
+     * @param card
      */
     public void playCard(int playerIndex, Card card) {
         // TODO
         // Replace card with string suit string value? to remove connections
-        List<Card> pCards = playerCards.get(playerIndex);
+        /*List<Card> pCards = playerCards.get(playerIndex);
         pCards.remove(card);
         playerCards.remove(playerIndex);
         playerCards.add(playerIndex, pCards);
-        playedCards.add(playerIndex, card);
-    }
-
-    /**
-     * Method to update a player's points
-     *
-     * @param player
-     * @param points
-     */
-    public void givePoints(Player player, int points) {
-        player.updatePoints(player.getPoints() + points);
+        playedCards.add(playerIndex, card);*/
     }
 
     /**
@@ -77,6 +72,57 @@ public class GameManager {
     }
 
     /**
+     * returns the points for players set count
+     *
+     * @param set
+     * @return
+     */
+    public int pointSystem(int set) {
+        int points = 0;
+        switch (set) {
+            case 0:
+                // -4
+                points = -4;
+                break;
+            case 1:
+            case 2:
+                // -3
+                points = -3;
+                break;
+            case 3:
+            case 4:
+                // -2
+                points = -2;
+                break;
+            case 5:
+            case 6:
+                // -1
+                points = -1;
+                break;
+            case 7:
+            case 8:
+                // +1
+                points = 1;
+                break;
+            case 9:
+            case 10:
+                // +2
+                points = 2;
+                break;
+            case 11:
+            case 12:
+                // +3
+                points = 3;
+                break;
+            case 13:
+                // +4
+                points = 4;
+                break;
+        }
+        return points;
+    }
+
+    /**
      * Method to see who have most sets
      *
      * @param playerList
@@ -86,56 +132,20 @@ public class GameManager {
         if (player1.getPartner() != null) {//Playing grand
             Player partner = player1.getPartner();
             int set = player1.getSets() + partner.getSets();
-            int points = 0;
-            switch (set) {
-                case 0:
-                    // -4
-                    points = 4;
-                    break;
-                case 1:
-                case 2:
-                    // -3
-                    points = 3;
-                    break;
-                case 3:
-                case 4:
-                    // -2
-                    points = 2;
-                    break;
-                case 5:
-                case 6:
-                    // -1
-                    points = 1;
-                    break;
-                case 7:
-                case 8:
-                    // +1
-                    points = 1;
-                    break;
-                case 9:
-                case 10:
-                    // +2
-                    points = 2;
-                    break;
-                case 11:
-                case 12:
-                    // +3
-                    points = 3;
-                    break;
-                case 13:
-                    // +4
-                    points = 4;
-                    break;
+            int points = pointSystem(set);
 
+            for (Player player : playerList) {
                 if (player.equals(player1) || player.equals(partner)) {
-                    player.updatePoints(-4);
+                    player.updatePoints(points);
                 } else {
-                    player.updatePoints(4);
+                    player.updatePoints(-1 * points);
                 }
             }
 
         } else {//Playing pass "else without if error"
-
+            for (Player player : playerList) {
+                player.updatePoints(pointSystem(player.getSets()));
+            }
         }
     }
 
