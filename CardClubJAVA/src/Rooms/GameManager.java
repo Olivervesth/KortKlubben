@@ -41,11 +41,6 @@ public class GameManager {
         }
     }
 
-    public void findPartners()
-    {
-
-    }
-
     /**
      * Method to play a card
      *
@@ -58,6 +53,16 @@ public class GameManager {
         playerCards.remove(playerIndex);
         playerCards.add(playerIndex, pCards);
         playedCards.add(playerIndex, card);
+    }
+
+    public void checkRound()
+    {
+
+    }
+
+    public void findPartners()
+    {
+
     }
 
     /**
