@@ -41,6 +41,11 @@ public class GameManager {
         }
     }
 
+    public void findPartners()
+    {
+
+    }
+
     /**
      * Method to play a card
      *

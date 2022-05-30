@@ -3,6 +3,7 @@ package Rooms;
 import java.util.ArrayList;
 import java.util.List;
 
+import Cards.Card;
 import Cards.CardManager;
 import Players.Player;
 
