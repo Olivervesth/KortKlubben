@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import Cards.Card;
+import GameEngine.EngineManager;
 
 public class GameManager {
     /**
@@ -53,6 +54,11 @@ public class GameManager {
         playerCards.remove(playerIndex);
         playerCards.add(playerIndex, pCards);
         playedCards.add(playerIndex, card);
+    }
+
+    public void givePoints()
+    {
+
     }
 
     public void checkGame()
