@@ -4,9 +4,6 @@ public class PlayerManager {
     /**
      * Method to create a new player instance
      *
-     * @param String  username
-     * @param String  playername
-     * @param boolean human
      * @return Player
      */
     public Player createPlayer(String username, String playername, boolean human) {
@@ -20,7 +17,6 @@ public class PlayerManager {
     /**
      * Method to reset a players points
      *
-     * @param Player player
      * @return Player
      */
     public Player resetPlayerPoints(Player player) {

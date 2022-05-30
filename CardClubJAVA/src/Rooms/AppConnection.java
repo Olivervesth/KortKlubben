@@ -28,7 +28,6 @@ public class AppConnection {
     /**
      * Constructor for AppConnection
      *
-     * @param int port
      */
     public AppConnection(int port) {
         // starts server and waits for a connection
@@ -72,7 +71,6 @@ public class AppConnection {
     /**
      * Method to see live commands on server
      *
-     * @param String string
      */
     private void println(String string) {
         System.out.println(string);

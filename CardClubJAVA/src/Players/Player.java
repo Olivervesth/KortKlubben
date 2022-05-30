@@ -13,8 +13,6 @@ public abstract class Player {
     /**
      * Constructor for Human class
      *
-     * @param String username
-     * @param Strign playername
      */
     public Player(String usernamename, String playername) {
         this.playername = playername;
@@ -52,7 +50,6 @@ public abstract class Player {
     /**
      * Method to add points to the player
      *
-     * @param int points
      */
     public void updatePoints(int points) {
         if (points >= -4 && points <= 4) {

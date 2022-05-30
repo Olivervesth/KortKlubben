@@ -27,7 +27,6 @@ public class GameManager {
     /**
      * Method to give players cards
      *
-     * @param List<Card> cards
      */
     public void giveCards(List<Card> cards) {
         for (int i = 0; i < 4; i++) {
@@ -45,8 +44,6 @@ public class GameManager {
     /**
      * Method to play a card
      *
-     * @param int  playerIndex
-     * @param Card card
      */
     public void playCard(int playerIndex, Card card) {
         // TODO
