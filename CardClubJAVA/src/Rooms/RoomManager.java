@@ -66,5 +66,13 @@ public class RoomManager {
         }
         return roomlist;
     }
+    public Room getRoom(String owner){
+        for (Room room:rooms) {
+            if(room.getOwner().equals(owner)){
+                return room;
+            }
+        }
+        return null;
+    }
 
 }

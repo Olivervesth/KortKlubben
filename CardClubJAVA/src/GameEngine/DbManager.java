@@ -253,7 +253,12 @@ public class DbManager {
             st.executeUpdate();
 
             String result = st.getString(2);
-            return result;
+
+            if(result == null){
+                return "fakename";
+            }else{
+                return result;
+            }
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Get Player Name", e.getMessage());
             return null;

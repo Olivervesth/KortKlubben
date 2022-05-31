@@ -63,7 +63,7 @@ public class ClientThread extends Thread {
                     System.out.println("UserAction activated");
                             output.writeUTF(userActions(line));
                 }else {
-                    playerInGameActions(line);
+                    output.writeUTF(playerInGameActions(line));
                 }
                 System.out.println(line);
 
@@ -161,29 +161,46 @@ public class ClientThread extends Thread {
                 for (Room room:rm.getRooms()) {
                     result += "Room;"+room.getOwner()+";"+room.getPlayerCount()+":";
                 }
-                    break;
+                if (result == null){
+                    return "false";
+                }else if (result != null){
+                    return result;
+                }
+            break;
             case "joinroom":
-
+                /**
+                 * data[1] owner name
+                 */
+                activeroom =  rm.getRoom(data[1]);
+                if(activeroom != null){
+                    return "true";
+                }else if(activeroom == null){
+                    return "false";
+                }
                 break;
             default:
                 break;
         }
-        return false;
+        return "false";
     }
 
     /**
      *
      * @param command
      */
-    public void playerInGameActions(String command) {
+    public String playerInGameActions(String command) {
 
         String[] data = command.split(";");
 		switch(data[0]) {
-            case "q":
-                break;
-            case "":
+            case "leave":
+                activeroom = null;
+                return "true";
+            default:
                 break;
 
+
+
 		}
+        return "false";
     }
 }
