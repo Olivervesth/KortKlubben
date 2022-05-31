@@ -39,5 +39,10 @@ public class Room
     {
         gameManager.giveCards(cardManager.generateCardDeckNoJokers());
     }
-
+    public int getPlayerCount(){
+        return players.size();
+    }
+    public String getOwner(){
+        return owner.getPlayerName();
+    }
 }

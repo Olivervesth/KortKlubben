@@ -1,5 +1,6 @@
 package Rooms;
 
+import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,16 @@ public class RoomManager {
      */
     public static List<Player> resetPlayers(List<Player> players) {
         return EngineManager.resetPlayerPoints(players);
+    }
+    public List<Room> getRooms(){
+        List<Room> roomlist = new ArrayList<>();
+
+        for (Room room: rooms) {
+            if (room.getPlayerCount() <4){
+                roomlist.add(room);
+            }
+        }
+        return roomlist;
     }
 
 }

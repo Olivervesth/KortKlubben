@@ -61,11 +61,7 @@ public class ClientThread extends Thread {
                 line = in.readUTF();
                 if(activeroom == null) {
                     System.out.println("UserAction activated");
-                    if(userActions(line)) {
-                        output.writeUTF("true");
-                    }else {
-                        output.writeUTF("false");
-                    }
+                            output.writeUTF(userActions(line));
                 }else {
                     playerInGameActions(line);
                 }
@@ -101,10 +97,10 @@ public class ClientThread extends Thread {
                             em.saveLog("Login", client.getInetAddress().toString());
                             if(clientplayer != null) {
                                 System.out.println(clientplayer.getUserName()+" Logged in");
-                                return true;
+                                return "true";
 
                             } else {
-                                return false;
+                                return "false";
                             }
                         }
 
@@ -113,7 +109,7 @@ public class ClientThread extends Thread {
                     }
 
                 } else {
-                    return false;
+                    return "false";
                 }
 
                 break;
@@ -147,9 +143,9 @@ public class ClientThread extends Thread {
                     try{
                         if(activeroom == null) {
                             activeroom = rm.createRoom(1,clientplayer);//fix
-                            return true;
+                            return "true";
                         }else {
-                            return false;
+                            return "false";
                         }
 
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -157,10 +153,18 @@ public class ClientThread extends Thread {
                     }
 
                 } else {
-                    return false;
+                    return "false";
                 }
                 break;
+            case "getrooms":
+                String result = "";
+                for (Room room:rm.getRooms()) {
+                    result += "Room;"+room.getOwner()+";"+room.getPlayerCount()+":";
+                }
+                    break;
+            case "joinroom":
 
+                break;
             default:
                 break;
         }
