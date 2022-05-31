@@ -4,6 +4,7 @@ import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.List;
 
+import Cards.Card;
 import Cards.CardManager;
 import GameEngine.EngineManager;
 import Players.Player;
@@ -73,5 +74,13 @@ public class RoomManager {
         }
         return null;
     }
+    public boolean joinRoom(Room room,Player player){
+        return room.addPlayer(player);
+    }
+    public boolean leaveRoom(Room room,Player player){
+        rooms.remove(room);
+        return true;
+    }
+
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import Cards.Card;
 import Cards.CardManager;
+import GameEngine.EngineManager;
 import Players.Player;
 
 public class Room
@@ -30,20 +31,64 @@ public class Room
         players.add(owner);
         this.gameManager = gameManager;
         this.cardManager = cardManager;
-        cardManager.generateCardDeckNoJokers();
     }
 
     /**
      * Method to give players cards
      */
-    public void giveCards()
+    private void giveCards()
     {
-        gameManager.giveCards(players, cardManager.generateCardDeckNoJokers());
+       players = gameManager.giveCards(players, cardManager.generateCardDeckNoJokers());
+       for (Player player : players)
+       {
+           EngineManager.getEngineManager().giveCardsToClient(player,player.getCards());
+       }
     }
     public int getPlayerCount(){
         return players.size();
     }
+
+    /**
+     * Get the room owners playername
+     * @return
+     */
     public String getOwner(){
         return owner.getPlayerName();
+    }
+
+    /**
+     * Add player to room
+     * @param player
+     * @return
+     */
+    public boolean addPlayer(Player player){
+        if(players.size()<4){
+            if(!players.contains(player)){
+                players.add(player);
+                if(players.size() == 2){
+                    giveCards();
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Remove player from room
+     * @param player
+     * @return
+     */
+    public boolean removePlayer(Player player){
+        if (players.size() >0){
+            if(players.contains(player)){
+                players.remove(player);
+                return true;
+            }
+        }
+        return false;
+    }
+    public void playCard(Player player, Card card){
+        gameManager.playCard(player,card);
     }
 }

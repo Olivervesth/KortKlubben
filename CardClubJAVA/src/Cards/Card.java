@@ -5,13 +5,13 @@ public class Card {
      * Fields for Card
      */
     private int value;
-    private String suit;
+    private Suit suit;
 
     /**
      * Constructor for Card class
      *
      */
-    public Card(int value, String suit) {
+    public Card(int value, Suit suit) {
         this.value = value;
         this.suit = suit;
     }
@@ -30,7 +30,7 @@ public class Card {
      *
      * @return String suit
      */
-    public String getSuit() {
+    public Suit getSuit() {
         return this.suit;
     }
 }

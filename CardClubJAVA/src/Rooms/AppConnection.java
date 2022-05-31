@@ -55,8 +55,11 @@ public class AppConnection {
                 }
                 // Start new thread when a new client joins
                 Thread t = new Thread(new ClientThread(socket, em, rm));
-                clientThreads.add(t);
                 t.start();
+                clientThreads.add(t);
+                t.getName();
+                em.addClient(socket);
+                System.out.println("Clients connected "+clientThreads.size());
             }
             // close connection
             socket.close();

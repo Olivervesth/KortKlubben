@@ -1,10 +1,15 @@
 package GameEngine;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import Cards.Card;
 import Players.Player;
 import Players.PlayerManager;
+import Rooms.ClientThread;
 import Rooms.RoomManager;
 
 public final class EngineManager {
@@ -17,12 +22,14 @@ public final class EngineManager {
     private static PlayerManager playerManager;
     private static RoomManager roomManager;
     private static EngineManager em;
+    private List<Socket> clientThreads = null;
 
     /**
      * Constructor for EngineManager
      */
     public EngineManager() {
         em = this;
+        clientThreads = new ArrayList<>();
         logger = new Logger();
         hashing = new Hashing();
         db = new DbManager();
@@ -39,15 +46,39 @@ public final class EngineManager {
         }
     }
 
-    public static RoomManager getRoomManager()
+    public void addClient(Socket client) {
+        if (!clientThreads.contains(client)) {
+            this.clientThreads.add(client);
+        }
+    }
+
+    public void removeClient(Socket client) {
+        if (clientThreads.contains(client)) {
+            this.clientThreads.remove(client);
+
+        }
+    }
+
+    public void giveCardsToClient(Player player, List<Card> cards)//stops here cant givecards to client
     {
-        if(roomManager == null)
-        {
+        for (Socket client : clientThreads) {
+            try {
+                String hand = "";
+                for (Card card : cards) {
+                    hand += card.getValue() + ";" + card.getSuit().name() + ";";
+                }
+                new DataOutputStream(client.getOutputStream()).writeUTF(hand);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static RoomManager getRoomManager() {
+        if (roomManager == null) {
             roomManager = new RoomManager();
             return roomManager;
-        }
-        else
-        {
+        } else {
             return roomManager;
         }
     }
@@ -110,7 +141,6 @@ public final class EngineManager {
     }
 
     /**
-     *
      * @param player
      * @param password
      * @return

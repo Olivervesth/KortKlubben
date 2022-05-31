@@ -3,6 +3,7 @@ package Rooms;
 import java.util.*;
 
 import Cards.Card;
+import Cards.Suit;
 import GameEngine.EngineManager;
 import Players.Player;
 
@@ -28,17 +29,18 @@ public class GameManager {
      * @param players
      * @param cards
      */
-    public void giveCards(List<Player> players, List<Card> cards) {
-        for (int i = 0; i < 4; i++) {
+    public List<Player> giveCards(List<Player> players, List<Card> cards) {
+        for (int i = 0; i < players.size(); i++) {
             List<Card> cardList = new ArrayList<Card>();
             for (int o = 0; o < 13; o++) {
-                int r = new Random().nextInt(0 - cards.size());
+                int r = new Random().nextInt(0 , cards.size());
                 Card c = (Card) cards.toArray()[r];
                 cards.remove(c);
                 cardList.add(c);
             }
             players.get(i).setCards(cardList);
         }
+        return players;
     }
 
     /**
@@ -193,8 +195,8 @@ public class GameManager {
         int highestCard = 0;
         int playerIndex = -1;
 
-        for (int i = 0; i < 4; i++) {
-            String suit = ((Card) (playedCards.toArray()[i])).getSuit();
+        for (int i = 0; i < playerList.size(); i++) {
+            Suit suit = ((Card) (playedCards.toArray()[i])).getSuit();
             int value = ((Card) (playedCards.toArray()[i])).getValue();
 
             if (suit.equals(playingSuit) || suit.equals(trumpSuit)) {
@@ -231,5 +233,8 @@ public class GameManager {
                 return a1.getSets() - a2.getSets();
             }
         }.reversed());
+    }
+    public void playCard(Player player, Card card){
+
     }
 }

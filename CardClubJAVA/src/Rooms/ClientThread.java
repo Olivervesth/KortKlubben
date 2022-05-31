@@ -1,5 +1,6 @@
 package Rooms;
 
+import Cards.Card;
 import GameEngine.EngineManager;
 import Players.Player;
 
@@ -8,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 
 public class ClientThread extends Thread {
     /**
@@ -18,11 +20,11 @@ public class ClientThread extends Thread {
     private DataInputStream in = null;
     Socket client;
     Room activeroom = null;
-    Player clientplayer = null;
+    private Player clientplayer = null;
+    DataOutputStream output = null;
 
     /**
      * Constructor for ClientThread
-     *
      * @param cli
      * @param enginemanager
      * @param roommanager
@@ -33,11 +35,16 @@ public class ClientThread extends Thread {
         rm = roommanager;
         client = cli;
     }
-
     /**
      * Run method, starts the thread
      */
     public void run() {
+        try {
+            output = new DataOutputStream(client.getOutputStream());
+            output.writeUTF("true");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         em.saveErrorLog("Websocket", "New client connected: " + client.getInetAddress() + "");
         System.out.println("New client connected: " + client.getInetAddress() + "");
         boolean clientconnected = true;
@@ -53,11 +60,11 @@ public class ClientThread extends Thread {
 
         // reads message from client until "Done" is sent
 
+
         while (!line.equals("Done") && clientconnected == true) {
             try {
                 //Send message to client
 
-                DataOutputStream output = new DataOutputStream(client.getOutputStream());
                 line = in.readUTF();
                 if(activeroom == null) {
                     System.out.println("UserAction activated");
@@ -72,11 +79,11 @@ public class ClientThread extends Thread {
                 clientconnected = false;
             }
         }
-        em. saveLog("Disconnected", client.getInetAddress().toString());//Log disconnect
+        em.removeClient(client);
+        em.saveLog("Disconnected", client.getInetAddress().toString());//Log disconnect
     }
 
     /**
-     *
      * @param command
      * @return
      */
@@ -161,18 +168,18 @@ public class ClientThread extends Thread {
                 for (Room room:rm.getRooms()) {
                     result += "Room;"+room.getOwner()+";"+room.getPlayerCount()+":";
                 }
-                if (result == null){
-                    return "false";
-                }else if (result != null){
-                    return result;
-                }
-            break;
+//                if (result == null){
+//                    return "false";
+//                }else if (result != null){
+//                }
+                return result;
             case "joinroom":
                 /**
                  * data[1] owner name
                  */
                 activeroom =  rm.getRoom(data[1]);
                 if(activeroom != null){
+                    rm.joinRoom(activeroom,clientplayer);
                     return "true";
                 }else if(activeroom == null){
                     return "false";
@@ -193,8 +200,16 @@ public class ClientThread extends Thread {
         String[] data = command.split(";");
 		switch(data[0]) {
             case "leave":
+                rm.leaveRoom(activeroom,clientplayer);
                 activeroom = null;
                 return "true";
+            case "playcard":
+                /**
+                 * data[1] = card
+                 */
+                    clientplayer.getCards().contains(data[1]);
+//                    rm.playCard(clientplayer,data[1]);
+                    break;
             default:
                 break;
 
@@ -202,5 +217,20 @@ public class ClientThread extends Thread {
 
 		}
         return "false";
+    }
+    public boolean giveCards(List<Card> cards){
+        try {
+            String hand = "";
+            for (Card card:cards) {
+                hand+=card.getValue()+";"+card.getSuit().name()+";";
+            }
+            output.writeUTF("hand;");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+    public Player getClientPlayer(){
+        return clientplayer;
     }
 }
