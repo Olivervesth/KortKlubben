@@ -58,7 +58,6 @@ public class RoomManager {
     }
     public List<Room> getRooms(){
         List<Room> roomlist = new ArrayList<>();
-
         for (Room room: rooms) {
             if (room.getPlayerCount() <4){
                 roomlist.add(room);

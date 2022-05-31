@@ -80,7 +80,7 @@ public class ClientThread extends Thread {
      * @param command
      * @return
      */
-    public boolean userActions(String command) {
+    public String userActions(String command) {
         String[] data = command.split(";");
         System.out.println("data 0 :" + data[0]);
         switch (data[0]) {
@@ -124,7 +124,7 @@ public class ClientThread extends Thread {
                         if (data[1] != null && data[2] != null && data[3] != null) {
                             System.out.println("Creating new user");
                             clientplayer = em.createPlayer(data[2], data[1]);
-                            return em.createUser(clientplayer, data[3]);
+                            return String.valueOf(em.createUser(clientplayer, data[3]));
                         }
 
                     } catch (ArrayIndexOutOfBoundsException e) {
