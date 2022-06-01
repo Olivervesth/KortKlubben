@@ -91,7 +91,7 @@ public final class EngineManager {
     public Player login(String username, String password) {
         // if login is success
         if (db.checkLogin(hashing.hash(username), hashing.hash(password))) {
-            return playerManager.createPlayer(username, db.getPlayerName(username), true);
+            return playerManager.createPlayer(username, db.getPlayerName(hashing.hash(username)), true);
         }
         // if login fails
         else {
