@@ -77,7 +77,7 @@ public class RoomManager {
     public boolean joinRoom(Room room,Player player){
         return room.addPlayer(player);
     }
-    public boolean leaveRoom(Room room,Player player){
+    public boolean destroyRoom(Room room,Player player){
         rooms.remove(room);
         return true;
     }

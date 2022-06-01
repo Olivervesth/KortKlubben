@@ -25,9 +25,9 @@ public class GameManager {
 
     /**
      * Method to give players cards
-     *
      * @param players
      * @param cards
+     * @return List<Player>
      */
     public List<Player> giveCards(List<Player> players, List<Card> cards) {
         for (int i = 0; i < players.size(); i++) {

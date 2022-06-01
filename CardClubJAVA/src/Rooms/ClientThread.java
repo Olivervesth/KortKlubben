@@ -200,7 +200,7 @@ public class ClientThread extends Thread {
         String[] data = command.split(";");
 		switch(data[0]) {
             case "leave":
-                rm.leaveRoom(activeroom,clientplayer);
+                rm.destroyRoom(activeroom,clientplayer);
                 activeroom = null;
                 return "true";
             case "playcard":

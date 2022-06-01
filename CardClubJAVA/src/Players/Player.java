@@ -14,7 +14,6 @@ public abstract class Player {
     private int points;
     private int cardSets;
     private List<Card> cards;
-
     private Player partner;
 
     /**
