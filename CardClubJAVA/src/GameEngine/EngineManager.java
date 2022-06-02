@@ -63,7 +63,7 @@ public final class EngineManager {
     public void giveCardsToClient(Player player, List<Card> cards)//stops here cant givecards to client
     {
         for (KeyValuePair client : clients) {
-            if (((Player) client.getValue()).equals(player)) {
+            if (((Player) client.getValue()).getUserName().equals(player.getUserName())) {
                 try {
                     String hand = "";
                     for (Card card : cards) {
