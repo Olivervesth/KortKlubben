@@ -1,6 +1,7 @@
 package Rooms;
 
 import Cards.Card;
+import DataModels.KeyValuePair;
 import GameEngine.EngineManager;
 import Players.Player;
 
@@ -25,6 +26,7 @@ public class ClientThread extends Thread {
 
     /**
      * Constructor for ClientThread
+     *
      * @param cli
      * @param enginemanager
      * @param roommanager
@@ -35,6 +37,7 @@ public class ClientThread extends Thread {
         rm = roommanager;
         client = cli;
     }
+
     /**
      * Run method, starts the thread
      */
@@ -66,10 +69,10 @@ public class ClientThread extends Thread {
                 //Send message to client
 
                 line = in.readUTF();
-                if(activeroom == null) {
+                if (activeroom == null) {
                     System.out.println("UserAction activated");
-                            output.writeUTF(userActions(line));
-                }else {
+                    output.writeUTF(userActions(line));
+                } else {
                     output.writeUTF(playerInGameActions(line));
                 }
                 System.out.println(line);
@@ -79,7 +82,11 @@ public class ClientThread extends Thread {
                 clientconnected = false;
             }
         }
-        em.removeClient(client);
+        try {
+            em.removeClient(new KeyValuePair(client, clientplayer));
+        } catch (Exception e) {
+            em.saveErrorLog("Thread disconnection error", clientplayer.getUserName() + " disconnected with error " + e.getMessage());
+        }
         em.saveLog("Disconnected", client.getInetAddress().toString());//Log disconnect
     }
 
@@ -96,14 +103,15 @@ public class ClientThread extends Thread {
                  * data[1] = username data[2] = psw
                  */
                 System.out.println("in login case");
-                if(clientplayer == null) {
-                    try{
-                        if(data[1] != null && data[2] != null) {
+                if (clientplayer == null) {
+                    try {
+                        if (data[1] != null && data[2] != null) {
                             System.out.println("data send in login case");
                             clientplayer = em.login(data[1], data[2]);
                             em.saveLog("Login", client.getInetAddress().toString());
-                            if(clientplayer != null) {
-                                System.out.println(clientplayer.getUserName()+" Logged in");
+                            if (clientplayer != null) {
+                                em.addClient(new KeyValuePair(client, clientplayer));
+                                System.out.println(clientplayer.getUserName() + " Logged in");
                                 return "true";
 
                             } else {
@@ -146,12 +154,12 @@ public class ClientThread extends Thread {
                  * data[1] = playername data[2] = username data[3] = psw
                  */
 
-                if(clientplayer != null) {
-                    try{
-                        if(activeroom == null) {
-                            activeroom = rm.createRoom(1,clientplayer);//fix
+                if (clientplayer != null) {
+                    try {
+                        if (activeroom == null) {
+                            activeroom = rm.createRoom(1, clientplayer);//fix
                             return "true";
-                        }else {
+                        } else {
                             return "false";
                         }
 
@@ -165,8 +173,8 @@ public class ClientThread extends Thread {
                 break;
             case "getrooms":
                 String result = "";
-                for (Room room:rm.getRooms()) {
-                    result += "Room;"+room.getOwner()+";"+room.getPlayerCount()+":";
+                for (Room room : rm.getRooms()) {
+                    result += "Room;" + room.getOwner() + ";" + room.getPlayerCount() + ":";
                 }
 //                if (result == null){
 //                    return "false";
@@ -177,11 +185,11 @@ public class ClientThread extends Thread {
                 /**
                  * data[1] owner name
                  */
-                activeroom =  rm.getRoom(data[1]);
-                if(activeroom != null){
-                    rm.joinRoom(activeroom,clientplayer);
+                activeroom = rm.getRoom(data[1]);
+                if (activeroom != null) {
+                    rm.joinRoom(activeroom, clientplayer);
                     return "true";
-                }else if(activeroom == null){
+                } else if (activeroom == null) {
                     return "false";
                 }
                 break;
@@ -192,37 +200,36 @@ public class ClientThread extends Thread {
     }
 
     /**
-     *
      * @param command
      */
     public String playerInGameActions(String command) {
 
         String[] data = command.split(";");
-		switch(data[0]) {
+        switch (data[0]) {
             case "leave":
-                rm.destroyRoom(activeroom,clientplayer);
+                rm.destroyRoom(activeroom, clientplayer);
                 activeroom = null;
                 return "true";
             case "playcard":
                 /**
                  * data[1] = card
                  */
-                    clientplayer.getCards().contains(data[1]);
+                clientplayer.getCards().contains(data[1]);
 //                    rm.playCard(clientplayer,data[1]);
-                    break;
+                break;
             default:
                 break;
 
 
-
-		}
+        }
         return "false";
     }
-    public boolean giveCards(List<Card> cards){
+
+    public boolean giveCards(List<Card> cards) {
         try {
             String hand = "";
-            for (Card card:cards) {
-                hand+=card.getValue()+";"+card.getSuit().name()+";";
+            for (Card card : cards) {
+                hand += card.getValue() + ";" + card.getSuit().name() + ";";
             }
             output.writeUTF("hand;");
         } catch (IOException e) {
@@ -230,7 +237,8 @@ public class ClientThread extends Thread {
         }
         return false;
     }
-    public Player getClientPlayer(){
+
+    public Player getClientPlayer() {
         return clientplayer;
     }
 }

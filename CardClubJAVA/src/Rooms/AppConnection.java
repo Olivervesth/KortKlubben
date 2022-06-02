@@ -58,7 +58,6 @@ public class AppConnection {
                 t.start();
                 clientThreads.add(t);
                 t.getName();
-                em.addClient(socket);
                 System.out.println("Clients connected "+clientThreads.size());
             }
             // close connection

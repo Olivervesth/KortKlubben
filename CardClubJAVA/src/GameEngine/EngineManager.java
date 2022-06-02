@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Cards.Card;
+import DataModels.KeyValuePair;
 import Players.Player;
 import Players.PlayerManager;
 import Rooms.ClientThread;
@@ -22,14 +23,14 @@ public final class EngineManager {
     private static PlayerManager playerManager;
     private static RoomManager roomManager;
     private static EngineManager em;
-    private List<Socket> clientThreads = null;
+    private List<KeyValuePair> clients = null;
 
     /**
      * Constructor for EngineManager
      */
     public EngineManager() {
         em = this;
-        clientThreads = new ArrayList<>();
+        clients = new ArrayList<>();
         logger = new Logger();
         hashing = new Hashing();
         db = new DbManager();
@@ -46,30 +47,32 @@ public final class EngineManager {
         }
     }
 
-    public void addClient(Socket client) {
-        if (!clientThreads.contains(client)) {
-            this.clientThreads.add(client);
+    public void addClient(KeyValuePair client) {
+        if (!clients.contains(client)) {
+            this.clients.add(client);
         }
     }
 
-    public void removeClient(Socket client) {
-        if (clientThreads.contains(client)) {
-            this.clientThreads.remove(client);
+    public void removeClient(KeyValuePair client) {
+        if (clients.contains(client)) {
+            this.clients.remove(client);
 
         }
     }
 
     public void giveCardsToClient(Player player, List<Card> cards)//stops here cant givecards to client
     {
-        for (Socket client : clientThreads) {
-            try {
-                String hand = "";
-                for (Card card : cards) {
-                    hand += card.getValue() + ";" + card.getSuit().name() + ";";
+        for (KeyValuePair client : clients) {
+            if (((Player) client.getValue()).equals(player)) {
+                try {
+                    String hand = "";
+                    for (Card card : cards) {
+                        hand += card.getValue() + ";" + card.getSuit().name() + ";";
+                    }
+                    new DataOutputStream(((Socket) client.getKey()).getOutputStream()).writeUTF(hand);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                new DataOutputStream(client.getOutputStream()).writeUTF(hand);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
         }
     }
