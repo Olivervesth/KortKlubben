@@ -237,4 +237,13 @@ public class GameManager {
     public void playCard(Player player, Card card){
 
     }
+    public boolean checkSuit(String playersuit){
+        boolean suitexists = false;
+        for (Suit suit:Suit.values()) {
+            if(playersuit.toLowerCase().equals(suit.name().toLowerCase())){
+                suitexists = true;
+            }
+        }
+        return suitexists;
+    }
 }

@@ -8,8 +8,7 @@ import Cards.CardManager;
 import GameEngine.EngineManager;
 import Players.Player;
 
-public class Room
-{
+public class Room {
     /**
      * Fields for Room class
      */
@@ -20,12 +19,12 @@ public class Room
 
     /**
      * Constructor for Room class
+     *
      * @param owner
      * @param gameManager
      * @param cardManager
      */
-    public Room(Player owner, GameManager gameManager, CardManager cardManager)
-    {
+    public Room(Player owner, GameManager gameManager, CardManager cardManager) {
         players = new ArrayList<Player>();
         this.owner = owner;
         players.add(owner);
@@ -36,36 +35,41 @@ public class Room
     /**
      * Method to give players cards
      */
-    private void giveCards()
-    {
-       players = gameManager.giveCards(players, cardManager.generateCardDeckNoJokers());
-       for (Player player : players)
-       {
-           EngineManager.getEngineManager().giveCardsToClient(player,player.getCards());
-       }
+    private void giveCards() {
+        players = gameManager.giveCards(players, cardManager.generateCardDeckNoJokers());
+        for (Player player : players) {
+            EngineManager.getEngineManager().giveCardsToClient(player, player.getCards());
+        }
     }
-    public int getPlayerCount(){
+
+    public boolean checkSuit(String suit) {
+        return gameManager.checkSuit(suit);
+    }
+
+    public int getPlayerCount() {
         return players.size();
     }
 
     /**
      * Get the room owners playername
+     *
      * @return
      */
-    public String getOwner(){
+    public String getOwner() {
         return owner.getPlayerName();
     }
 
     /**
      * Add player to room
+     *
      * @param player
      * @return
      */
-    public boolean addPlayer(Player player){
-        if(players.size()<4){
-            if(!players.contains(player)){
+    public boolean addPlayer(Player player) {
+        if (players.size() < 4) {
+            if (!players.contains(player)) {
                 players.add(player);
-                if(players.size() == 2){
+                if (players.size() == 2) {
                     giveCards();
                 }
                 return true;
@@ -76,19 +80,21 @@ public class Room
 
     /**
      * Remove player from room
+     *
      * @param player
      * @return
      */
-    public boolean removePlayer(Player player){
-        if (players.size() >0){
-            if(players.contains(player)){
+    public boolean removePlayer(Player player) {
+        if (players.size() > 0) {
+            if (players.contains(player)) {
                 players.remove(player);
                 return true;
             }
         }
         return false;
     }
-    public void playCard(Player player, Card card){
-        gameManager.playCard(player,card);
+
+    public void playCard(Player player, Card card) {
+        gameManager.playCard(player, card);
     }
 }

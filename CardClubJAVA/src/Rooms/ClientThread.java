@@ -1,6 +1,7 @@
 package Rooms;
 
 import Cards.Card;
+import Cards.Suit;
 import DataModels.KeyValuePair;
 import GameEngine.EngineManager;
 import Players.Player;
@@ -212,10 +213,11 @@ public class ClientThread extends Thread {
                 return "true";
             case "playcard":
                 /**
-                 * data[1] = card
+                 * data[1] = card number
+                 * data[2] = suit
                  */
-                clientplayer.getCards().contains(data[1]);
-//                    rm.playCard(clientplayer,data[1]);
+                activeroom.checkSuit(data[2]);
+//                activeroom.playCard(clientplayer,);
                 break;
             default:
                 break;
