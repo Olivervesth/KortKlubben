@@ -9,7 +9,6 @@ public class Hashing {
      * Method to hash a string input
      *
      * @return String hashed input
-     * @return null if hashing failed
      */
     public String hash(String input) {
         try {

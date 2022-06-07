@@ -9,8 +9,8 @@ public abstract class Player {
     /**
      * Fields for Player class
      */
-    private String playername;
-    private String username;
+    private String playerName;
+    private String userName;
     private int points;
     private int cardSets;
     private List<Card> cards;
@@ -20,8 +20,8 @@ public abstract class Player {
      * Constructor for Human class
      */
     public Player(String Username, String PlayerName) {
-        this.playername = PlayerName;
-        this.username = Username;
+        this.playerName = PlayerName;
+        this.userName = Username;
         this.points = 0;
     }
 
@@ -31,7 +31,7 @@ public abstract class Player {
      * @return String name
      */
     public String getUserName() {
-        return this.username;
+        return this.userName;
     }
 
     /**
@@ -40,7 +40,7 @@ public abstract class Player {
      * @return String name
      */
     public String getPlayerName() {
-        return this.playername;
+        return this.playerName;
     }
 
     /**
@@ -53,24 +53,6 @@ public abstract class Player {
     }
 
     /**
-     * Method to set a player's cards
-     *
-     * @param newCards
-     */
-    public void setCards(List<Card> newCards) {
-        this.cards = newCards;
-    }
-
-    /**
-     * Method to set a players partner
-     *
-     * @param player
-     */
-    public void setPartner(Player player) {
-        this.partner = player;
-    }
-
-    /**
      * Method to get the partner player of a player
      *
      * @return partner player
@@ -78,6 +60,13 @@ public abstract class Player {
     public Player getPartner() {
         return this.partner;
     }
+
+    /**
+     * Method to get a players amount of sets
+     *
+     * @return amount of sets
+     */
+    public int getSets() { return cardSets; }
 
     /**
      * Method to get the player's points
@@ -96,7 +85,7 @@ public abstract class Player {
             this.points += points;
         } else {
             EngineManager.getEngineManager().saveErrorLog("UpdatePoints",
-                    this.username + " tried to add: " + points + " points");
+                    this.userName + " tried to add: " + points + " points");
         }
     }
 
@@ -108,20 +97,27 @@ public abstract class Player {
     }
 
     /**
-     * Method to get a players amount of sets
+     * Method to set a player's cards
      *
-     * @return amount of sets
+     * @param newCards new set of cards
      */
-    public int getSets() {
-        return cardSets;
+    public void setCards(List<Card> newCards) {
+        this.cards = newCards;
+    }
+
+    /**
+     * Method to set a players partner
+     *
+     * @param player partner player
+     */
+    public void setPartner(Player player) {
+        this.partner = player;
     }
 
     /**
      * adds 1 to a players amount of sets
-     *
-     * @param set
      */
-    public void setSets(int set) {
+    public void addToSets() {
         cardSets++;
     }
 
@@ -131,5 +127,7 @@ public abstract class Player {
     public void resetSets() {
         cardSets = 0;
     }
+
+    public void setPlayerName(String name){ playerName = name; }
 
 }

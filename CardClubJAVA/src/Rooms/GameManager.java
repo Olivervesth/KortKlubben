@@ -13,62 +13,52 @@ public class GameManager {
      */
     private List<Card> playedCards;
     private int[] playerPoints;
-    private String trumpSuit;
-    private String playingSuit;
+    private Suit trumpSuit;
+    private Suit playingSuit;
 
     /**
      * Constructor for GameManager
      */
     public GameManager() {
-        playedCards = new ArrayList<Card>();
+        playedCards = new ArrayList<>();
     }
 
     /**
      * Method to give players cards
-     * @param players
-     * @param cards
+     *
+     * @param players players to give cards
+     * @param cards cards for players
      * @return List<Player>
      */
     public List<Player> giveCards(List<Player> players, List<Card> cards) {
-        for (int i = 0; i < players.size(); i++) {
-            List<Card> cardList = new ArrayList<Card>();
+        for (Player player : players) {
+            List<Card> cardList = new ArrayList<>();
             for (int o = 0; o < 13; o++) {
-                int r = new Random().nextInt(0 , cards.size());
+                int r = new Random().nextInt(0, cards.size());
                 Card c = (Card) cards.toArray()[r];
                 cards.remove(c);
                 cardList.add(c);
             }
-            players.get(i).setCards(cardList);
+            player.setCards(cardList);
         }
         return players;
     }
 
     /**
-     * Method to play a card
-     *
-     * @param card
-     */
-    public void playCard(int playerIndex, Card card) {
-        // TODO
-        // Replace card with string suit string value? to remove connections
-        /*List<Card> pCards = playerCards.get(playerIndex);
-        pCards.remove(card);
-        playerCards.remove(playerIndex);
-        playerCards.add(playerIndex, pCards);
-        playedCards.add(playerIndex, card);*/
-    }
-
-    /**
      * Method to see who WON
      *
-     * @param playerList
+     * @param playerList list of players in game
      */
     public void checkGame(List<Player> playerList) {
         for (Player player : playerList) {//Go through the list of players
-
             EngineManager.getEngineManager().addGamePlayed(player);//Adds a played game to player data
             if (player.getPoints() >= 5) {//If a player has 5 or more points the player wins
-                EngineManager.getEngineManager().addGameWon(player);//Adds a game won to player data
+                EngineManager.getEngineManager().addGameWon(player);//Adds a game won to player data,
+                // TODO win msg
+                EngineManager.getEngineManager().msgPlayer(player, "You Won");
+            } else {
+                // TODO loose msg
+                EngineManager.getEngineManager().msgPlayer(player, "You Lost");
             }
         }
     }
@@ -76,8 +66,8 @@ public class GameManager {
     /**
      * returns the points for players set count
      *
-     * @param set
-     * @return
+     * @param set amounts of sets
+     * @return int
      */
     public int pointSystem(int set) {
         int points = 0;
@@ -127,7 +117,7 @@ public class GameManager {
     /**
      * Method to see who have most sets
      *
-     * @param playerList
+     * @param playerList list of players in game
      */
     public void checkRound(List<Player> playerList) {
         Player player1 = playerList.get(0);
@@ -149,11 +139,29 @@ public class GameManager {
                 player.updatePoints(pointSystem(player.getSets()));
             }
         }
+        trumpSuit = null;
+        boolean winConditionMet = false;
+        for (Player p : playerList)
+        {
+            if (p.getPoints() > 5)
+            {
+                winConditionMet = true;
+                break;
+            }
+        }
+        if (winConditionMet)
+        {
+            checkGame(playerList);
+        }
     }
 
 
     /**
      * Method to find partners
+     *
+     * @param cardPlayer the player playing a card
+     * @param playedCard the card being played
+     * @param players list of players in game
      */
     public void findPartners(Player cardPlayer, Card playedCard, List<Player> players) {
         Card matchingAce = new Card(14, playedCard.getSuit());
@@ -189,30 +197,38 @@ public class GameManager {
     /**
      * Method to see who won the set
      *
-     * @param playerList
+     * @param playerList list of players in game
      */
     public void checkForSet(List<Player> playerList) {
         int highestCard = 0;
         int playerIndex = -1;
+        try{
+            for (int i = 0; i < playerList.size(); i++) {
+                Suit suit = ((Card) (playedCards.toArray()[i])).getSuit();
+                int value = ((Card) (playedCards.toArray()[i])).getValue();
 
-        for (int i = 0; i < playerList.size(); i++) {
-            Suit suit = ((Card) (playedCards.toArray()[i])).getSuit();
-            int value = ((Card) (playedCards.toArray()[i])).getValue();
-
-            if (suit.equals(playingSuit) || suit.equals(trumpSuit)) {
-                if (value > highestCard) {
-                    highestCard = value;
-                    playerIndex = i;
+                if (suit.equals(playingSuit) || suit.equals(trumpSuit)) {
+                    if (value > highestCard) {
+                        highestCard = value;
+                        playerIndex = i;
+                    }
                 }
             }
+            playerList.get(playerIndex).addToSets();
+            playedCards.clear();
+            // crashes ?
+            playingSuit = null;
+
+        }catch(ArrayIndexOutOfBoundsException e){
+            //log
+            e.printStackTrace();
         }
-        playerList.get(playerIndex).setSets(1);
     }
 
     /**
      * Sets all players' partner to null
      *
-     * @param players
+     * @param players list of players to set partner to null
      */
     private void nullAllPartners(List<Player> players) {
         for (Player player : players) {
@@ -224,26 +240,58 @@ public class GameManager {
      * Sorts a list of players based on theirs sets.
      * Highest to lowest.
      *
-     * @param players
+     * @param players list of players to sort by amount of sets
      */
     private void sortListBySets(List<Player> players) {
-        players.sort(new Comparator<Player>() {
-            @Override
-            public int compare(Player a1, Player a2) {
-                return a1.getSets() - a2.getSets();
-            }
-        }.reversed());
+        players.sort(Comparator.comparingInt(Player::getSets).reversed());
     }
-    public void playCard(Player player, Card card){
 
-    }
-    public boolean checkSuit(String playersuit){
-        boolean suitexists = false;
-        for (Suit suit:Suit.values()) {
-            if(playersuit.toLowerCase().equals(suit.name().toLowerCase())){
-                suitexists = true;
+    /**
+     * Removes the played card and call the cardPlayed method
+     *
+     * @param player player playing a card
+     * @param card   card being played
+     */
+    public void playCard(Player player, Card card) {
+        for (Card pcard : player.getCards()) {
+            if (pcard.getValue() == card.getValue() && pcard.getSuit() == card.getSuit()) {
+                if (playingSuit == null)
+                {
+                    this.playingSuit = card.getSuit();
+                }
+                if (trumpSuit == null)
+                {
+                    this.trumpSuit = card.getSuit();
+                }
+                List<Card> playerCards = player.getCards();
+                playerCards.remove(pcard);
+                player.setCards(playerCards);
+                playedCards.add(card);
+                EngineManager.getEngineManager().cardPlayed(player, card);
+                break;
             }
         }
-        return suitexists;
+        String temphand=player.getPlayerName()+" cards - ";
+        for (Card pcard : player.getCards()){
+            temphand += pcard.getValue()+";"+pcard.getSuit()+" ";
+        }
+        System.out.println(temphand);
+    }
+
+    /**
+     * Checks that the suit exists in the suit enum
+     *
+     * @param playerSuit suit of card
+     * @return boolean
+     */
+    public boolean checkSuit(String playerSuit) {
+        boolean suitExists = false;
+        for (Suit suit : Suit.values()) {
+            if (playerSuit.equalsIgnoreCase(suit.name())) {
+                suitExists = true;
+                break;
+            }
+        }
+        return suitExists;
     }
 }

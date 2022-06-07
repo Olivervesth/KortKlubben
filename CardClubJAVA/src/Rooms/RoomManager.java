@@ -1,10 +1,8 @@
 package Rooms;
 
-import java.sql.ClientInfoStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-import Cards.Card;
 import Cards.CardManager;
 import GameEngine.EngineManager;
 import Players.Player;
@@ -19,14 +17,15 @@ public class RoomManager {
      * Constructor for RoomManager
      */
     public RoomManager() {
-        rooms = new ArrayList<Room>();
+        rooms = new ArrayList<>();
     }
 
     /**
      * Method to create a new room
-     * @param gameType
-     * @param owner
-     * @return
+     *
+     * @param gameType int to determine card game
+     * @param owner    Creator of room
+     * @return Room
      */
     public Room createRoom(int gameType, Player owner) {
         Room room = null;
@@ -51,33 +50,57 @@ public class RoomManager {
 
     /**
      * Method to reset players in a room
-     * @param players
-     * @return
+     *
+     * @param players players to reset
+     * @return List<Player> list of players that have been reset
      */
-    public static List<Player> resetPlayers(List<Player> players) {
+    public List<Player> resetPlayers(List<Player> players) {
         return EngineManager.resetPlayerPoints(players);
     }
-    public List<Room> getRooms(){
-        List<Room> roomlist = new ArrayList<>();
-        for (Room room: rooms) {
-            if (room.getPlayerCount() <4){
-                roomlist.add(room);
+
+    public List<Room> getRooms() {
+        List<Room> roomList = new ArrayList<>();
+        for (Room room : rooms) {
+            if (room.getPlayerCount() < 4) {
+                roomList.add(room);
             }
         }
-        return roomlist;
+        return roomList;
     }
-    public Room getRoom(String owner){
-        for (Room room:rooms) {
-            if(room.getOwner().equals(owner)){
+
+    /**
+     * Method to get room object from owner
+     *
+     * @param owner creator of room
+     * @return Room
+     */
+    public Room getRoom(String owner) {
+        for (Room room : rooms) {
+            if (room.getOwner().equals(owner)) {
                 return room;
             }
         }
         return null;
     }
-    public boolean joinRoom(Room room,Player player){
+
+    /**
+     * Method for a player to join a room
+     *
+     * @param room   room to join
+     * @param player player joining
+     * @return boolean
+     */
+    public boolean joinRoom(Room room, Player player) {
         return room.addPlayer(player);
     }
-    public boolean destroyRoom(Room room,Player player){
+
+    /**
+     * Method to destroy an active room
+     *
+     * @param room room to be destroyed
+     * @return boolean
+     */
+    public boolean destroyRoom(Room room) {
         rooms.remove(room);
         return true;
     }

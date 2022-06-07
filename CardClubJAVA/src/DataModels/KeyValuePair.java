@@ -2,7 +2,7 @@ package DataModels;
 
 import java.io.Serializable;
 
-public class KeyValuePair extends Object implements Serializable {
+public class KeyValuePair implements Serializable {
     private Object key;
     private Object value;
 

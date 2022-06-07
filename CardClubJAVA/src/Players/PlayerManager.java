@@ -6,11 +6,11 @@ public class PlayerManager {
      *
      * @return Player
      */
-    public Player createPlayer(String username, String playername, boolean human) {
+    public Player createPlayer(String username, String playerName, boolean human) {
         if (human) {
-            return new Human(username, playername);
+            return new Human(username, playerName);
         } else {
-            return new Computer(playername);
+            return new Computer(playerName);
         }
     }
 
@@ -24,6 +24,12 @@ public class PlayerManager {
         return player;
     }
 
+    /**
+     * Method to change a players point total
+     *
+     * @param player player to change points
+     * @param points points to change
+     */
     public void setPlayerPoints(Player player, int points) {
         player.updatePoints(points);
     }

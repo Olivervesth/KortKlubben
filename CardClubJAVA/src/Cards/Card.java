@@ -26,7 +26,7 @@ public class Card {
     }
 
     /**
-     * Method to the the card's suit
+     * Method to get the card's suit
      *
      * @return String suit
      */

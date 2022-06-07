@@ -23,7 +23,7 @@ class DbManagerTests {
     static DbManager manager;
 
     @BeforeAll
-    static void setUpBeforeClass() throws Exception {
+    static void setUpBeforeClass() {
         manager = new DbManager();
     }
 
@@ -45,12 +45,16 @@ class DbManagerTests {
             System.out.println(e.getMessage());
         } finally {
             try {
-                rs.close();
+                if (rs != null) {
+                    rs.close();
+                }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
@@ -62,7 +66,7 @@ class DbManagerTests {
         }
 
         // Assert
-        assertFalse(rs == null);
+        assertNotNull(rs);
     }
 
 
@@ -103,7 +107,7 @@ class DbManagerTests {
         }
 
         // Assert
-        assertFalse(resultSet == null);
+        assertNotNull(resultSet);
     }
 
 
@@ -111,14 +115,11 @@ class DbManagerTests {
     @Order(4)
     void checkLogin_ReturnsTrue_IfParamsEqual() {
         // Arrange
-//		String username = "JesperKD";
-//		String password = "Kage1234!";
         String username = testPlayer().getUserName();
         String password = "Chowder123";
-        boolean result = false;
 
         // Act
-        result = manager.checkLogin(username, password);
+        boolean result = manager.checkLogin(username, password);
 
 
         // Assert
@@ -128,11 +129,9 @@ class DbManagerTests {
     @Test
     @Order(5)
     void updatePlayer_ChangesPlayerData_IfValid() {
-        // Arrange
-        boolean result = false;
 
         // Act
-        result = manager.updatePlayer(testPlayer2(), "TestPass123");
+        boolean result = manager.updatePlayer(testPlayer2(), "TestPass123");
 
         // Assert
         assertTrue(result);
@@ -141,11 +140,8 @@ class DbManagerTests {
     @Test
     @Order(6)
     void addGamePlayed_ShouldAdd_IfAble() {
-        // Arrange
-        boolean result = false;
-
         // Act
-        result = manager.addGamePlayed(testPlayer2());
+        boolean result = manager.addGamePlayed(testPlayer2());
 
         // Assert
         assertTrue(result);
@@ -154,11 +150,8 @@ class DbManagerTests {
     @Test
     @Order(7)
     void addGameWon_ShouldAdd_IfAble() {
-        // Arrange
-        boolean result = false;
-
         // Act
-        result = manager.addGameWon(testPlayer2());
+        boolean result = manager.addGameWon(testPlayer2());
 
         // Assert
         assertTrue(result);
@@ -168,11 +161,8 @@ class DbManagerTests {
     @Test
     @Order(8)
     void deletePlayer_RemovesPlayer_IfAble() {
-        // Arrange
-        boolean result = false;
-
         // Act
-        result = manager.deletePlayer(testPlayer2());
+        boolean result = manager.deletePlayer(testPlayer2());
 
         // Assert
         assertTrue(result);
@@ -184,25 +174,22 @@ class DbManagerTests {
         // Arrange
         String action = "Testing Log";
         String message = "This is a test for creating logs";
-        boolean result = false;
 
         // Act
-        result = manager.createLog(action, message);
+        boolean result = manager.createLog(action, message);
 
         // Assert
         assertTrue(result);
     }
 
     private Player testPlayer() {
-        Player player = new Human("LarsLummer", "Lars");
 
-        return player;
+        return new Human("LarsLummer", "Lars");
     }
 
     private Player testPlayer2() {
-        Player player = new Human("LarsLummer", "Bror");
 
-        return player;
+        return new Human("LarsLummer", "Bror");
     }
 
 }

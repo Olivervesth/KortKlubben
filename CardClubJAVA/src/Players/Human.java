@@ -5,7 +5,7 @@ public class Human extends Player {
      * Constructor for Human
      *
      */
-    public Human(String username, String playernamename) {
-        super(username, playernamename);
+    public Human(String username, String playerName) {
+        super(username, playerName);
     }
 }

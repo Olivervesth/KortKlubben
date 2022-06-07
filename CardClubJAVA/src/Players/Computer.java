@@ -2,10 +2,10 @@ package Players;
 
 public class Computer extends Player {
     /**
-     * Constructor for Comomputer
+     * Constructor for Computer
      *
      */
-    public Computer(String playernamename) {
-        super("pc", playernamename);
+    public Computer(String playerName) {
+        super("pc", playerName);
     }
 }

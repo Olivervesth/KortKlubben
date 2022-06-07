@@ -10,7 +10,6 @@ import Cards.Card;
 import DataModels.KeyValuePair;
 import Players.Player;
 import Players.PlayerManager;
-import Rooms.ClientThread;
 import Rooms.RoomManager;
 
 public final class EngineManager {
@@ -41,18 +40,26 @@ public final class EngineManager {
     public static EngineManager getEngineManager() {
         if (em == null) {
             em = new EngineManager();
-            return em;
-        } else {
-            return em;
         }
+        return em;
     }
 
+    /**
+     * Adds a client to the list of clients
+     *
+     * @param client client to add
+     */
     public void addClient(KeyValuePair client) {
         if (!clients.contains(client)) {
             this.clients.add(client);
         }
     }
 
+    /**
+     * Removes a client from the list of clients
+     *
+     * @param client client to remove
+     */
     public void removeClient(KeyValuePair client) {
         if (clients.contains(client)) {
             this.clients.remove(client);
@@ -60,7 +67,13 @@ public final class EngineManager {
         }
     }
 
-    public void giveCardsToClient(Player player, List<Card> cards)//stops here cant givecards to client
+    /**
+     * Method to deal cards to a specific player
+     *
+     * @param player player to give cards to
+     * @param cards  cards for the player
+     */
+    public void giveCardsToClient(Player player, List<Card> cards)//stops here can't give cards to client
     {
         for (KeyValuePair client : clients) {
             if (((Player) client.getValue()).getUserName().equals(player.getUserName())) {
@@ -69,6 +82,7 @@ public final class EngineManager {
                     for (Card card : cards) {
                         hand += card.getValue() + ";" + card.getSuit().name() + ";";
                     }
+                    System.out.println(player.getPlayerName()+";"+hand);
                     new DataOutputStream(((Socket) client.getKey()).getOutputStream()).writeUTF(hand);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -77,13 +91,56 @@ public final class EngineManager {
         }
     }
 
+    /**
+     * Method to register that a card has been played
+     *
+     * @param player player playing a card
+     * @param card   the card being played
+     */
+    public void cardPlayed(Player player, Card card) {
+        for (KeyValuePair client : clients) {
+            if (!((Player) client.getValue()).getUserName().equals(player.getUserName())) {
+                try {
+                    String response = card.getValue() + ";" + card.getSuit().name();
+                    DataOutputStream output = new DataOutputStream(((Socket) client.getKey()).getOutputStream());
+                    output.writeUTF(response);
+                } catch (IOException e) {
+                    em.saveErrorLog("EngineManager cardPlayed",e.getMessage());
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    /**
+     * Method to message a single player
+     *
+     * @param player player to message
+     * @param msg the message
+     */
+    public void msgPlayer(Player player, String msg) {
+        for (KeyValuePair client : clients) {
+            if (((Player) client.getValue()).getUserName().equals(player.getUserName())) {
+                try {
+                    new DataOutputStream(((Socket) client.getKey()).getOutputStream()).writeUTF(msg);
+                    break;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    /**
+     * Method to instantiate a new RoomManager
+     *
+     * @return RoomManager
+     */
     public static RoomManager getRoomManager() {
         if (roomManager == null) {
             roomManager = new RoomManager();
-            return roomManager;
-        } else {
-            return roomManager;
         }
+        return roomManager;
     }
 
     /**
@@ -94,11 +151,12 @@ public final class EngineManager {
     public Player login(String username, String password) {
         // if login is success
         if (db.checkLogin(hashing.hash(username), hashing.hash(password))) {
+            saveLog("Login", "Player " + username + " logged in successfully");
             return playerManager.createPlayer(username, db.getPlayerName(hashing.hash(username)), true);
         }
         // if login fails
         else {
-            // log failed attempt?
+            saveErrorLog("Login", "Player " + username + " failed to login");
             return null;
         }
     }
@@ -127,9 +185,9 @@ public final class EngineManager {
      * @return List<Player>
      */
     public static List<Player> resetPlayerPoints(List<Player> players) {
-        List<Player> returnList = new ArrayList<Player>();
-        for (int i = 0; i < players.size(); i++) {
-            returnList.add(playerManager.resetPlayerPoints(players.get(i)));
+        List<Player> returnList = new ArrayList<>();
+        for (Player player : players) {
+            returnList.add(playerManager.resetPlayerPoints(player));
         }
         return returnList;
     }
@@ -139,17 +197,26 @@ public final class EngineManager {
      *
      * @return Player
      */
-    public Player createPlayer(String username, String playername) {
-        return playerManager.createPlayer(hashing.hash(username), playername, true);
+    public Player createPlayer(String username, String playerName) {
+        return playerManager.createPlayer(hashing.hash(username), playerName, true);
     }
 
     /**
-     * @param player
-     * @param password
-     * @return
+     * Method for saving a new user to the db
+     *
+     * @param player   the user to be created
+     * @param password string of new password
+     * @return boolean
      */
     public boolean createUser(Player player, String password) {
-        return db.createPlayer(player, hashing.hash(password));
+        if (db.createPlayer(player, hashing.hash(password))) {
+            saveLog("CreateUser", "User " + player.getUserName() + " create successfully");
+            return true;
+        } else {
+            saveErrorLog("CreateUser", "Failed to create user " + player.getUserName());
+            return false;
+        }
+
     }
 
     /**
@@ -166,8 +233,22 @@ public final class EngineManager {
      *
      * @return boolean
      */
-    public boolean updateUser(Player player, String newpassword) {
-        return db.updatePlayer(player, newpassword);
+    public boolean updateUser(Player player, String newPassword) {
+        boolean result = false;
+        if(newPassword.equals("")){
+            result = db.updatePlayer(player, null);
+        }
+        else{
+            result = db.updatePlayer(player, hashing.hash(newPassword));
+        }
+
+        if (result) {
+            saveLog("UpdateUser", "User " + player.getUserName() + " updated successfully");
+            return true;
+        } else {
+            saveErrorLog("UpdateUser", "User " + player.getUserName() + "failed to update");
+            return false;
+        }
     }
 
     /**
@@ -176,25 +257,27 @@ public final class EngineManager {
      * @return boolean
      */
     public boolean deleteUser(Player player) {
-        return db.deletePlayer(player);
+        if (db.deletePlayer(player)) {
+            saveLog("DeletePlayer", "User " + player.getUserName() + " was deleted");
+            return true;
+        } else {
+            saveErrorLog("DeletePlayer", "Failed to delete user " + player.getUserName());
+            return false;
+        }
     }
 
     /**
-     * Method to save error messages to ErrorLog table in db
-     *
-     * @returns boolean
+     * Method to save error messages to db
      */
-    public boolean saveErrorLog(String action, String message) {
-        return logger.saveErrorLog(action, message, db);
+    public void saveErrorLog(String action, String message) {
+        logger.saveErrorLog(action, message, db);
     }
 
     /**
-     * Method to save messages to Log table in db
-     *
-     * @returns boolean
+     * Method to save messages to db
      */
-    public boolean saveLog(String action, String message) {
-        return logger.saveLog(action, message, db);
+    public void saveLog(String action, String message) {
+        logger.saveLog(action, message, db);
     }
 
 }

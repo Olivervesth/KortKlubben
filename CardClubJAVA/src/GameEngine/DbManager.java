@@ -1,21 +1,14 @@
 package GameEngine;
 
 import java.sql.*;
+import java.util.Objects;
 
 import Players.Player;
 
 public class DbManager {
-    /**
-     * Fields for DbManager move this to a application setting?
-     */
-    private String database = "cardclub_db";
-    private String databaseUsername = "martin";
-    private String databasePassword = "Kode1234!";
-    private String connectionString = "jdbc:mysql://10.108.130.218:3306/" + database + "";
 
     /**
      * Constructor for DbManager
-     *
      */
     public DbManager() {
     }
@@ -26,6 +19,11 @@ public class DbManager {
      * @return Connection
      */
     public Connection connectDb() {
+        //TODO: Move database connection settings into readable file
+        String databaseUsername = "martin";
+        String databasePassword = "Kode1234!";
+        String database = "cardclub_db";
+        String connectionString = "jdbc:mysql://10.108.130.218:3306/" + database + "";
 
         Connection con = null;
         try {
@@ -34,16 +32,6 @@ public class DbManager {
             return con;
         } catch (Exception e) {
             EngineManager.getEngineManager().saveErrorLog("connectDB", e.getMessage());
-        }
-        if (con != null) {
-            try {
-                if (con.isClosed() == false) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                EngineManager.getEngineManager().saveErrorLog("connectDB", e.getMessage());
-            }
-
         }
         return null;
     }
@@ -72,10 +60,12 @@ public class DbManager {
             return result;
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("create Player", e.getMessage());
-            return result;
+            return false;
         } finally {
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 EngineManager.getEngineManager().saveErrorLog("create Player", e.getMessage());
             }
@@ -92,7 +82,7 @@ public class DbManager {
      *
      * @return boolean
      */
-    public boolean updatePlayer(Player player, String newpassword) {
+    public boolean updatePlayer(Player player, String newPassword) {
         Connection con = connectDb();
         CallableStatement st = null;
         boolean result = false;
@@ -101,7 +91,7 @@ public class DbManager {
             st = con.prepareCall("{call SP_UpdatePlayer(?, ?, ?, ?)}");
             st.setString(1, player.getPlayerName());
             st.setString(2, player.getUserName());
-            st.setString(3, newpassword);
+            st.setString(3, newPassword);
             st.registerOutParameter(4, Types.INTEGER);
 
             st.executeUpdate();
@@ -112,10 +102,12 @@ public class DbManager {
             return result;
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Update Player", e.getMessage());
-            return result;
+            return false;
         } finally {
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 EngineManager.getEngineManager().saveErrorLog("Update Player", e.getMessage());
             }
@@ -151,10 +143,12 @@ public class DbManager {
             return result;
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Delete Player", e.getMessage());
-            return result;
+            return false;
         } finally {
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 EngineManager.getEngineManager().saveErrorLog("Delete Player", e.getMessage());
             }
@@ -183,14 +177,15 @@ public class DbManager {
 
             st.executeUpdate();
 
-            boolean result = st.getBoolean(3);
-            return result;
+            return st.getBoolean(3);
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Check Login", e.getMessage());
             return false;
         } finally {
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 EngineManager.getEngineManager().saveErrorLog("Check Login", e.getMessage());
             }
@@ -218,14 +213,15 @@ public class DbManager {
 
             st.executeUpdate();
 
-            String[] result = new String[] { st.getString(2), st.getString(3) };
-            return result;
+            return new String[]{st.getString(2), st.getString(3)};
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Get Stats", e.getMessage());
             return null;
         } finally {
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 EngineManager.getEngineManager().saveErrorLog("Get Stats", e.getMessage());
             }
@@ -238,7 +234,7 @@ public class DbManager {
     }
 
     /**
-     * Method to get a players playername
+     * Method to get a players playerName
      *
      * @return String
      */
@@ -254,17 +250,15 @@ public class DbManager {
 
             String result = st.getString(2);
 
-            if(result == null){
-                return "fakename";
-            }else{
-                return result;
-            }
+            return Objects.requireNonNullElse(result, "fakename");
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Get Player Name", e.getMessage());
             return null;
         } finally {
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 EngineManager.getEngineManager().saveErrorLog("Get Player Name", e.getMessage());
             }
@@ -299,10 +293,12 @@ public class DbManager {
             return result;
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Add Game Played", e.getMessage());
-            return result;
+            return false;
         } finally {
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 EngineManager.getEngineManager().saveErrorLog("Add Game Played", e.getMessage());
             }
@@ -337,10 +333,12 @@ public class DbManager {
             return result;
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Add Game Won", e.getMessage());
-            return result;
+            return false;
         } finally {
             try {
-                st.close();
+                if (st != null) {
+                    st.close();
+                }
             } catch (SQLException e) {
                 EngineManager.getEngineManager().saveErrorLog("Add Game Won", e.getMessage());
             }
@@ -357,7 +355,7 @@ public class DbManager {
      *
      * @return boolean
      */
-    public boolean createLog(String errorAction, String errormessage) {
+    public boolean createLog(String errorAction, String errorMessage) {
         Connection con = connectDb();
         CallableStatement st = null;
         boolean result = false;
@@ -365,7 +363,7 @@ public class DbManager {
         try {
             st = con.prepareCall("{call SP_CreateLog(?, ?, ?)}");
             st.setString(1, errorAction);
-            st.setString(2, errormessage);
+            st.setString(2, errorMessage);
             st.registerOutParameter(3, Types.INTEGER);
 
             st.executeUpdate();
@@ -376,7 +374,7 @@ public class DbManager {
             return result;
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Create Log", e.getMessage());
-            return result;
+            return false;
         } finally {
             try {
                 if (st != null)
@@ -399,7 +397,7 @@ public class DbManager {
      *
      * @return boolean
      */
-    public boolean createErrorLog(String errorAction, String errormessage) {
+    public boolean createErrorLog(String errorAction, String errorMessage) {
         Connection con = connectDb();
         CallableStatement st = null;
         boolean result = false;
@@ -407,7 +405,7 @@ public class DbManager {
         try {
             st = con.prepareCall("{call SP_CreateErrorLog(?, ?, ?)}");
             st.setString(1, errorAction);
-            st.setString(2, errormessage);
+            st.setString(2, errorMessage);
             st.registerOutParameter(3, Types.INTEGER);
 
             st.executeUpdate();
@@ -418,7 +416,7 @@ public class DbManager {
             return result;
         } catch (SQLException e) {
             EngineManager.getEngineManager().saveErrorLog("Create Log", e.getMessage());
-            return result;
+            return false;
         } finally {
             try {
                 if (st != null)
@@ -434,7 +432,6 @@ public class DbManager {
             }
         }
     }
-
 
 
 }

@@ -1,20 +1,14 @@
 package Rooms;
 
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import GameEngine.EngineManager;
-import Rooms.RoomManager;
 
 public class AppConnection {
     /**
@@ -58,6 +52,7 @@ public class AppConnection {
                 t.start();
                 clientThreads.add(t);
                 t.getName();
+
                 System.out.println("Clients connected "+clientThreads.size());
             }
             // close connection
