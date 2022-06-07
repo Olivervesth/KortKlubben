@@ -208,6 +208,7 @@ BEGIN
 				Password = newPass
 			WHERE
 			Logins.Player_Id = @ChosenPlayerId;
+		ELSE BEGIN END;
     end case;
         
 	CASE WHEN newName IS NOT NULL
@@ -216,6 +217,7 @@ BEGIN
 				Name = newName
 			WHERE
 			Players.Player_Id = @ChosenPlayerId;
+		ELSE BEGIN END;
 	END CASE;
     
     SET result = ROW_COUNT();
