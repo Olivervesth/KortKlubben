@@ -275,14 +275,14 @@ public class DbManager {
      *
      * @return boolean
      */
-    public boolean addGamePlayed(Player player) {
+    public boolean addGamePlayed(String username) {
         Connection con = connectDb();
         CallableStatement st = null;
         boolean result = false;
 
         try {
             st = con.prepareCall("{call SP_AddGamePlayed(?, ?)}");
-            st.setString(1, player.getUserName());
+            st.setString(1, username);
             st.registerOutParameter(2, Types.INTEGER);
 
             st.executeUpdate();
@@ -315,14 +315,14 @@ public class DbManager {
      *
      * @return boolean
      */
-    public boolean addGameWon(Player player) {
+    public boolean addGameWon(String username) {
         Connection con = connectDb();
         CallableStatement st = null;
         boolean result = false;
 
         try {
             st = con.prepareCall("{call SP_AddGameWon(?, ?)}");
-            st.setString(1, player.getUserName());
+            st.setString(1, username);
             st.registerOutParameter(2, Types.INTEGER);
 
             st.executeUpdate();

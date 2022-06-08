@@ -39,13 +39,14 @@ public class AppConnection {
             while (!server.isClosed()) {
                 try {
                     socket = server.accept();
+                    socket.setKeepAlive(true);
                     System.out.println("Client accepted.");
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     if (server.isClosed()) {
                         System.out.println("Server Stopped.");
                     }
-                    throw new RuntimeException("Error accepting client connection", e);
+                    e.printStackTrace();
                 }
                 // Start new thread when a new client joins
                 Thread t = new Thread(new ClientThread(socket, em, rm));

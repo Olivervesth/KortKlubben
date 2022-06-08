@@ -9,17 +9,11 @@ import Players.Player;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.EOFException;
 import java.net.Socket;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
-
-import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.time.*;
 import java.util.List;
-import java.util.Locale;
 
 public class ClientThread extends Thread {
     /**
@@ -57,8 +51,9 @@ public class ClientThread extends Thread {
         try {
             output = new DataOutputStream(client.getOutputStream());
             output.writeUTF("true");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            em.saveErrorLog("ClientThread run", "Dataoutputstream" + e);
+            e.printStackTrace();
         }
         em.saveLog("Websocket", "New client connected: " + client.getInetAddress());
         System.out.println("New client connected: " + client.getInetAddress() + "");
@@ -67,38 +62,33 @@ public class ClientThread extends Thread {
         // takes input from the client socket
         try {
             in = new DataInputStream(new BufferedInputStream(client.getInputStream()));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+        } catch (Exception e) {
+            em.saveErrorLog("ClientThread run", "DataInputStream" + e);
             e.printStackTrace();
         }
         String line = "";
 
         // reads message from client until "Done" is sent
-
-
-        while (!line.equals("Done") && clientConnected == true) {
+        while (clientConnected == true) {
             try {
-                //Send message to client
-
                 line = in.readUTF();
-                if (activeroom != null){
-                    if (rm.getRoom(activeroom.getOwner()) == null){//Checks if the room still exists in room manager
+                if (activeroom != null) {
+                    if (rm.getRoom(activeroom.getOwner()) == null) {//Checks if the room still exists in room manager
                         activeroom = null;
                     }
                 }
-
                 if (activeroom == null) {
                     System.out.println("UserAction activated");
                     output.writeUTF(userActions(line));
-                } else{
+                } else {
                     output.writeUTF(playerInGameActions(line));
                 }
-
-
                 System.out.println(line);
+            } catch (EOFException eoe) {
 
-            } catch (IOException i) {
-                System.out.println(i);
+            } catch (Exception i) {
+                em.saveErrorLog("ClientThread run", "Client loop" + i);
+                System.out.println("Client flow whileloop : " + i);
                 clientConnected = false;
             }
         }
@@ -123,9 +113,7 @@ public class ClientThread extends Thread {
         System.out.println("data 0 :" + data[0]);
         switch (data[0]) {
             case "login":
-                /**
-                 * data[1] = username data[2] = psw
-                 */
+                //data[1] = username data[2] = psw
                 System.out.println("in login case");
                 if (clientPlayer == null) {
                     try {
@@ -137,26 +125,19 @@ public class ClientThread extends Thread {
                                 em.addClient(new KeyValuePair(client, clientPlayer));
                                 System.out.println(clientPlayer.getUserName() + " Logged in");
                                 return "true";
-
                             } else {
                                 return "false";
                             }
                         }
-
                     } catch (ArrayIndexOutOfBoundsException e) {
                         em.saveErrorLog(this.getName(), e.getLocalizedMessage() + "" + e.getMessage());
                     }
-
                 } else {
                     return "false";
                 }
-
                 break;
-
             case "register":
-                /**
-                 * data[1] = playername data[2] = username data[3] = psw
-                 */
+                //data[1] = playername data[2] = username data[3] = psw
                 if (clientPlayer == null) {
                     System.out.println("Register case");
                     try {
@@ -165,19 +146,13 @@ public class ClientThread extends Thread {
                             clientPlayer = em.createPlayer(data[2], data[1]);
                             return String.valueOf(em.createUser(clientPlayer, data[3]));
                         }
-
                     } catch (ArrayIndexOutOfBoundsException e) {
                         em.saveErrorLog(this.getName(), e.getLocalizedMessage() + "" + e.getMessage());
                     }
-
                 }
-
                 break;
             case "createroom":
-                /**
-                 * data[1] = playername data[2] = username data[3] = psw
-                 */
-
+                //data[1] = playername data[2] = username data[3] = psw
                 if (clientPlayer != null) {
                     try {
                         if (activeroom == null) {
@@ -186,11 +161,9 @@ public class ClientThread extends Thread {
                         } else {
                             return "false";
                         }
-
                     } catch (ArrayIndexOutOfBoundsException e) {
                         em.saveErrorLog(this.getName(), e.getLocalizedMessage() + "" + e.getMessage());
                     }
-
                 } else {
                     return "false";
                 }
@@ -228,7 +201,6 @@ public class ClientThread extends Thread {
                             if (data[1] != null) {
                                 return String.valueOf(em.deleteUser(clientPlayer));
                             }
-
                         } catch (ArrayIndexOutOfBoundsException e) {
                             em.saveErrorLog(this.getName(), e.getLocalizedMessage() + "" + e.getMessage());
                         }
@@ -258,8 +230,6 @@ public class ClientThread extends Thread {
                                     break;
                             }
                             if (data[1] != null && data[2] != null && data[3] != null) {
-
-
                             }
                         } catch (Exception e) {
                             em.saveErrorLog(this.getName(), e.getLocalizedMessage() + "" + e.getMessage());
@@ -301,7 +271,6 @@ public class ClientThread extends Thread {
                     e.printStackTrace();
                     em.saveErrorLog("clientThread activeroom.playCard", e.getMessage());
                 }
-
                 break;
             default:
                 break;
@@ -322,8 +291,8 @@ public class ClientThread extends Thread {
                 hand += card.getValue() + ";" + card.getSuit().name() + ";";
             }
             output.writeUTF("hand;");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }

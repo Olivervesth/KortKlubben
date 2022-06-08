@@ -52,12 +52,14 @@ public class GameManager {
     public void checkGame(List<Player> playerList) {
         for (Player player : playerList) {//Go through the list of players
             EngineManager.getEngineManager().addGamePlayed(player);//Adds a played game to player data
-            if (player.getPoints() >= 5) {//If a player has 5 or more points the player wins
-                EngineManager.getEngineManager().addGameWon(player);//Adds a game won to player data,
+                if (player.getPoints() >= 1) {//If a player has 5 or more points the player wins
+                    EngineManager.getEngineManager().addGameWon(player);//Adds a game won to player data,
                 // TODO win msg
+                System.out.println(player.getPlayerName() + " is the winner!");
                 EngineManager.getEngineManager().msgPlayer(player, "You Won");
             } else {
                 // TODO loose msg
+                System.out.println(player.getPlayerName() + " lost the game.");
                 EngineManager.getEngineManager().msgPlayer(player, "You Lost");
             }
         }
@@ -119,7 +121,7 @@ public class GameManager {
      *
      * @param playerList list of players in game
      */
-    public void checkRound(List<Player> playerList) {
+    public boolean checkRound(List<Player> playerList) {
         Player player1 = playerList.get(0);
         if (player1.getPartner() != null) {//Playing grand
             Player partner = player1.getPartner();
@@ -143,7 +145,7 @@ public class GameManager {
         boolean winConditionMet = false;
         for (Player p : playerList)
         {
-            if (p.getPoints() > 5)
+            if (p.getPoints() >= 1 )
             {
                 winConditionMet = true;
                 break;
@@ -152,7 +154,9 @@ public class GameManager {
         if (winConditionMet)
         {
             checkGame(playerList);
+            return true;
         }
+        return false;
     }
 
 

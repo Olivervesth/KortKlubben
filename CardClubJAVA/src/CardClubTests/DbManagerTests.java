@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import GameEngine.EngineManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -21,6 +22,7 @@ import Players.Player;
 class DbManagerTests {
 
     static DbManager manager;
+    EngineManager engManager;
 
     @BeforeAll
     static void setUpBeforeClass() {
@@ -141,7 +143,7 @@ class DbManagerTests {
     @Order(6)
     void addGamePlayed_ShouldAdd_IfAble() {
         // Act
-        boolean result = manager.addGamePlayed(testPlayer2());
+        boolean result = manager.addGamePlayed(testPlayer2().getUserName());
 
         // Assert
         assertTrue(result);
@@ -151,7 +153,7 @@ class DbManagerTests {
     @Order(7)
     void addGameWon_ShouldAdd_IfAble() {
         // Act
-        boolean result = manager.addGameWon(testPlayer2());
+        boolean result = manager.addGameWon(testPlayer2().getUserName());
 
         // Assert
         assertTrue(result);
@@ -190,6 +192,11 @@ class DbManagerTests {
     private Player testPlayer2() {
 
         return new Human("LarsLummer", "Bror");
+    }
+
+    private Player tisplayer() {
+
+        return new Human("tis", "tis");
     }
 
 }

@@ -85,7 +85,7 @@ public final class EngineManager {
                     System.out.println(player.getPlayerName()+";"+hand);
                     new DataOutputStream(((Socket) client.getKey()).getOutputStream()).writeUTF(hand);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                   e.printStackTrace();
                 }
             }
         }
@@ -106,7 +106,7 @@ public final class EngineManager {
                     output.writeUTF(response);
                 } catch (IOException e) {
                     em.saveErrorLog("EngineManager cardPlayed",e.getMessage());
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -125,7 +125,7 @@ public final class EngineManager {
                     new DataOutputStream(((Socket) client.getKey()).getOutputStream()).writeUTF(msg);
                     break;
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             }
         }
@@ -167,7 +167,7 @@ public final class EngineManager {
      * @return boolean
      */
     public boolean addGamePlayed(Player player) {
-        return db.addGamePlayed(player);
+        return db.addGamePlayed(hashing.hash(player.getUserName()));
     }
 
     /**
@@ -176,7 +176,7 @@ public final class EngineManager {
      * @return boolean
      */
     public boolean addGameWon(Player player) {
-        return db.addGameWon(player);
+        return db.addGameWon(hashing.hash(player.getUserName()));
     }
 
     /**

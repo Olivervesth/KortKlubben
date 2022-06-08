@@ -18,11 +18,12 @@ public class Room {
     private CardManager cardManager;
     private int playerTurn;
     private boolean firstCard;
+    private boolean gamedone = false;
 
     /**
      * Constructor for Room class
      *
-     * @param owner user that created the room
+     * @param owner       user that created the room
      * @param gameManager managed game logic
      * @param cardManager manages card creation
      */
@@ -87,7 +88,7 @@ public class Room {
                 if (players.size() == 2) {
                     giveCards();
                     // TODO better turn msg/handling
-                    EngineManager.getEngineManager().msgPlayer(players.get(playerTurn),"YourTurn");
+                    EngineManager.getEngineManager().msgPlayer(players.get(playerTurn), "YourTurn");
                 }
                 return true;
             }
@@ -117,17 +118,16 @@ public class Room {
      * Method that handles a player playing a card
      *
      * @param player player playing a card
-     * @param card card being played
+     * @param card   card being played
      */
     public String playCard(Player player, Card card) {
-        if (firstCard)
-        {
-            gameManager.findPartners(player,card,players);
+        if (firstCard) {
+            gameManager.findPartners(player, card, players);
             firstCard = false;
         }
-        if (players.get(playerTurn).getUserName().equals(player.getUserName())) {
+        if (players.get(playerTurn).getUserName().equals(player.getUserName())) { //"Method will fail" at third playerturn
             boolean foundcard = false;
-            for (Card c:player.getCards()) {
+            for (Card c : player.getCards()) {
                 if (c.getValue() == card.getValue() && c.getSuit() == card.getSuit()) {
                     gameManager.playCard(player, card);
                     changeTurn();
@@ -146,25 +146,37 @@ public class Room {
      */
     public void changeTurn() {
         // TODO handle 4 players not 2
-        if (playerTurn >= 2) {
-            gameManager.checkForSet(players);
-            if (players.get(0).getCards().size() == 0)
-            {
-                gameManager.checkRound(players);
-                firstCard = true;
+        if (!gamedone){
+            if (playerTurn >= 2) {
+                gameManager.checkForSet(players);
+                if (players.get(0).getCards().size() == 0) {
+                    gamedone = gameManager.checkRound(players);
+                    if (!gamedone){
+                        for (Player player : players) {
+                            System.out.println(player.getPlayerName() + " has: " + player.getPoints() + " points.");
+                            System.out.println(player.getPlayerName() + " has: " + player.getSets() + " sets.");
+                            EngineManager.getEngineManager().msgPlayer(player, String.valueOf(player.getSets()));
+                            player.resetSets();
+                        }
+                        firstCard = true;
+                        giveCards();
+
+                    }
+                }
+                if(!gamedone){
+                    playerTurn = -1;
+                    changeTurn();
+                }
+            } else {
+                // TODO handle turn string
+                playerTurn++;
+                if (playerTurn < 2) {
+                    EngineManager.getEngineManager().msgPlayer(players.get(playerTurn), "YourTurn");
+                } else {
+                    changeTurn();
+                }
             }
-            playerTurn = -1;
-            changeTurn();
-        } else {
-            // TODO handle turn string
-            playerTurn++;
-            if (playerTurn < 2) {
-                EngineManager.getEngineManager().msgPlayer(players.get(playerTurn),"YourTurn");
-            }
-            else
-            {
-                changeTurn();
-            }
+
         }
     }
 
