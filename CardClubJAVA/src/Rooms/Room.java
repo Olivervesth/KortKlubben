@@ -21,7 +21,7 @@ public class Room {
     private CardManager cardManager;
     private int playerTurn;
     private boolean firstCard;
-    private boolean gameDone = false;
+    private boolean gamedone = false;
 
     /**
      * Constructor for Room class
@@ -109,7 +109,7 @@ public class Room {
         if (players.size() > 0) {
             if (players.contains(player)) {
                 players.remove(player);
-                //TODO version 1.2 don't destroy room on player leaving/kicked
+                //TODO version 1.2 dont destroy room on player leaving/kicked
                 EngineManager.getRoomManager().destroyRoom(this);
                 return true;
             }
@@ -129,17 +129,17 @@ public class Room {
             gameManager.findPartners(player, card, players);
             firstCard = false;
         }
-        if (players.get(playerTurn).getUserName().equals(player.getUserName())) { //"Method will fail" at third playerTurn
-            boolean foundCard = false;
+        if (players.get(playerTurn).getUserName().equals(player.getUserName())) { //"Method will fail" at third playerturn
+            boolean foundcard = false;
             for (Card c : player.getCards()) {
                 if (c.getValue() == card.getValue() && c.getSuit() == card.getSuit()) {
                     gameManager.playCard(player, card);
                     changeTurn();
-                    foundCard = true;
+                    foundcard = true;
                     break;
                 }
             }
-            return String.valueOf(foundCard);
+            return String.valueOf(foundcard);
         }
         return "false";
     }
@@ -150,12 +150,12 @@ public class Room {
      */
     public void changeTurn() {
         // TODO handle 4 players not 2
-        if (!gameDone){
+        if (!gamedone){
             if (playerTurn >= 2) {
                 gameManager.checkForSet(players);
                 if (players.get(0).getCards().size() == 0) {
-                    gameDone = gameManager.checkRound(players);
-                    if (!gameDone){
+                    gamedone = gameManager.checkRound(players);
+                    if (!gamedone){
                         for (Player player : players) {
                             System.out.println(player.getPlayerName() + " has: " + player.getPoints() + " points.");
                             System.out.println(player.getPlayerName() + " has: " + player.getSets() + " sets.");
@@ -167,7 +167,7 @@ public class Room {
 
                     }
                 }
-                if(!gameDone){
+                if(!gamedone){
                     playerTurn = -1;
                     changeTurn();
                 }

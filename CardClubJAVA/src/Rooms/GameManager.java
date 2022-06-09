@@ -15,6 +15,7 @@ public class GameManager {
      * Fields for GameManager
      */
     private List<Card> playedCards;
+    private int[] playerPoints;
     private Suit trumpSuit;
     private Suit playingSuit;
 
@@ -74,33 +75,48 @@ public class GameManager {
      * @return int
      */
     public int pointSystem(int set) {
-        return switch (set) {
-            case 0 ->
+        int points = 0;
+        switch (set) {
+            case 0:
                 // -4
-                    -4;
-            case 1, 2 ->
+                points = -4;
+                break;
+            case 1:
+            case 2:
                 // -3
-                    -3;
-            case 3, 4 ->
+                points = -3;
+                break;
+            case 3:
+            case 4:
                 // -2
-                    -2;
-            case 5, 6 ->
+                points = -2;
+                break;
+            case 5:
+            case 6:
                 // -1
-                    -1;
-            case 7, 8 ->
+                points = -1;
+                break;
+            case 7:
+            case 8:
                 // +1
-                    1;
-            case 9, 10 ->
+                points = 1;
+                break;
+            case 9:
+            case 10:
                 // +2
-                    2;
-            case 11, 12 ->
+                points = 2;
+                break;
+            case 11:
+            case 12:
                 // +3
-                    3;
-            case 13 ->
+                points = 3;
+                break;
+            case 13:
                 // +4
-                    4;
-            default -> 0;
-        };
+                points = 4;
+                break;
+        }
+        return points;
     }
 
     /**
@@ -225,10 +241,15 @@ public class GameManager {
         }
     }
 
-
-    /*private void sortListBySets(List<Player> players) {
+    /**
+     * Sorts a list of players based on theirs sets.
+     * Highest to lowest.
+     *
+     * @param players list of players to sort by amount of sets
+     */
+    private void sortListBySets(List<Player> players) {
         players.sort(Comparator.comparingInt(Player::getSets).reversed());
-    }*/
+    }
 
     /**
      * Removes the played card and call the cardPlayed method
@@ -237,8 +258,8 @@ public class GameManager {
      * @param card   card being played
      */
     public void playCard(Player player, Card card) {
-        for (Card pCard : player.getCards()) {
-            if (pCard.getValue() == card.getValue() && pCard.getSuit() == card.getSuit()) {
+        for (Card pcard : player.getCards()) {
+            if (pcard.getValue() == card.getValue() && pcard.getSuit() == card.getSuit()) {
                 if (playingSuit == null) {
                     this.playingSuit = card.getSuit();
                 }
@@ -246,18 +267,18 @@ public class GameManager {
                     this.trumpSuit = card.getSuit();
                 }
                 List<Card> playerCards = player.getCards();
-                playerCards.remove(pCard);
+                playerCards.remove(pcard);
                 player.setCards(playerCards);
                 playedCards.add(card);
                 EngineManager.getEngineManager().cardPlayed(player, card);
                 break;
             }
         }
-        String tempHand = player.getPlayerName() + " cards - ";
-        for (Card pCard : player.getCards()) {
-            tempHand += pCard.getValue() + ";" + pCard.getSuit() + " ";
+        String temphand = player.getPlayerName() + " cards - ";
+        for (Card pcard : player.getCards()) {
+            temphand += pcard.getValue() + ";" + pcard.getSuit() + " ";
         }
-        System.out.println(tempHand);
+        System.out.println(temphand);
     }
 
     /**
