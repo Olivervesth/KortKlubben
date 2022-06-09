@@ -1,7 +1,7 @@
 package Cards;
 
 /**
- * Enum for all the playingcard suits
+ * Enum for all the card suits
  */
 public enum Suit{
     Hearts,

@@ -12,9 +12,6 @@ import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.net.Socket;
 
-import java.time.*;
-import java.util.List;
-
 /**
  * Class for handling client actions Async
  */
@@ -29,7 +26,6 @@ public class ClientThread extends Thread {
     Room activeroom = null;
     private Player clientPlayer = null;
     DataOutputStream output = null;
-    private LocalDateTime lastactivetime;
 
 
     /**
@@ -72,7 +68,7 @@ public class ClientThread extends Thread {
         String line = "";
 
         // reads message from client until "Done" is sent
-        while (clientConnected == true) {
+        while (clientConnected) {
             try {
                 line = in.readUTF();
                 if (activeroom != null) {
@@ -182,9 +178,7 @@ public class ClientThread extends Thread {
                     return result;
                 }
             case "joinroom":
-                /**
-                 * data[1] owner name
-                 */
+                // data[1] owner name
                 activeroom = rm.getRoom(data[1]);
                 if (activeroom != null) {
                     rm.joinRoom(activeroom, clientPlayer);
@@ -194,9 +188,7 @@ public class ClientThread extends Thread {
                 }
                 break;
             case "deleteuser":
-                /**
-                 * data[1] = username
-                 */
+                // data[1] = username
                 if (clientPlayer == null) {
                     if (clientPlayer.getUserName().equals(data[1])) {
                         System.out.println("Delete case");
@@ -211,12 +203,10 @@ public class ClientThread extends Thread {
                 }
                 break;
             case "updateuser":
-                /**
-                 * data[1] = type data[2] = playername data[3] = username data[4] = psw
-                 * data[1] = type data[2] = playername data[3] = username
-                 */
+                // data[1] = type data[2] = playerName data[3] = username data[4] = psw
+                // data[1] = type data[2] = playerName data[3] = username
                 if (clientPlayer == null) {
-                    if (clientPlayer.getUserName().equals(data[3])) {
+                    if (clientPlayer != null && clientPlayer.getUserName().equals(data[3])) {
                         System.out.println("Update Case");
                         try {
                             switch (data[1]) {
@@ -262,14 +252,12 @@ public class ClientThread extends Thread {
                 activeroom = null;
                 return "true";
             case "playcard":
-                /**
-                 * data[1] = card number
-                 * data[2] = suit
-                 */
+                // data[1] = card number
+                // data[2] = suit
                 try {
                     activeroom.checkSuit(data[2]);
                     String d2 = data[2].substring(0, 1).toUpperCase() + data[2].substring(1);
-                    Card card = new Card(Integer.valueOf(data[1]), Suit.valueOf(d2));
+                    Card card = new Card(Integer.parseInt(data[1]), Suit.valueOf(d2));
                     activeroom.playCard(clientPlayer, card);
                     return "true";
                 } catch (Exception e) {
@@ -283,13 +271,7 @@ public class ClientThread extends Thread {
         return "false";
     }
 
-    /**
-     * Method to grant cards
-     *
-     * @param cards list of cards
-     *
-     * @return boolean
-     */
+   /*
     public boolean giveCards(List<Card> cards) {
         try {
             String hand = "";
@@ -301,16 +283,12 @@ public class ClientThread extends Thread {
             e.printStackTrace();
         }
         return false;
-    }
+    }*/
 
-    /**
-     * Method to get the client player
-     *
-     * @return Player clientPlayer
-     */
-    public Player getClientPlayer() {
+
+    /*public Player getClientPlayer() {
         return clientPlayer;
-    }
+    }*/
 
 //    public void lastActive(){
 //        while(true){//Check if player is deleted
