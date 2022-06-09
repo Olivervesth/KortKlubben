@@ -10,7 +10,7 @@ public class CardManager {
     /**
      * Fields for CardManager
      */
-    private List<Card> cards;
+    private final List<Card> cards;
 
     /**
      * Constructor for CardManager

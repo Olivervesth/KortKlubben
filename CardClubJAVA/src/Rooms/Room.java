@@ -16,9 +16,9 @@ public class Room {
      * Fields for Room class
      */
     private List<Player> players;
-    private Player owner = null;
-    private GameManager gameManager;
-    private CardManager cardManager;
+    private final Player owner;
+    private final GameManager gameManager;
+    private final CardManager cardManager;
     private int playerTurn;
     private boolean firstCard;
     private boolean gameDone = false;
@@ -53,10 +53,9 @@ public class Room {
      * Method to check a suit
      *
      * @param suit the suit of the card
-     * @return boolean
      */
-    public boolean checkSuit(String suit) {
-        return gameManager.checkSuit(suit);
+    public void checkSuit(String suit) {
+        gameManager.checkSuit(suit);
     }
 
     /**
@@ -81,9 +80,8 @@ public class Room {
      * Add player to room
      *
      * @param player player to add
-     * @return boolean
      */
-    public boolean addPlayer(Player player) {
+    public void addPlayer(Player player) {
         // TODO handle 4 players not 2
         if (players.size() < 4) {
             if (!players.contains(player)) {
@@ -93,10 +91,8 @@ public class Room {
                     // TODO better turn msg/handling
                     EngineManager.getEngineManager().msgPlayer(players.get(playerTurn), "YourTurn");
                 }
-                return true;
             }
         }
-        return false;
     }
 
     /**
@@ -122,26 +118,21 @@ public class Room {
      *
      * @param player player playing a card
      * @param card   card being played
-     * @return String
      */
-    public String playCard(Player player, Card card) {
+    public void playCard(Player player, Card card) {
         if (firstCard) {
             gameManager.findPartners(player, card, players);
             firstCard = false;
         }
         if (players.get(playerTurn).getUserName().equals(player.getUserName())) { //"Method will fail" at third playerTurn
-            boolean foundCard = false;
             for (Card c : player.getCards()) {
                 if (c.getValue() == card.getValue() && c.getSuit() == card.getSuit()) {
                     gameManager.playCard(player, card);
                     changeTurn();
-                    foundCard = true;
                     break;
                 }
             }
-            return String.valueOf(foundCard);
         }
-        return "false";
     }
 
     /**

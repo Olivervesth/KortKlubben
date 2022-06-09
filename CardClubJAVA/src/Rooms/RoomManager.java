@@ -14,7 +14,7 @@ public class RoomManager {
     /**
      * Fields
      */
-    private List<Room> rooms;
+    private final List<Room> rooms;
 
     /**
      * Constructor for RoomManager

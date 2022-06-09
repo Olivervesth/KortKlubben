@@ -14,7 +14,7 @@ public class GameManager {
     /**
      * Fields for GameManager
      */
-    private List<Card> playedCards;
+    private final List<Card> playedCards;
     private Suit trumpSuit;
     private Suit playingSuit;
 

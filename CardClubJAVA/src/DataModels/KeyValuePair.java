@@ -9,11 +9,11 @@ public class KeyValuePair implements Serializable {
     /**
      * Key
      */
-    private Object key;
+    private final Object key;
     /**
      * Value of key
      */
-    private Object value;
+    private final Object value;
 
     /**
      * Constructor for a KeyValuePair

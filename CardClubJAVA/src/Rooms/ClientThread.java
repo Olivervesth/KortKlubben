@@ -19,8 +19,8 @@ public class ClientThread extends Thread {
     /**
      * Fields
      */
-    private EngineManager em = null;
-    private RoomManager rm = null;
+    private final EngineManager em;
+    private final RoomManager rm;
     private DataInputStream in = null;
     Socket client;
     Room activeroom = null;
@@ -65,7 +65,7 @@ public class ClientThread extends Thread {
             em.saveErrorLog("ClientThread run", "DataInputStream" + e);
             e.printStackTrace();
         }
-        String line = "";
+        String line;
 
         // reads message from client until "Done" is sent
         while (clientConnected) {

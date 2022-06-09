@@ -13,7 +13,7 @@ public abstract class Player {
      * Fields for Player class
      */
     private String playerName;
-    private String userName;
+    private final String userName;
     private int points;
     private int cardSets;
     private List<Card> cards;

@@ -25,7 +25,7 @@ public final class EngineManager {
     private static PlayerManager playerManager;
     private static RoomManager roomManager;
     private static EngineManager em;
-    private List<KeyValuePair> clients = null;
+    private final List<KeyValuePair> clients;
 
     /**
      * Constructor for EngineManager
@@ -175,20 +175,18 @@ public final class EngineManager {
      * Method to add played game to player statistics
      *
      * @param player player to add game to
-     * @return boolean
      */
-    public boolean addGamePlayed(Player player) {
-        return db.addGamePlayed(hashing.hash(player.getUserName()));
+    public void addGamePlayed(Player player) {
+        db.addGamePlayed(hashing.hash(player.getUserName()));
     }
 
     /**
      * Method to add won game to player statistics
      *
      * @param player player to add win to
-     * @return boolean
      */
-    public boolean addGameWon(Player player) {
-        return db.addGameWon(hashing.hash(player.getUserName()));
+    public void addGameWon(Player player) {
+        db.addGameWon(hashing.hash(player.getUserName()));
     }
 
     /**
@@ -252,7 +250,7 @@ public final class EngineManager {
      * @return boolean
      */
     public boolean updateUser(Player player, String newPassword) {
-        boolean result = false;
+        boolean result;
         if (newPassword.equals("")) {
             result = db.updatePlayer(player, null);
         } else {

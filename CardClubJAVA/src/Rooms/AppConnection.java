@@ -57,8 +57,8 @@ public class AppConnection {
                 socket.close();
             }
             in.close();
-        } catch (IOException i) {
-            System.out.println(i);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
             try {
                 if (socket != null) {
                     socket.close();

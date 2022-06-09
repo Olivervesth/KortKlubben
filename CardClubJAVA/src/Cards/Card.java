@@ -7,8 +7,8 @@ public class Card {
     /**
      * Fields for Card
      */
-    private int value;
-    private Suit suit;
+    private final int value;
+    private final Suit suit;
 
     /**
      * Constructor for Card class
