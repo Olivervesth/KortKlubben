@@ -52,10 +52,10 @@ public class Room {
     /**
      * Method to check a suit
      *
-     * @param suit the suit of the card
+     * @param input the suit of the card
      */
-    public void checkSuit(String suit) {
-        gameManager.checkSuit(suit);
+    public void checkSuit(String input) {
+        gameManager.checkSuit(input);
     }
 
     /**
@@ -99,18 +99,15 @@ public class Room {
      * Remove player from room
      *
      * @param player player to remove
-     * @return boolean
      */
-    public boolean removePlayer(Player player) {
+    public void removePlayer(Player player) {
         if (players.size() > 0) {
             if (players.contains(player)) {
                 players.remove(player);
                 //TODO version 1.2 don't destroy room on player leaving/kicked
                 EngineManager.getRoomManager().destroyRoom(this);
-                return true;
             }
         }
-        return false;
     }
 
     /**

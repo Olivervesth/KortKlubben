@@ -261,19 +261,15 @@ public class GameManager {
     }
 
     /**
-     * Checks that the suit exists in the suit enum
+     * Checks that the input is a valid suit
      *
-     * @param playerSuit suit of card
-     * @return boolean
+     * @param input player input
      */
-    public boolean checkSuit(String playerSuit) {
-        boolean suitExists = false;
+    public void checkSuit(String input) {
         for (Suit suit : Suit.values()) {
-            if (playerSuit.equalsIgnoreCase(suit.name())) {
-                suitExists = true;
+            if (input.equalsIgnoreCase(suit.name())) {
                 break;
             }
         }
-        return suitExists;
     }
 }

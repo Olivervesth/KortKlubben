@@ -28,7 +28,7 @@ public class DbManager {
         String database = "cardclub_db";
         String connectionString = "jdbc:mysql://10.108.130.218:3306/" + database + "";
 
-        Connection con = null;
+        Connection con;
         try {
             // establish the connection
             con = DriverManager.getConnection(connectionString, databaseUsername, databasePassword);
