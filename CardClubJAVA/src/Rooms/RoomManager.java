@@ -7,6 +7,9 @@ import Cards.CardManager;
 import GameEngine.EngineManager;
 import Players.Player;
 
+/**
+ * Class for handling and creating Rooms
+ */
 public class RoomManager {
     /**
      * Fields
@@ -52,12 +55,16 @@ public class RoomManager {
      * Method to reset players in a room
      *
      * @param players players to reset
-     * @return List<Player> list of players that have been reset
+     * @return List of players that have been reset
      */
     public List<Player> resetPlayers(List<Player> players) {
         return EngineManager.resetPlayerPoints(players);
     }
 
+    /**
+     * Method for getting a list of all available rooms
+     * @return List of Room
+     */
     public List<Room> getRooms() {
         List<Room> roomList = new ArrayList<>();
         for (Room room : rooms) {

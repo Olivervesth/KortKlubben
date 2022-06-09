@@ -8,6 +8,9 @@ import Cards.CardManager;
 import GameEngine.EngineManager;
 import Players.Player;
 
+/**
+ * Object class representing a room to play in
+ */
 public class Room {
     /**
      * Fields for Room class
@@ -119,6 +122,7 @@ public class Room {
      *
      * @param player player playing a card
      * @param card   card being played
+     * @return String
      */
     public String playCard(Player player, Card card) {
         if (firstCard) {

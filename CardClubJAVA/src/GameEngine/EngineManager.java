@@ -12,6 +12,9 @@ import Players.Player;
 import Players.PlayerManager;
 import Rooms.RoomManager;
 
+/**
+ * Singleton class for handling almost all actions on the server
+ */
 public final class EngineManager {
     /**
      * Fields
@@ -37,6 +40,11 @@ public final class EngineManager {
         roomManager = new RoomManager();
     }
 
+    /**
+     * Method to get new instance of EngineManager
+     *
+     * @return EngineManager
+     */
     public static EngineManager getEngineManager() {
         if (em == null) {
             em = new EngineManager();
@@ -82,10 +90,10 @@ public final class EngineManager {
                     for (Card card : cards) {
                         hand += card.getValue() + ";" + card.getSuit().name() + ";";
                     }
-                    System.out.println(player.getPlayerName()+";"+hand);
+                    System.out.println(player.getPlayerName() + ";" + hand);
                     new DataOutputStream(((Socket) client.getKey()).getOutputStream()).writeUTF(hand);
                 } catch (IOException e) {
-                   e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
         }
@@ -105,7 +113,7 @@ public final class EngineManager {
                     DataOutputStream output = new DataOutputStream(((Socket) client.getKey()).getOutputStream());
                     output.writeUTF(response);
                 } catch (IOException e) {
-                    em.saveErrorLog("EngineManager cardPlayed",e.getMessage());
+                    em.saveErrorLog("EngineManager cardPlayed", e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -116,7 +124,7 @@ public final class EngineManager {
      * Method to message a single player
      *
      * @param player player to message
-     * @param msg the message
+     * @param msg    the message
      */
     public void msgPlayer(Player player, String msg) {
         for (KeyValuePair client : clients) {
@@ -146,6 +154,8 @@ public final class EngineManager {
     /**
      * Method to login
      *
+     * @param username login name of user
+     * @param password password of user
      * @return Player
      */
     public Player login(String username, String password) {
@@ -164,6 +174,7 @@ public final class EngineManager {
     /**
      * Method to add played game to player statistics
      *
+     * @param player player to add game to
      * @return boolean
      */
     public boolean addGamePlayed(Player player) {
@@ -173,6 +184,7 @@ public final class EngineManager {
     /**
      * Method to add won game to player statistics
      *
+     * @param player player to add win to
      * @return boolean
      */
     public boolean addGameWon(Player player) {
@@ -182,7 +194,8 @@ public final class EngineManager {
     /**
      * Method to reset players points
      *
-     * @return List<Player>
+     * @param players List of players to reset
+     * @return List of players after reset
      */
     public static List<Player> resetPlayerPoints(List<Player> players) {
         List<Player> returnList = new ArrayList<>();
@@ -195,6 +208,8 @@ public final class EngineManager {
     /**
      * Method to create a player
      *
+     * @param username   Login name of player
+     * @param playerName Public name of player
      * @return Player
      */
     public Player createPlayer(String username, String playerName) {
@@ -222,6 +237,7 @@ public final class EngineManager {
     /**
      * Method to get player stats
      *
+     * @param player player to get stats from
      * @return String[]
      */
     public String[] getStats(Player player) {
@@ -231,14 +247,15 @@ public final class EngineManager {
     /**
      * Method to update a user
      *
+     * @param player      player with updated values
+     * @param newPassword String of new password
      * @return boolean
      */
     public boolean updateUser(Player player, String newPassword) {
         boolean result = false;
-        if(newPassword.equals("")){
+        if (newPassword.equals("")) {
             result = db.updatePlayer(player, null);
-        }
-        else{
+        } else {
             result = db.updatePlayer(player, hashing.hash(newPassword));
         }
 
@@ -254,6 +271,7 @@ public final class EngineManager {
     /**
      * Method to delete a user
      *
+     * @param player user to delete
      * @return boolean
      */
     public boolean deleteUser(Player player) {
@@ -268,6 +286,9 @@ public final class EngineManager {
 
     /**
      * Method to save error messages to db
+     *
+     * @param action  Action that caused error
+     * @param message Generated message from error
      */
     public void saveErrorLog(String action, String message) {
         logger.saveErrorLog(action, message, db);
@@ -275,6 +296,9 @@ public final class EngineManager {
 
     /**
      * Method to save messages to db
+     *
+     * @param action  Action that occurred
+     * @param message Message detailing result of action
      */
     public void saveLog(String action, String message) {
         logger.saveLog(action, message, db);

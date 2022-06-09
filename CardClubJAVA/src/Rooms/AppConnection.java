@@ -10,6 +10,9 @@ import java.util.List;
 
 import GameEngine.EngineManager;
 
+/**
+ * Class for handling connection between app and server
+ */
 public class AppConnection {
     /**
      * Fields
@@ -24,6 +27,7 @@ public class AppConnection {
     /**
      * Constructor for AppConnection
      *
+     * @param port port number
      */
     public AppConnection(int port) {
         // starts server and waits for a connection

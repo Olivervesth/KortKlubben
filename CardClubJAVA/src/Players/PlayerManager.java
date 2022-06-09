@@ -1,9 +1,15 @@
 package Players;
 
+/**
+ * Class for handling and creating players
+ */
 public class PlayerManager {
     /**
      * Method to create a new player instance
      *
+     * @param username Login name of user
+     * @param playerName Public name of player
+     * @param human boolean to determine if Human or CPU player
      * @return Player
      */
     public Player createPlayer(String username, String playerName, boolean human) {
@@ -16,8 +22,8 @@ public class PlayerManager {
 
     /**
      * Method to reset a players points
-     *
-     * @return Player
+     * @param player player to reset
+     * @return Player player after reset
      */
     public Player resetPlayerPoints(Player player) {
         player.resetPoints();

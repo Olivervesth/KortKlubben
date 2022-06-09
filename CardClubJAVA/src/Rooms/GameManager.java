@@ -7,6 +7,9 @@ import Cards.Suit;
 import GameEngine.EngineManager;
 import Players.Player;
 
+/**
+ * Class for handling gameplay logic
+ */
 public class GameManager {
     /**
      * Fields for GameManager
@@ -27,8 +30,8 @@ public class GameManager {
      * Method to give players cards
      *
      * @param players players to give cards
-     * @param cards cards for players
-     * @return List<Player>
+     * @param cards   cards for players
+     * @return List of players with cards
      */
     public List<Player> giveCards(List<Player> players, List<Card> cards) {
         for (Player player : players) {
@@ -52,8 +55,8 @@ public class GameManager {
     public void checkGame(List<Player> playerList) {
         for (Player player : playerList) {//Go through the list of players
             EngineManager.getEngineManager().addGamePlayed(player);//Adds a played game to player data
-                if (player.getPoints() >= 1) {//If a player has 5 or more points the player wins
-                    EngineManager.getEngineManager().addGameWon(player);//Adds a game won to player data,
+            if (player.getPoints() >= 1) {//If a player has 5 or more points the player wins
+                EngineManager.getEngineManager().addGameWon(player);//Adds a game won to player data,
                 // TODO win msg
                 System.out.println(player.getPlayerName() + " is the winner!");
                 EngineManager.getEngineManager().msgPlayer(player, "You Won");
@@ -120,6 +123,7 @@ public class GameManager {
      * Method to see who have most sets
      *
      * @param playerList list of players in game
+     * @return boolean
      */
     public boolean checkRound(List<Player> playerList) {
         Player player1 = playerList.get(0);
@@ -143,16 +147,13 @@ public class GameManager {
         }
         trumpSuit = null;
         boolean winConditionMet = false;
-        for (Player p : playerList)
-        {
-            if (p.getPoints() >= 1 )
-            {
+        for (Player p : playerList) {
+            if (p.getPoints() >= 1) {
                 winConditionMet = true;
                 break;
             }
         }
-        if (winConditionMet)
-        {
+        if (winConditionMet) {
             checkGame(playerList);
             return true;
         }
@@ -165,7 +166,7 @@ public class GameManager {
      *
      * @param cardPlayer the player playing a card
      * @param playedCard the card being played
-     * @param players list of players in game
+     * @param players    list of players in game
      */
     public void findPartners(Player cardPlayer, Card playedCard, List<Player> players) {
         Card matchingAce = new Card(14, playedCard.getSuit());
@@ -206,7 +207,7 @@ public class GameManager {
     public void checkForSet(List<Player> playerList) {
         int highestCard = 0;
         int playerIndex = -1;
-        try{
+        try {
             for (int i = 0; i < playerList.size(); i++) {
                 Suit suit = ((Card) (playedCards.toArray()[i])).getSuit();
                 int value = ((Card) (playedCards.toArray()[i])).getValue();
@@ -223,7 +224,7 @@ public class GameManager {
             // crashes ?
             playingSuit = null;
 
-        }catch(ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             //log
             e.printStackTrace();
         }
@@ -259,12 +260,10 @@ public class GameManager {
     public void playCard(Player player, Card card) {
         for (Card pcard : player.getCards()) {
             if (pcard.getValue() == card.getValue() && pcard.getSuit() == card.getSuit()) {
-                if (playingSuit == null)
-                {
+                if (playingSuit == null) {
                     this.playingSuit = card.getSuit();
                 }
-                if (trumpSuit == null)
-                {
+                if (trumpSuit == null) {
                     this.trumpSuit = card.getSuit();
                 }
                 List<Card> playerCards = player.getCards();
@@ -275,9 +274,9 @@ public class GameManager {
                 break;
             }
         }
-        String temphand=player.getPlayerName()+" cards - ";
-        for (Card pcard : player.getCards()){
-            temphand += pcard.getValue()+";"+pcard.getSuit()+" ";
+        String temphand = player.getPlayerName() + " cards - ";
+        for (Card pcard : player.getCards()) {
+            temphand += pcard.getValue() + ";" + pcard.getSuit() + " ";
         }
         System.out.println(temphand);
     }

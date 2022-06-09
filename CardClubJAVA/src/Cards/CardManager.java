@@ -3,6 +3,9 @@ package Cards;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for generating new cards
+ */
 public class CardManager {
     /**
      * Fields for CardManager
@@ -20,7 +23,7 @@ public class CardManager {
      * Method to generate a new deck of cards This deck of cards do not contain
      * jokers Generated cards are added to the managers cards list
      *
-     * @return List<Card>
+     * @return List of cards
      */
     public List<Card> generateCardDeckNoJokers() {
         Suit suit = null;

@@ -4,10 +4,14 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Class responsible for hashing data
+ */
 public class Hashing {
     /**
      * Method to hash a string input
      *
+     * @param input the String to hash
      * @return String hashed input
      */
     public String hash(String input) {

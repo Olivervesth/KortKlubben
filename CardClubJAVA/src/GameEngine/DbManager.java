@@ -5,6 +5,9 @@ import java.util.Objects;
 
 import Players.Player;
 
+/**
+ * Class for handling database queries
+ */
 public class DbManager {
 
     /**
@@ -39,6 +42,8 @@ public class DbManager {
     /**
      * Method to create a new player
      *
+     * @param player   the user to save
+     * @param Password the password of the user
      * @return boolean
      */
     public boolean createPlayer(Player player, String Password) {
@@ -80,6 +85,8 @@ public class DbManager {
     /**
      * Method to update player information
      *
+     * @param player      player object with updated data
+     * @param newPassword new password for the user
      * @return boolean
      */
     public boolean updatePlayer(Player player, String newPassword) {
@@ -122,6 +129,7 @@ public class DbManager {
     /**
      * Method to delete a player
      *
+     * @param player player to delete
      * @return boolean
      */
     public boolean deletePlayer(Player player) {
@@ -163,6 +171,8 @@ public class DbManager {
     /**
      * Method to validate user login
      *
+     * @param username login name of user
+     * @param password password of user
      * @return boolean
      */
     public boolean checkLogin(String username, String password) {
@@ -200,6 +210,7 @@ public class DbManager {
     /**
      * Method to get a players stats
      *
+     * @param player player to get stats from
      * @return String[]
      */
     public String[] getStats(Player player) {
@@ -236,6 +247,7 @@ public class DbManager {
     /**
      * Method to get a players playerName
      *
+     * @param username login name of player to get playerName from
      * @return String
      */
     public String getPlayerName(String username) {
@@ -273,6 +285,7 @@ public class DbManager {
     /**
      * Method to add a played game to the players statistics
      *
+     * @param username Login name of player
      * @return boolean
      */
     public boolean addGamePlayed(String username) {
@@ -313,6 +326,7 @@ public class DbManager {
     /**
      * Method to add a win to the players statistics
      *
+     * @param username Login name of player
      * @return boolean
      */
     public boolean addGameWon(String username) {
@@ -353,6 +367,8 @@ public class DbManager {
     /**
      * Method to create error log on db
      *
+     * @param errorAction  Action that happened
+     * @param errorMessage Message detailing the result of the action
      * @return boolean
      */
     public boolean createLog(String errorAction, String errorMessage) {
@@ -395,6 +411,8 @@ public class DbManager {
     /**
      * Method to create error log on db
      *
+     * @param errorAction  Action that caused error
+     * @param errorMessage message generated on error
      * @return boolean
      */
     public boolean createErrorLog(String errorAction, String errorMessage) {

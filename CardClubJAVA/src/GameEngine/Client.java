@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * Object class for handling client data and info
+ */
 public class Client {
 
     /**
@@ -19,6 +22,8 @@ public class Client {
     /**
      * Constructor for Client
      *
+     * @param address IP of user
+     * @param port    Port of connection
      */
     public Client(String address, Integer port) {
 

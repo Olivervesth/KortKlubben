@@ -5,6 +5,9 @@ import GameEngine.EngineManager;
 
 import java.util.List;
 
+/**
+ * Abstract class to represent a player
+ */
 public abstract class Player {
     /**
      * Fields for Player class
@@ -18,6 +21,9 @@ public abstract class Player {
 
     /**
      * Constructor for Human class
+     *
+     * @param Username   Login name of user
+     * @param PlayerName public name of user
      */
     public Player(String Username, String PlayerName) {
         this.playerName = PlayerName;
@@ -66,7 +72,9 @@ public abstract class Player {
      *
      * @return amount of sets
      */
-    public int getSets() { return cardSets; }
+    public int getSets() {
+        return cardSets;
+    }
 
     /**
      * Method to get the player's points
@@ -79,6 +87,8 @@ public abstract class Player {
 
     /**
      * Method to add points to the player
+     *
+     * @param points points to add
      */
     public void updatePoints(int points) {
         if (points >= -4 && points <= 4) {
@@ -128,6 +138,12 @@ public abstract class Player {
         cardSets = 0;
     }
 
-    public void setPlayerName(String name){ playerName = name; }
+    /**
+     * Method to set the public playerName of user
+     * @param name name to set
+     */
+    public void setPlayerName(String name) {
+        playerName = name;
+    }
 
 }

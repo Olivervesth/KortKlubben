@@ -1,5 +1,8 @@
 package Cards;
 
+/***
+ * Object class for a Card
+ */
 public class Card {
     /**
      * Fields for Card
@@ -10,6 +13,8 @@ public class Card {
     /**
      * Constructor for Card class
      *
+     * @param value value of card
+     * @param suit suit of card
      */
     public Card(int value, Suit suit) {
         this.value = value;

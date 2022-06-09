@@ -15,6 +15,9 @@ import java.net.Socket;
 import java.time.*;
 import java.util.List;
 
+/**
+ * Class for handling client actions Async
+ */
 public class ClientThread extends Thread {
     /**
      * Fields
@@ -246,7 +249,9 @@ public class ClientThread extends Thread {
     /**
      * Method to read player actions in a game
      *
-     * @param command
+     * @param command the command input from the client user
+     *
+     * @return String
      */
     public String playerInGameActions(String command) {
 
@@ -281,8 +286,9 @@ public class ClientThread extends Thread {
     /**
      * Method to grant cards
      *
-     * @param cards
-     * @return
+     * @param cards list of cards
+     *
+     * @return boolean
      */
     public boolean giveCards(List<Card> cards) {
         try {
