@@ -96,21 +96,18 @@ public class RoomManager {
      *
      * @param room   room to join
      * @param player player joining
-     * @return boolean
      */
-    public boolean joinRoom(Room room, Player player) {
-        return room.addPlayer(player);
+    public void joinRoom(Room room, Player player) {
+        room.addPlayer(player);
     }
 
     /**
      * Method to destroy an active room
      *
      * @param room room to be destroyed
-     * @return boolean
      */
-    public boolean destroyRoom(Room room) {
+    public void destroyRoom(Room room) {
         rooms.remove(room);
-        return true;
     }
 
 
