@@ -14,16 +14,7 @@ import GameEngine.EngineManager;
  * Class for handling connection between app and server
  */
 public class AppConnection {
-    /**
-     * Fields
-     */
-    private Socket socket = null;
-    private EngineManager em = null;
-    private RoomManager rm = null;
-    private ServerSocket server = null;
-    private DataInputStream in = null;
-    private List<Thread> clientThreads = null;
-    // constructor with port
+
     /**
      * Constructor for AppConnection
      *
@@ -31,12 +22,14 @@ public class AppConnection {
      */
     public AppConnection(int port) {
         // starts server and waits for a connection
+        Socket socket = null;
+        DataInputStream in = null;
         try {
-            clientThreads = new ArrayList<>();
-            em = new EngineManager();
-            rm = em.getRoomManager();
-            server = new ServerSocket(port);
-            println("Server started: Ip " + InetAddress.getLocalHost().getHostAddress() + ",Port "
+            List<Thread> clientThreads = new ArrayList<>();
+            EngineManager em = new EngineManager();
+            RoomManager rm = EngineManager.getRoomManager();
+            ServerSocket server = new ServerSocket(port);
+            System.out.println("Server started: Ip " + InetAddress.getLocalHost().getHostAddress() + ",Port "
                     + server.getLocalPort() + ":");
             System.out.println("Waiting for a client ........");
 
@@ -56,31 +49,26 @@ public class AppConnection {
                 Thread t = new Thread(new ClientThread(socket, em, rm));
                 t.start();
                 clientThreads.add(t);
-                t.getName();
 
-                System.out.println("Clients connected "+clientThreads.size());
+                System.out.println("Clients connected "+ clientThreads.size());
             }
             // close connection
-            socket.close();
+            if (socket != null) {
+                socket.close();
+            }
             in.close();
         } catch (IOException i) {
             System.out.println(i);
             try {
-                socket.close();
+                if (socket != null) {
+                    socket.close();
+                }
                 in.close();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Method to see live commands on server
-     *
-     */
-    private void println(String string) {
-        System.out.println(string);
     }
 
 }
