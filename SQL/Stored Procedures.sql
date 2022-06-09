@@ -390,6 +390,3 @@ BEGIN
 END//
 
 DELIMITER ;
-
-
--- CALL SP_CreatePlayer('Jesper', 'JesperKD', 'Kage1234!', @rs);
