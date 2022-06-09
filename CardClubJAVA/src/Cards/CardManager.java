@@ -19,7 +19,7 @@ public class CardManager {
         cards = new ArrayList<>();
     }
 
-        /**
+    /**
      * Method to generate a new deck of cards This deck of cards do not contain
      * jokers Generated cards are added to the managers cards list
      *

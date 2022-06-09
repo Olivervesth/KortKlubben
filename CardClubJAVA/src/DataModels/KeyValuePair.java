@@ -18,30 +18,29 @@ public class KeyValuePair implements Serializable {
     /**
      * Constructor for a KeyValuePair
      *
-     * @param key Object
+     * @param key   Object
      * @param value Object
      */
-    public KeyValuePair(Object key, Object value)
-    {
+    public KeyValuePair(Object key, Object value) {
         this.key = key;
         this.value = value;
     }
 
     /**
      * Method to get the key
+     *
      * @return Object key
      */
-    public Object getKey()
-    {
+    public Object getKey() {
         return this.key;
     }
 
     /**
      * Method to get the value
+     *
      * @return Object value
      */
-    public Object getValue()
-    {
+    public Object getValue() {
         return this.value;
     }
 }

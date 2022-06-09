@@ -50,7 +50,7 @@ public class AppConnection {
                 t.start();
                 clientThreads.add(t);
 
-                System.out.println("Clients connected "+ clientThreads.size());
+                System.out.println("Clients connected " + clientThreads.size());
             }
             // close connection
             if (socket != null) {

@@ -6,6 +6,7 @@ import Rooms.AppConnection;
 public class Main {
     /**
      * The starting point of everything
+     *
      * @param args args
      */
     public static void main(String[] args) {

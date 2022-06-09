@@ -63,6 +63,7 @@ public class RoomManager {
 
     /**
      * Method for getting a list of all available rooms
+     *
      * @return List of Room
      */
     public List<Room> getRooms() {

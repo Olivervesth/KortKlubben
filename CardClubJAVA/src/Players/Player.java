@@ -140,6 +140,7 @@ public abstract class Player {
 
     /**
      * Method to set the public playerName of user
+     *
      * @param name name to set
      */
     public void setPlayerName(String name) {

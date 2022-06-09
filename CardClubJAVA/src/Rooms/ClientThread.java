@@ -240,7 +240,6 @@ public class ClientThread extends Thread {
      * Method to read player actions in a game
      *
      * @param command the command input from the client user
-     *
      * @return String
      */
     public String playerInGameActions(String command) {

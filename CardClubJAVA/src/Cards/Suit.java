@@ -3,7 +3,7 @@ package Cards;
 /**
  * Enum for all the card suits
  */
-public enum Suit{
+public enum Suit {
     Hearts,
     Spades,
     Diamonds,
