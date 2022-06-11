@@ -123,7 +123,7 @@ public class ClientThread extends Thread {
                             if (clientPlayer != null) {
                                 em.addClient(new KeyValuePair(client, clientPlayer));
                                 System.out.println(clientPlayer.getUserName() + " Logged in");
-                                return "true";
+                                return "true;"+clientPlayer.getPlayerName();
                             } else {
                                 return "false";
                             }
