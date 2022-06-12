@@ -205,7 +205,6 @@ public class ClientThread extends Thread {
             case "updateuser":
                 // data[1] = type data[2] = playerName data[3] = username data[4] = psw
                 // data[1] = type data[2] = playerName data[3] = username
-                if (clientPlayer == null) {
                     if (clientPlayer != null && clientPlayer.getUserName().equals(data[3])) {
                         System.out.println("Update Case");
                         try {
@@ -218,17 +217,15 @@ public class ClientThread extends Thread {
                                 case "Playername":
                                     if (data[2] != null) {
                                         clientPlayer.setPlayerName(data[2]);
-                                        return String.valueOf(em.updateUser(clientPlayer, null));
+                                        return String.valueOf(em.updateUser(clientPlayer, ""));
                                     }
                                     break;
-                            }
-                            if (data[1] != null && data[2] != null && data[3] != null) {
                             }
                         } catch (Exception e) {
                             em.saveErrorLog(this.getName(), e.getLocalizedMessage() + "" + e.getMessage());
                         }
                     }
-                }
+
                 break;
             default:
                 break;
