@@ -26,7 +26,7 @@ public class DbManager {
         String databaseUsername = "martin";
         String databasePassword = "Kode1234!";
         String database = "cardclub_db";
-        String connectionString = "jdbc:mysql://10.108.130.218:3306/" + database + "";
+        String connectionString = "jdbc:mysql://192.168.1.15:3306/" + database + "";
 
         Connection con;
         try {
