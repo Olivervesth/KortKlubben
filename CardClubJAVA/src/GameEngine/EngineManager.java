@@ -261,7 +261,7 @@ public final class EngineManager {
             saveLog("UpdateUser", "User " + player.getUserName() + " updated successfully");
             return true;
         } else {
-            saveErrorLog("UpdateUser", "User " + player.getUserName() + "failed to update");
+            saveErrorLog("UpdateUser", "User " + player.getUserName() + " failed to update");
             return false;
         }
     }

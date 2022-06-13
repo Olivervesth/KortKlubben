@@ -4,6 +4,7 @@ import Cards.Card;
 import Cards.Suit;
 import DataModels.KeyValuePair;
 import GameEngine.EngineManager;
+import Players.Human;
 import Players.Player;
 
 import java.io.BufferedInputStream;
@@ -210,8 +211,10 @@ public class ClientThread extends Thread {
                         try {
                             switch (data[1]) {
                                 case "psw":
-                                    if (data[4] != null) {
-                                        return String.valueOf(em.updateUser(clientPlayer, data[4]));
+                                    if (data[4] != null && !data[4].equals("")) {
+                                        Player tempPlayer = new Human(clientPlayer.getUserName(), data[2]);
+
+                                        return String.valueOf(em.updateUser(tempPlayer, data[4]));
                                     }
                                     break;
                                 case "Playername":
