@@ -23,10 +23,16 @@ public class DbManager {
      */
     public Connection connectDb() {
         //TODO: Move database connection settings into readable file
-        String databaseUsername = "martin";
+        /*String databaseUsername = "martin";
         String databasePassword = "Kode1234!";
         String database = "cardclub_db";
-        String connectionString = "jdbc:mysql://192.168.1.15:3306/" + database + "";
+         */
+
+        String databaseUsername = "root";
+        String databasePassword = "Kode1234!";
+        String database = "cardclub_db";
+        String connectionString = "jdbc:mysql://127.0.0.1:3306/" + database + "";
+
 
         Connection con;
         try {
